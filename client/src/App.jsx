@@ -1,10 +1,10 @@
 import './App.css'
+import AppRouter from './AppRouter'
 
 function App() {
   return (
     <div className="app">
-      <h1>MSportFit</h1>
-      <p>UI skeleton</p>
+      <AppRouter />
     </div>
   )
 }
