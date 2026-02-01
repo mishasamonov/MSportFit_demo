@@ -1,0 +1,24 @@
+.app {
+  min-height: 100vh;
+}
+
+.layout__nav {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background: #eee;
+  flex-wrap: wrap;
+}
+
+.layout__nav a {
+  color: #333;
+  text-decoration: none;
+}
+
+.layout__nav a:hover {
+  text-decoration: underline;
+}
+
+.layout__main {
+  padding: 1.5rem;
+}
