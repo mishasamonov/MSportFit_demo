@@ -11,5 +11,3 @@ server/.env
 .DS_Store
 .vscode
 .idea
-
-server/prisma/migrations
