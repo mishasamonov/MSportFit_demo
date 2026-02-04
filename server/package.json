@@ -6,6 +6,7 @@
     "start": "node src/index.js",
     "dev": "node src/index.js",
     "create-env": "node scripts/create-env.js",
+     "seed": "node scripts/seed.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
