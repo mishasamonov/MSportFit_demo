@@ -20,11 +20,22 @@ model Product {
   title     String
   category  String?
   calories  Int
-  protein  Decimal    @db.Decimal(8, 2)
+  protein   Decimal    @db.Decimal(8, 2)
   fat       Decimal    @db.Decimal(8, 2)
   carbs     Decimal    @db.Decimal(8, 2)
   createdAt DateTime   @default(now())
   favorites Favorite[]
+}
+
+model Exercise {
+  id          String   @id @default(uuid())
+  title       String
+  category    String?
+  calories    Int?
+  muscleGroup String?
+  level       String?
+  videoUrl    String?
+  createdAt   DateTime @default(now())
 }
 
 model Favorite {
