@@ -58,6 +58,13 @@ function ProductDetails() {
     return <p>Продукт не знайдено.</p>
   }
 
+  const hasValue = (v) => v !== null && v !== undefined && v !== ''
+  const formatMacro = (v) => {
+    if (!hasValue(v)) return null
+    const n = Number(v)
+    return Number.isFinite(n) ? n.toFixed(1) : String(v)
+  }
+
   return (
     <div>
       <h1>Картка продукту</h1>
@@ -69,24 +76,24 @@ function ProductDetails() {
           <strong>Категорія:</strong> {product.category}
         </p>
       )}
-      {typeof product.calories === 'number' && (
+      {hasValue(product.calories) && (
         <p>
-          <strong>Калорії:</strong> {product.calories}
+          <strong>Калорії:</strong> {formatMacro(product.calories)}
         </p>
       )}
-      {typeof product.protein === 'number' && (
+      {hasValue(product.protein) && (
         <p>
-          <strong>Білки:</strong> {product.protein}
+          <strong>Білки:</strong> {formatMacro(product.protein)}
         </p>
       )}
-      {typeof product.fat === 'number' && (
+      {hasValue(product.fat) && (
         <p>
-          <strong>Жири:</strong> {product.fat}
+          <strong>Жири:</strong> {formatMacro(product.fat)}
         </p>
       )}
-      {typeof product.carbs === 'number' && (
+      {hasValue(product.carbs) && (
         <p>
-          <strong>Вуглеводи:</strong> {product.carbs}
+          <strong>Вуглеводи:</strong> {formatMacro(product.carbs)}
         </p>
       )}
     </div>
