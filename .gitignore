@@ -11,3 +11,9 @@ server/.env
 .DS_Store
 .vscode
 .idea
+
+
+coverage
+.cache
+client/.vite
+server/dist
