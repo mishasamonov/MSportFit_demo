@@ -39,11 +39,16 @@
 cd client
 npm install
 npm run dev
+```
 
-    2) Backend
+### 2) Backend
+```bash
 cd server
 npm install
 npm run dev
+```
 
-    3) PostgreSQL (Docker)
+### 3) PostgreSQL (Docker)
+```bash
 docker compose up -d
+```
