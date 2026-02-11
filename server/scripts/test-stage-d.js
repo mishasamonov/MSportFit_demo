@@ -16,12 +16,13 @@ const BASE_URL = `http://localhost:${process.env.PORT || 3001}`;
 // Utility: fetch with strict error handling
 async function apiFetch(endpoint, options = {}) {
   const url = `${BASE_URL}${endpoint}`;
+  const { headers: optionHeaders, ...restOptions } = options;
   const response = await fetch(url, {
+    ...restOptions,
     headers: {
       'Content-Type': 'application/json',
-      ...options.headers,
+      ...optionHeaders,
     },
-    ...options,
   });
 
   // REQUIREMENT 1: Check res.ok FIRST

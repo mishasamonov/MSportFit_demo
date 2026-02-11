@@ -17,7 +17,6 @@ function Calculators() {
   const [activity, setActivity] = useState('1.55')
   const [tdeeError, setTdeeError] = useState(null)
   const [bmrResult, setBmrResult] = useState(null)
-  const [tdeeResult, setTdeeResult] = useState(null)
 
   // BMI state
   const [bmiHeight, setBmiHeight] = useState('')
@@ -58,7 +57,6 @@ function Calculators() {
     if (!w || !h || !a || !factor) {
       setTdeeError('Усі значення мають бути додатними числами')
       setBmrResult(null)
-      setTdeeResult(null)
       return
     }
 
@@ -70,7 +68,6 @@ function Calculators() {
     if (weightErr || heightErr || ageErr) {
       setTdeeError(weightErr || heightErr || ageErr)
       setBmrResult(null)
-      setTdeeResult(null)
       return
     }
 
@@ -94,7 +91,6 @@ function Calculators() {
       maintain: tdeeRounded,
       bulk: bulkCalories,
     })
-    setTdeeResult(tdeeRounded)
 
     // Підтягнемо калорії у калькулятор макро залежно від обраної мети
     if (!macroWeight) {
