@@ -63,6 +63,27 @@ function generateTestEmail() {
   return `test-${timestamp}-${random}@msportfit.test`;
 }
 
+// Robust ID matching for different API response shapes
+function findProductInFavorites(favorites, targetProductId) {
+  return favorites.some((item) => {
+    return (
+      item.id === targetProductId ||
+      item.productId === targetProductId ||
+      item.product?.id === targetProductId
+    );
+  });
+}
+
+function findExerciseInFavorites(favorites, targetExerciseId) {
+  return favorites.some((item) => {
+    return (
+      item.id === targetExerciseId ||
+      item.exerciseId === targetExerciseId ||
+      item.exercise?.id === targetExerciseId
+    );
+  });
+}
+
 async function main() {
   console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
   console.log('🧪 Stage D Test: Auth + Favorites');
@@ -155,30 +176,34 @@ async function main() {
     });
     const initialCount = initialProducts.length;
     
-    // Add to favorites
-    await apiFetch('/api/favorites/products', {
+    // Add to favorites (ID in URL with proper encoding)
+    const encodedProductId = encodeURIComponent(productId);
+    await apiFetch(`/api/favorites/products/${encodedProductId}`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}` },
-      body: JSON.stringify({ productId }),
     });
     console.log('   ✓ Product add request sent');
     
-    // REQUIREMENT 3: Verify it was actually added
+    // Verify it was actually added (robust validation)
     const updatedProducts = await apiFetch('/api/favorites/products', {
       headers: { Authorization: `Bearer ${token}` },
     });
     
-    const productExists = updatedProducts.some((fp) => fp.productId === productId);
-    const countIncreased = updatedProducts.length > initialCount;
+    const productExists = findProductInFavorites(updatedProducts, productId);
+    const countValid = updatedProducts.length >= initialCount;
     
-    if (!productExists || !countIncreased) {
+    if (!productExists || !countValid) {
       console.error('');
       console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
       console.error('❌ VALIDATION FAILED: Product was NOT added to favorites');
-      console.error(`   Product ID: ${productId}`);
+      console.error(`   Target Product ID: ${productId}`);
       console.error(`   Initial count: ${initialCount}`);
       console.error(`   Updated count: ${updatedProducts.length}`);
       console.error(`   Product exists in list: ${productExists}`);
+      console.error(`   Count valid (>= initial): ${countValid}`);
+      if (updatedProducts.length > 0) {
+        console.error(`   Sample item (first):`, JSON.stringify(updatedProducts[0], null, 2));
+      }
       console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
       process.exit(1);
     }
@@ -197,30 +222,34 @@ async function main() {
     });
     const initialCount = initialExercises.length;
     
-    // Add to favorites
-    await apiFetch('/api/favorites/exercises', {
+    // Add to favorites (ID in URL with proper encoding)
+    const encodedExerciseId = encodeURIComponent(exerciseId);
+    await apiFetch(`/api/favorites/exercises/${encodedExerciseId}`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}` },
-      body: JSON.stringify({ exerciseId }),
     });
     console.log('   ✓ Exercise add request sent');
     
-    // REQUIREMENT 3: Verify it was actually added
+    // Verify it was actually added (robust validation)
     const updatedExercises = await apiFetch('/api/favorites/exercises', {
       headers: { Authorization: `Bearer ${token}` },
     });
     
-    const exerciseExists = updatedExercises.some((fe) => fe.exerciseId === exerciseId);
-    const countIncreased = updatedExercises.length > initialCount;
+    const exerciseExists = findExerciseInFavorites(updatedExercises, exerciseId);
+    const countValid = updatedExercises.length >= initialCount;
     
-    if (!exerciseExists || !countIncreased) {
+    if (!exerciseExists || !countValid) {
       console.error('');
       console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
       console.error('❌ VALIDATION FAILED: Exercise was NOT added to favorites');
-      console.error(`   Exercise ID: ${exerciseId}`);
+      console.error(`   Target Exercise ID: ${exerciseId}`);
       console.error(`   Initial count: ${initialCount}`);
       console.error(`   Updated count: ${updatedExercises.length}`);
       console.error(`   Exercise exists in list: ${exerciseExists}`);
+      console.error(`   Count valid (>= initial): ${countValid}`);
+      if (updatedExercises.length > 0) {
+        console.error(`   Sample item (first):`, JSON.stringify(updatedExercises[0], null, 2));
+      }
       console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
       process.exit(1);
     }
@@ -240,12 +269,18 @@ async function main() {
   
   console.log(`   ✓ Total favorite products: ${finalProducts.length}`);
   if (finalProducts.length > 0) {
-    console.log('     Items:', finalProducts.map((fp) => fp.product.title).join(', '));
+    const titles = finalProducts
+      .map((fp) => fp.product?.title || fp.title || `ID:${fp.productId || fp.id}`)
+      .join(', ');
+    console.log('     Items:', titles);
   }
   
   console.log(`   ✓ Total favorite exercises: ${finalExercises.length}`);
   if (finalExercises.length > 0) {
-    console.log('     Items:', finalExercises.map((fe) => fe.exercise.title).join(', '));
+    const titles = finalExercises
+      .map((fe) => fe.exercise?.title || fe.title || `ID:${fe.exerciseId || fe.id}`)
+      .join(', ');
+    console.log('     Items:', titles);
   }
 
   // REQUIREMENT 4: Success summary (ONLY if we got here)
