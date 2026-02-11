@@ -21,7 +21,7 @@
 **Frontend:** React, Vite, SCSS, React Router, Redux Toolkit (auth/favorites/products/filters), React Select  
 **Backend:** Node.js, Express  
 **DB:** PostgreSQL (Docker Compose), Prisma  
-**Auth:** bcrypt + JWT (Bearer)
+**Auth:** bcrypt + JWT (Bearer) — потребує змінної середовища `JWT_SECRET` на сервері
 
 ## Структура репозиторію
 - `client/` — клієнтська частина (React/Vite)
@@ -34,21 +34,163 @@
 
 ## Запуск локально
 
-### 1) Frontend (Vite)
+### 1) PostgreSQL (Docker)
 ```bash
-cd client
-npm install
-npm run dev
+docker compose up -d
 ```
 
 ### 2) Backend
 ```bash
 cd server
 npm install
+
+# Налаштування .env (ОБОВ'ЯЗКОВО!)
+# Скопіюйте env.example → .env
+copy env.example .env    # Windows
+# або
+cp env.example .env      # Linux/Mac
+
+# Після копіювання відредагуйте .env та встановіть JWT_SECRET
+# Приклад: JWT_SECRET=my_super_secret_random_string_12345
+
+# Prisma
+npm run prisma:generate
+npm run prisma:migrate
+
+# Запуск
 npm run dev
 ```
 
-### 3) PostgreSQL (Docker)
+### 3) Frontend (Vite)
 ```bash
-docker compose up -d
+cd client
+npm install
+npm run dev
+```
+
+## Налаштування авторизації (обов'язково для Stage D+)
+
+### Крок 1: Створіть .env файл
+```bash
+cd server
+copy env.example .env    # Windows
+# або
+cp env.example .env      # Linux/Mac
+```
+
+### Крок 2: Встановіть JWT_SECRET
+Відкрийте `server/.env` та встановіть унікальний секретний ключ:
+```env
+JWT_SECRET=your_long_random_secret_key_here
+JWT_EXPIRES_IN=7d
+```
+
+**ВАЖЛИВО:** 
+- JWT_SECRET має бути довгим випадковим рядком (мінімум 32 символи)
+- Ніколи не комітьте файл `.env` в git!
+- Без JWT_SECRET auth endpoints повертатимуть помилку `ServerConfigError`
+
+### Крок 3: Перезапустіть сервер
+```bash
+npm run dev
+```
+
+Якщо все налаштовано правильно, при старті побачите:
+```
+✓ Auth config OK: JWT_SECRET налаштовано
+Server running on port 3001
+```
+
+## Тестування API авторизації
+
+**ВАЖЛИВО:** Endpoints `/api/auth/login` та `/api/auth/register` — це **POST** запити.  
+Відкриття їх у браузері через адресний рядок використовує **GET** і поверне `Cannot GET /api/auth/login` — це нормально!
+
+### 🚀 Швидке тестування (автоматичний скрипт)
+
+Найпростіший спосіб перевірити auth та favorites:
+
+```bash
+# 1. Запустіть сервер (якщо ще не запущено)
+cd server
+npm run dev
+
+# 2. В іншому терміналі
+cd server
+npm run test:stage-d
+```
+
+Скрипт автоматично протестує реєстрацію, вхід, `/me`, додавання в обране та отримання списків.
+
+**Вимоги:** Node.js 18+, запущений сервер, налаштований JWT_SECRET
+
+### Тестування через PowerShell (Windows)
+
+#### 1. Реєстрація нового користувача
+```powershell
+$body = @{ 
+  email = "test@example.com"
+  password = "secret123" 
+} | ConvertTo-Json
+
+$response = Invoke-RestMethod `
+  -Uri "http://localhost:3001/api/auth/register" `
+  -Method Post `
+  -ContentType "application/json" `
+  -Body $body
+
+# Зберігаємо токен для подальших запитів
+$token = $response.token
+Write-Host "Token: $token"
+```
+
+#### 2. Вхід (Login)
+```powershell
+$body = @{ 
+  email = "test@example.com"
+  password = "secret123" 
+} | ConvertTo-Json
+
+$response = Invoke-RestMethod `
+  -Uri "http://localhost:3001/api/auth/login" `
+  -Method Post `
+  -ContentType "application/json" `
+  -Body $body
+
+$token = $response.token
+Write-Host "Token: $token"
+```
+
+#### 3. Отримання поточного користувача (захищений endpoint)
+```powershell
+# Використовуємо токен з попереднього запиту
+Invoke-RestMethod `
+  -Uri "http://localhost:3001/api/auth/me" `
+  -Method Get `
+  -Headers @{ Authorization = "Bearer $token" }
+```
+
+### Тестування через curl (Linux/Mac)
+
+#### Реєстрація
+```bash
+curl -X POST http://localhost:3001/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com","password":"secret123"}'
+```
+
+#### Вхід
+```bash
+TOKEN=$(curl -X POST http://localhost:3001/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com","password":"secret123"}' \
+  | jq -r '.token')
+
+echo "Token: $TOKEN"
+```
+
+#### Отримання поточного користувача
+```bash
+curl http://localhost:3001/api/auth/me \
+  -H "Authorization: Bearer $TOKEN"
 ```

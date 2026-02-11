@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './components/Layout'
 import Home from './pages/Home'
 import Products from './pages/Products'
@@ -10,7 +10,23 @@ import Programs from './pages/Programs'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Favorites from './pages/Favorites'
+import Calculators from './pages/Calculators'
 import NotFound from './pages/NotFound'
+import { useAuth } from './context/AuthContext.jsx'
+
+function RequireAuth({ children }) {
+  const { isAuthed, loading } = useAuth()
+
+  if (loading) {
+    return <p>Перевірка авторизації...</p>
+  }
+
+  if (!isAuthed) {
+    return <Navigate to="/login" replace />
+  }
+
+  return children
+}
 
 function AppRouter() {
   return (
@@ -23,9 +39,17 @@ function AppRouter() {
         <Route path="exercises/:id" element={<ExerciseDetails />} />
         <Route path="faq" element={<Faq />} />
         <Route path="programs" element={<Programs />} />
+        <Route path="calculators" element={<Calculators />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
-        <Route path="favorites" element={<Favorites />} />
+        <Route
+          path="favorites"
+          element={
+            <RequireAuth>
+              <Favorites />
+            </RequireAuth>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
