@@ -1,11 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext.jsx'
+import { apiFetch } from '../lib/api'
 
 function ExerciseDetails() {
   const { id } = useParams()
+  const { isAuthed } = useAuth()
   const [exercise, setExercise] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [favoriteLoading, setFavoriteLoading] = useState(false)
+  const [isFavorite, setIsFavorite] = useState(false)
 
   useEffect(() => {
     let isMounted = true
@@ -45,6 +50,57 @@ function ExerciseDetails() {
       isMounted = false
     }
   }, [id])
+
+  useEffect(() => {
+    let isMounted = true
+
+    async function loadFavoriteState() {
+      if (!isAuthed) {
+        setIsFavorite(false)
+        return
+      }
+
+      try {
+        const res = await apiFetch('/api/favorites/exercises')
+        if (!res.ok) {
+          return
+        }
+        const data = await res.json()
+        if (!Array.isArray(data)) return
+
+        if (isMounted) {
+          setIsFavorite(data.some((e) => e.id === id))
+        }
+      } catch (err) {
+        console.error('Exercise favorite state error', err)
+      }
+    }
+
+    loadFavoriteState()
+
+    return () => {
+      isMounted = false
+    }
+  }, [id, isAuthed])
+
+  const handleToggleFavorite = async () => {
+    if (!exercise || !isAuthed || favoriteLoading) return
+
+    setFavoriteLoading(true)
+    try {
+      const method = isFavorite ? 'DELETE' : 'POST'
+      const res = await apiFetch(`/api/favorites/exercises/${id}`, { method })
+      if (!res.ok) {
+        throw new Error('Не вдалося оновити обране')
+      }
+      setIsFavorite(!isFavorite)
+    } catch (err) {
+      console.error('Toggle favorite exercise error', err)
+      alert(err.message || 'Помилка оновлення обраного')
+    } finally {
+      setFavoriteLoading(false)
+    }
+  }
 
   if (loading) {
     return <p>Завантаження вправи...</p>
@@ -91,6 +147,14 @@ function ExerciseDetails() {
             Відкрити відео
           </a>
         </p>
+      )}
+
+      {!isAuthed ? (
+        <p>Увійдіть, щоб додавати вправу в обране.</p>
+      ) : (
+        <button type="button" onClick={handleToggleFavorite} disabled={favoriteLoading}>
+          {isFavorite ? 'Видалити з обраного' : 'Додати в обране'}
+        </button>
       )}
     </div>
   )

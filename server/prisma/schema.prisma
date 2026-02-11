@@ -8,11 +8,12 @@ datasource db {
 }
 
 model User {
-  id           String     @id @default(uuid())
-  email        String     @unique
-  passwordHash String
-  createdAt    DateTime   @default(now())
-  favorites    Favorite[]
+  id                String             @id @default(uuid())
+  email             String             @unique
+  passwordHash      String
+  createdAt         DateTime           @default(now())
+  favorites         Favorite[]
+  exerciseFavorites ExerciseFavorite[]
 }
 
 model Product {
@@ -28,14 +29,15 @@ model Product {
 }
 
 model Exercise {
-  id          String   @id @default(uuid())
-  title       String
-  category    String?
-  calories    Int?
-  muscleGroup String?
-  level       String?
-  videoUrl    String?
-  createdAt   DateTime @default(now())
+  id              String             @id @default(uuid())
+  title           String
+  category        String?
+  calories        Int?
+  muscleGroup     String?
+  level           String?
+  videoUrl        String?
+  createdAt       DateTime           @default(now())
+  favoritedBy     ExerciseFavorite[]
 }
 
 model Favorite {
@@ -49,4 +51,18 @@ model Favorite {
   @@unique([userId, productId])
   @@index([userId])
   @@index([productId])
+}
+
+model ExerciseFavorite {
+  id         String   @id @default(uuid())
+  userId     String
+  exerciseId String
+  createdAt  DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exercise Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, exerciseId])
+  @@index([userId])
+  @@index([exerciseId])
 }
