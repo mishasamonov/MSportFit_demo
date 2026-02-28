@@ -4,7 +4,7 @@ function Programs() {
       <h1>Програми</h1>
       <p>Placeholder — програми тренувань.</p>
     </div>
-  )
+  );
 }
 
-export default Programs
+export default Programs;

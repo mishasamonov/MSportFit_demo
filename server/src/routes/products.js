@@ -78,8 +78,7 @@ function createProductsRouter(prisma) {
     ) {
       return res.status(400).json({
         error: 'ValidationError',
-        message:
-          'Поля "calories", "protein", "fat", "carbs" є обовʼязковими для продукту',
+        message: 'Поля "calories", "protein", "fat", "carbs" є обовʼязковими для продукту',
       });
     }
 
@@ -118,4 +117,3 @@ function createProductsRouter(prisma) {
 }
 
 module.exports = createProductsRouter;
-

@@ -1,11 +1,11 @@
 /**
  * Automated test for Stage D (Auth + Favorites)
- * 
+ *
  * Requires:
  * - Node 18+ (native fetch)
  * - Server running on PORT (default 3001)
  * - JWT_SECRET set in server/.env
- * 
+ *
  * Usage: npm run test:stage-d
  */
 
@@ -161,22 +161,20 @@ async function main() {
     console.log('   Skipping exercise favorites test.');
   } else {
     exerciseId = exercises[0].id;
-    console.log(
-      `   ✓ Found ${exercises.length} exercises, using first: ${exercises[0].title}`
-    );
+    console.log(`   ✓ Found ${exercises.length} exercises, using first: ${exercises[0].title}`);
   }
 
   // Add product to favorites + VALIDATE
   if (productId) {
     console.log('');
     console.log('6️⃣  Adding product to favorites...');
-    
+
     // Get initial count
     const initialProducts = await apiFetch('/api/favorites/products', {
       headers: { Authorization: `Bearer ${token}` },
     });
     const initialCount = initialProducts.length;
-    
+
     // Add to favorites (ID in URL with proper encoding)
     const encodedProductId = encodeURIComponent(productId);
     await apiFetch(`/api/favorites/products/${encodedProductId}`, {
@@ -184,15 +182,15 @@ async function main() {
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log('   ✓ Product add request sent');
-    
+
     // Verify it was actually added (robust validation)
     const updatedProducts = await apiFetch('/api/favorites/products', {
       headers: { Authorization: `Bearer ${token}` },
     });
-    
+
     const productExists = findProductInFavorites(updatedProducts, productId);
     const countValid = updatedProducts.length >= initialCount;
-    
+
     if (!productExists || !countValid) {
       console.error('');
       console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
@@ -208,21 +206,23 @@ async function main() {
       console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
       process.exit(1);
     }
-    
-    console.log(`   ✓ VALIDATED: Product added (count: ${initialCount} → ${updatedProducts.length})`);
+
+    console.log(
+      `   ✓ VALIDATED: Product added (count: ${initialCount} → ${updatedProducts.length})`,
+    );
   }
 
   // Add exercise to favorites + VALIDATE
   if (exerciseId) {
     console.log('');
     console.log('7️⃣  Adding exercise to favorites...');
-    
+
     // Get initial count
     const initialExercises = await apiFetch('/api/favorites/exercises', {
       headers: { Authorization: `Bearer ${token}` },
     });
     const initialCount = initialExercises.length;
-    
+
     // Add to favorites (ID in URL with proper encoding)
     const encodedExerciseId = encodeURIComponent(exerciseId);
     await apiFetch(`/api/favorites/exercises/${encodedExerciseId}`, {
@@ -230,15 +230,15 @@ async function main() {
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log('   ✓ Exercise add request sent');
-    
+
     // Verify it was actually added (robust validation)
     const updatedExercises = await apiFetch('/api/favorites/exercises', {
       headers: { Authorization: `Bearer ${token}` },
     });
-    
+
     const exerciseExists = findExerciseInFavorites(updatedExercises, exerciseId);
     const countValid = updatedExercises.length >= initialCount;
-    
+
     if (!exerciseExists || !countValid) {
       console.error('');
       console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
@@ -254,8 +254,10 @@ async function main() {
       console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
       process.exit(1);
     }
-    
-    console.log(`   ✓ VALIDATED: Exercise added (count: ${initialCount} → ${updatedExercises.length})`);
+
+    console.log(
+      `   ✓ VALIDATED: Exercise added (count: ${initialCount} → ${updatedExercises.length})`,
+    );
   }
 
   // Final verification - get all favorites
@@ -267,7 +269,7 @@ async function main() {
   const finalExercises = await apiFetch('/api/favorites/exercises', {
     headers: { Authorization: `Bearer ${token}` },
   });
-  
+
   console.log(`   ✓ Total favorite products: ${finalProducts.length}`);
   if (finalProducts.length > 0) {
     const titles = finalProducts
@@ -275,7 +277,7 @@ async function main() {
       .join(', ');
     console.log('     Items:', titles);
   }
-  
+
   console.log(`   ✓ Total favorite exercises: ${finalExercises.length}`);
   if (finalExercises.length > 0) {
     const titles = finalExercises

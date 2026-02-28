@@ -51,14 +51,7 @@ function createExercisesRouter(prisma) {
 
   // POST /api/exercises -> створити вправу (мінімальна валідація)
   router.post('/', async (req, res) => {
-    const {
-      title,
-      category,
-      calories,
-      muscleGroup,
-      level,
-      videoUrl,
-    } = req.body || {};
+    const { title, category, calories, muscleGroup, level, videoUrl } = req.body || {};
 
     if (!title || typeof title !== 'string') {
       return res.status(400).json({
@@ -101,4 +94,3 @@ function createExercisesRouter(prisma) {
 }
 
 module.exports = createExercisesRouter;
-

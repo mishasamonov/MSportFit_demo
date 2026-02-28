@@ -6,7 +6,12 @@ module.exports = {
     sourceType: 'module',
     ecmaFeatures: { jsx: true },
   },
-  settings: { react: { version: 'detect' } },
+  settings: {
+    react: { version: 'detect' },
+    'import/resolver': {
+      node: { extensions: ['.js', '.jsx'] },
+    },
+  },
   plugins: ['react', 'react-hooks', 'import', 'jsx-a11y', 'prettier'],
   extends: [
     'eslint:recommended',

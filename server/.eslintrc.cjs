@@ -17,4 +17,14 @@ module.exports = {
     'n/no-unpublished-require': 'off',
   },
   ignorePatterns: ['node_modules', 'prisma', 'coverage'],
+  overrides: [
+    {
+      files: ['scripts/**/*.js'],
+      rules: {
+        'n/no-process-exit': 'off',
+        'n/no-unsupported-features/node-builtins': 'off',
+        'security/detect-non-literal-fs-filename': 'off',
+      },
+    },
+  ],
 };

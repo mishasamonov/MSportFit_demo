@@ -1,88 +1,84 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
 const TABS = {
   TDEE: 'tdee',
   BMI: 'bmi',
   MACRO: 'macro',
-}
+};
 
 function Calculators() {
-  const [activeTab, setActiveTab] = useState(TABS.BMI)
+  const [activeTab, setActiveTab] = useState(TABS.BMI);
 
   // TDEE state
-  const [sex, setSex] = useState('male')
-  const [age, setAge] = useState('')
-  const [height, setHeight] = useState('')
-  const [weight, setWeight] = useState('')
-  const [activity, setActivity] = useState('1.55')
-  const [tdeeError, setTdeeError] = useState(null)
-  const [bmrResult, setBmrResult] = useState(null)
+  const [sex, setSex] = useState('male');
+  const [age, setAge] = useState('');
+  const [height, setHeight] = useState('');
+  const [weight, setWeight] = useState('');
+  const [activity, setActivity] = useState('1.55');
+  const [tdeeError, setTdeeError] = useState(null);
+  const [bmrResult, setBmrResult] = useState(null);
 
   // BMI state
-  const [bmiHeight, setBmiHeight] = useState('')
-  const [bmiWeight, setBmiWeight] = useState('')
-  const [bmiError, setBmiError] = useState(null)
-  const [bmiResult, setBmiResult] = useState(null)
-  const [bmiCategory, setBmiCategory] = useState(null)
+  const [bmiHeight, setBmiHeight] = useState('');
+  const [bmiWeight, setBmiWeight] = useState('');
+  const [bmiError, setBmiError] = useState(null);
+  const [bmiResult, setBmiResult] = useState(null);
+  const [bmiCategory, setBmiCategory] = useState(null);
 
   // Macro state
-  const [macroWeight, setMacroWeight] = useState('')
-  const [macroCalories, setMacroCalories] = useState('')
-  const [macroGoal, setMacroGoal] = useState('maintain')
-  const [proteinPerKg, setProteinPerKg] = useState('1.8')
-  const [fatPerKg, setFatPerKg] = useState('0.8')
-  const [macroError, setMacroError] = useState(null)
-  const [macroResult, setMacroResult] = useState(null)
+  const [macroWeight, setMacroWeight] = useState('');
+  const [macroCalories, setMacroCalories] = useState('');
+  const [macroGoal, setMacroGoal] = useState('maintain');
+  const [proteinPerKg, setProteinPerKg] = useState('1.8');
+  const [fatPerKg, setFatPerKg] = useState('0.8');
+  const [macroError, setMacroError] = useState(null);
+  const [macroResult, setMacroResult] = useState(null);
 
   const parsePositive = (value) => {
-    const n = Number(value)
-    return Number.isFinite(n) && n > 0 ? n : null
-  }
+    const n = Number(value);
+    return Number.isFinite(n) && n > 0 ? n : null;
+  };
 
   const validateRange = (value, min, max, fieldName) => {
     if (value < min || value > max) {
-      return `${fieldName} має бути в діапазоні ${min}–${max}`
+      return `${fieldName} має бути в діапазоні ${min}–${max}`;
     }
-    return null
-  }
+    return null;
+  };
 
   const handleTdeeCalculate = () => {
-    setTdeeError(null)
+    setTdeeError(null);
 
-    const w = parsePositive(weight)
-    const h = parsePositive(height)
-    const a = parsePositive(age)
-    const factor = parsePositive(activity)
+    const w = parsePositive(weight);
+    const h = parsePositive(height);
+    const a = parsePositive(age);
+    const factor = parsePositive(activity);
 
     if (!w || !h || !a || !factor) {
-      setTdeeError('Усі значення мають бути додатними числами')
-      setBmrResult(null)
-      return
+      setTdeeError('Усі значення мають бути додатними числами');
+      setBmrResult(null);
+      return;
     }
 
     // Валідація діапазонів
-    const weightErr = validateRange(w, 30, 250, 'Вага')
-    const heightErr = validateRange(h, 120, 230, 'Зріст')
-    const ageErr = validateRange(a, 10, 90, 'Вік')
+    const weightErr = validateRange(w, 30, 250, 'Вага');
+    const heightErr = validateRange(h, 120, 230, 'Зріст');
+    const ageErr = validateRange(a, 10, 90, 'Вік');
 
     if (weightErr || heightErr || ageErr) {
-      setTdeeError(weightErr || heightErr || ageErr)
-      setBmrResult(null)
-      return
+      setTdeeError(weightErr || heightErr || ageErr);
+      setBmrResult(null);
+      return;
     }
 
-    let bmr =
-      10 * w +
-      6.25 * h -
-      5 * a +
-      (sex === 'male' ? 5 : -161)
+    let bmr = 10 * w + 6.25 * h - 5 * a + (sex === 'male' ? 5 : -161);
 
-    const tdee = bmr * factor
+    const tdee = bmr * factor;
 
-    const bmrRounded = Math.round(bmr)
-    const tdeeRounded = Math.round(tdee)
-    const cutCalories = Math.round(tdee * 0.85) // -15%
-    const bulkCalories = Math.round(tdee * 1.10) // +10%
+    const bmrRounded = Math.round(bmr);
+    const tdeeRounded = Math.round(tdee);
+    const cutCalories = Math.round(tdee * 0.85); // -15%
+    const bulkCalories = Math.round(tdee * 1.1); // +10%
 
     setBmrResult({
       bmr: bmrRounded,
@@ -90,117 +86,117 @@ function Calculators() {
       cut: cutCalories,
       maintain: tdeeRounded,
       bulk: bulkCalories,
-    })
+    });
 
     // Підтягнемо калорії у калькулятор макро залежно від обраної мети
     if (!macroWeight) {
-      setMacroWeight(String(w))
+      setMacroWeight(String(w));
     }
-    updateMacroCaloriesFromGoal(macroGoal, cutCalories, tdeeRounded, bulkCalories)
-  }
+    updateMacroCaloriesFromGoal(macroGoal, cutCalories, tdeeRounded, bulkCalories);
+  };
 
   const updateMacroCaloriesFromGoal = (goal, cutCal, maintainCal, bulkCal) => {
     const goalCalories = {
       cut: cutCal,
       maintain: maintainCal,
       bulk: bulkCal,
-    }
-    setMacroCalories(String(goalCalories[goal] || maintainCal))
-  }
+    };
+    setMacroCalories(String(goalCalories[goal] || maintainCal));
+  };
 
   const handleBmiCalculate = () => {
-    setBmiError(null)
+    setBmiError(null);
 
-    const w = parsePositive(bmiWeight)
-    const h = parsePositive(bmiHeight)
+    const w = parsePositive(bmiWeight);
+    const h = parsePositive(bmiHeight);
 
     if (!w || !h) {
-      setBmiError('Вага та зріст мають бути додатними числами')
-      setBmiResult(null)
-      setBmiCategory(null)
-      return
+      setBmiError('Вага та зріст мають бути додатними числами');
+      setBmiResult(null);
+      setBmiCategory(null);
+      return;
     }
 
     // Валідація діапазонів
-    const weightErr = validateRange(w, 30, 250, 'Вага')
-    const heightErr = validateRange(h, 120, 230, 'Зріст')
+    const weightErr = validateRange(w, 30, 250, 'Вага');
+    const heightErr = validateRange(h, 120, 230, 'Зріст');
 
     if (weightErr || heightErr) {
-      setBmiError(weightErr || heightErr)
-      setBmiResult(null)
-      setBmiCategory(null)
-      return
+      setBmiError(weightErr || heightErr);
+      setBmiResult(null);
+      setBmiCategory(null);
+      return;
     }
 
-    const hMeters = h / 100
-    const bmi = w / (hMeters * hMeters)
-    const bmiRounded = Math.round(bmi * 10) / 10
+    const hMeters = h / 100;
+    const bmi = w / (hMeters * hMeters);
+    const bmiRounded = Math.round(bmi * 10) / 10;
 
-    let category = 'Норма'
+    let category = 'Норма';
     if (bmiRounded < 18.5) {
-      category = 'Недостатня вага'
+      category = 'Недостатня вага';
     } else if (bmiRounded >= 25 && bmiRounded < 30) {
-      category = 'Надлишкова вага'
+      category = 'Надлишкова вага';
     } else if (bmiRounded >= 30) {
-      category = 'Ожиріння'
+      category = 'Ожиріння';
     }
 
-    setBmiResult(bmiRounded)
-    setBmiCategory(category)
-  }
+    setBmiResult(bmiRounded);
+    setBmiCategory(category);
+  };
 
   const handleMacroCalculate = () => {
-    setMacroError(null)
+    setMacroError(null);
 
-    const w = parsePositive(macroWeight)
-    const calories = parsePositive(macroCalories)
-    const proteinKg = parsePositive(proteinPerKg)
-    const fatKg = parsePositive(fatPerKg)
+    const w = parsePositive(macroWeight);
+    const calories = parsePositive(macroCalories);
+    const proteinKg = parsePositive(proteinPerKg);
+    const fatKg = parsePositive(fatPerKg);
 
     if (!w || !calories || !proteinKg || !fatKg) {
-      setMacroError('Усі значення мають бути додатними числами')
-      setMacroResult(null)
-      return
+      setMacroError('Усі значення мають бути додатними числами');
+      setMacroResult(null);
+      return;
     }
 
     // Валідація діапазонів
-    const weightErr = validateRange(w, 30, 250, 'Вага')
-    const caloriesErr = validateRange(calories, 800, 6000, 'Калорії')
+    const weightErr = validateRange(w, 30, 250, 'Вага');
+    const caloriesErr = validateRange(calories, 800, 6000, 'Калорії');
 
     if (weightErr || caloriesErr) {
-      setMacroError(weightErr || caloriesErr)
-      setMacroResult(null)
-      return
+      setMacroError(weightErr || caloriesErr);
+      setMacroResult(null);
+      return;
     }
 
-    const proteinG = w * proteinKg
-    const fatG = w * fatKg
-    const proteinCal = proteinG * 4
-    const fatCal = fatG * 9
-    const carbsCal = Math.max(0, calories - proteinCal - fatCal)
-    const carbsG = carbsCal / 4
+    const proteinG = w * proteinKg;
+    const fatG = w * fatKg;
+    const proteinCal = proteinG * 4;
+    const fatCal = fatG * 9;
+    const carbsCal = Math.max(0, calories - proteinCal - fatCal);
+    const carbsG = carbsCal / 4;
 
     setMacroResult({
       proteinG: Math.round(proteinG * 10) / 10,
       fatG: Math.round(fatG * 10) / 10,
       carbsG: Math.round(carbsG * 10) / 10,
-    })
-  }
+    });
+  };
 
   // Оновлення макросів при зміні мети
   const handleMacroGoalChange = (goal) => {
-    setMacroGoal(goal)
+    setMacroGoal(goal);
 
     // Оновлення дефолтних значень макросів
     const macroDefaults = {
       cut: { protein: '2.0', fat: '0.8' },
       maintain: { protein: '1.8', fat: '0.8' },
       bulk: { protein: '1.8', fat: '1.0' },
-    }
+    };
 
-    const defaults = macroDefaults[goal]
-    setProteinPerKg(defaults.protein)
-    setFatPerKg(defaults.fat)
+    const defaults = macroDefaults[goal];
+    setProteinPerKg(defaults.protein);
+    setFatPerKg(defaults.fat);
 
     // Якщо TDEE вже розраховано, оновлюємо калорії
     if (bmrResult && typeof bmrResult === 'object') {
@@ -208,10 +204,10 @@ function Calculators() {
         cut: bmrResult.cut,
         maintain: bmrResult.maintain,
         bulk: bmrResult.bulk,
-      }
-      setMacroCalories(String(goalCalories[goal] || bmrResult.maintain))
+      };
+      setMacroCalories(String(goalCalories[goal] || bmrResult.maintain));
     }
-  }
+  };
 
   return (
     <div>
@@ -249,8 +245,8 @@ function Calculators() {
           {activeTab === TABS.BMI && (
             <form
               onSubmit={(e) => {
-                e.preventDefault()
-                handleBmiCalculate()
+                e.preventDefault();
+                handleBmiCalculate();
               }}
             >
               <h2>BMI — індекс маси тіла</h2>
@@ -284,8 +280,8 @@ function Calculators() {
           {activeTab === TABS.TDEE && (
             <form
               onSubmit={(e) => {
-                e.preventDefault()
-                handleTdeeCalculate()
+                e.preventDefault();
+                handleTdeeCalculate();
               }}
             >
               <h2>TDEE / добова норма калорій</h2>
@@ -351,18 +347,15 @@ function Calculators() {
           {activeTab === TABS.MACRO && (
             <form
               onSubmit={(e) => {
-                e.preventDefault()
-                handleMacroCalculate()
+                e.preventDefault();
+                handleMacroCalculate();
               }}
             >
               <h2>Макро — білки, жири, вуглеводи</h2>
               <div>
                 <label>
                   Мета
-                  <select
-                    value={macroGoal}
-                    onChange={(e) => handleMacroGoalChange(e.target.value)}
-                  >
+                  <select value={macroGoal} onChange={(e) => handleMacroGoalChange(e.target.value)}>
                     <option value="cut">Схуднення (дефіцит)</option>
                     <option value="maintain">Підтримання ваги</option>
                     <option value="bulk">Набір маси (профіцит)</option>
@@ -449,7 +442,8 @@ function Calculators() {
                     <div
                       style={{
                         padding: '0.25rem 0.5rem',
-                        backgroundColor: bmiCategory === 'Недостатня вага' ? '#fff3cd' : 'transparent',
+                        backgroundColor:
+                          bmiCategory === 'Недостатня вага' ? '#fff3cd' : 'transparent',
                         fontWeight: bmiCategory === 'Недостатня вага' ? 'bold' : 'normal',
                       }}
                     >
@@ -467,7 +461,8 @@ function Calculators() {
                     <div
                       style={{
                         padding: '0.25rem 0.5rem',
-                        backgroundColor: bmiCategory === 'Надлишкова вага' ? '#fff3cd' : 'transparent',
+                        backgroundColor:
+                          bmiCategory === 'Надлишкова вага' ? '#fff3cd' : 'transparent',
                         fontWeight: bmiCategory === 'Надлишкова вага' ? 'bold' : 'normal',
                       }}
                     >
@@ -542,8 +537,7 @@ function Calculators() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Calculators
-
+export default Calculators;

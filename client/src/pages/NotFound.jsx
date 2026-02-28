@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 function NotFound() {
   return (
@@ -7,7 +7,7 @@ function NotFound() {
       <p>Сторінку не знайдено.</p>
       <Link to="/">На головну</Link>
     </div>
-  )
+  );
 }
 
-export default NotFound
+export default NotFound;

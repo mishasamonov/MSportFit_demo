@@ -14,12 +14,12 @@ function signToken(userId) {
   if (!secret) {
     throw Object.assign(
       new Error(
-        'JWT_SECRET is not set. Create server/.env (copy from env.example) and restart server.'
+        'JWT_SECRET is not set. Create server/.env (copy from env.example) and restart server.',
       ),
       {
         name: 'ServerConfigError',
         status: 500,
-      }
+      },
     );
   }
 
@@ -186,4 +186,3 @@ function createAuthRouter(prisma) {
 }
 
 module.exports = createAuthRouter;
-

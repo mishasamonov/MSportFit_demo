@@ -1,38 +1,38 @@
-import { useState } from 'react'
-import { useAuth } from '../context/AuthContext.jsx'
+import { useState } from 'react';
+import { useAuth } from '../context/AuthContext.jsx';
 
 function Register() {
-  const { register } = useAuth()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordRepeat, setPasswordRepeat] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const { register } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordRepeat, setPasswordRepeat] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (event) => {
-    event.preventDefault()
-    setError(null)
+    event.preventDefault();
+    setError(null);
 
     if (password !== passwordRepeat) {
-      setError('Паролі не співпадають')
-      return
+      setError('Паролі не співпадають');
+      return;
     }
 
     if (password.length < 6) {
-      setError('Пароль має містити щонайменше 6 символів')
-      return
+      setError('Пароль має містити щонайменше 6 символів');
+      return;
     }
 
-    setLoading(true)
+    setLoading(true);
 
     try {
-      await register(email, password)
+      await register(email, password);
     } catch (err) {
-      setError(err.message || 'Помилка реєстрації')
+      setError(err.message || 'Помилка реєстрації');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div>
@@ -41,12 +41,7 @@ function Register() {
         <div>
           <label>
             Email
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </label>
         </div>
         <div>
@@ -79,7 +74,7 @@ function Register() {
         </button>
       </form>
     </div>
-  )
+  );
 }
 
-export default Register
+export default Register;

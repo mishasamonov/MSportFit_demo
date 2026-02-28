@@ -26,9 +26,7 @@ function createFavoritesRouter(prisma) {
         orderBy: { createdAt: 'desc' },
       });
 
-      const products = favorites
-        .map((f) => f.product)
-        .filter(Boolean);
+      const products = favorites.map((f) => f.product).filter(Boolean);
 
       return res.json(products);
     } catch (err) {
@@ -115,9 +113,7 @@ function createFavoritesRouter(prisma) {
         orderBy: { createdAt: 'desc' },
       });
 
-      const exercises = favorites
-        .map((f) => f.exercise)
-        .filter(Boolean);
+      const exercises = favorites.map((f) => f.exercise).filter(Boolean);
 
       return res.json(exercises);
     } catch (err) {
@@ -195,4 +191,3 @@ function createFavoritesRouter(prisma) {
 }
 
 module.exports = createFavoritesRouter;
-

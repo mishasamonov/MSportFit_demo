@@ -1,26 +1,26 @@
-import { useState } from 'react'
-import { useAuth } from '../context/AuthContext.jsx'
+import { useState } from 'react';
+import { useAuth } from '../context/AuthContext.jsx';
 
 function Login() {
-  const { login } = useAuth()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const { login } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (event) => {
-    event.preventDefault()
-    setError(null)
-    setLoading(true)
+    event.preventDefault();
+    setError(null);
+    setLoading(true);
 
     try {
-      await login(email, password)
+      await login(email, password);
     } catch (err) {
-      setError(err.message || 'Помилка авторизації')
+      setError(err.message || 'Помилка авторизації');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div>
@@ -29,12 +29,7 @@ function Login() {
         <div>
           <label>
             Email
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </label>
         </div>
         <div>
@@ -55,7 +50,7 @@ function Login() {
         </button>
       </form>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
