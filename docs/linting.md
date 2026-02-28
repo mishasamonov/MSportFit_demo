@@ -62,14 +62,105 @@ npm run format:check    # перевірка форматування
 npm run typecheck       # перевірка типів (tsc)
 ```
 
+### Запуск з кореня монорепо
+
+```bash
+npm run lint            # ESLint для client + server
+npm run lint:fix        # автовиправлення в обох частинах
+npm run typecheck       # перевірка типів в обох частинах
+npm run check           # lint + typecheck разом
+npm run build           # check + збірка client (Vite)
+```
+
 ## 4. Git hooks
 
-> Планується інтеграція з husky + lint-staged для автоматичного запуску лінтера перед комітом.
+Для автоматичної перевірки коду перед кожним комітом використовується зв'язка **husky + lint-staged**.
 
-## 5. Інтеграція з build
+- **husky** — менеджер Git-хуків, що дозволяє визначати скрипти для `pre-commit`, `pre-push` тощо.
+- **lint-staged** — запускає лінтер лише на файлах, що потрапили до `git add` (staged), що значно пришвидшує перевірку.
 
-> Планується додавання ESLint-перевірки у CI/CD pipeline та в pre-build етап.
+### Як це працює
+
+1. Розробник виконує `git commit`.
+2. Husky перехоплює подію `pre-commit` і запускає `npx lint-staged`.
+3. lint-staged знаходить staged-файли та застосовує правила з кореневого `package.json`:
+   - `client/**/*.{js,jsx}` → `eslint --fix` з конфігурацією клієнта
+   - `server/**/*.{js}` → `eslint --fix` з конфігурацією сервера
+4. Якщо ESLint виявляє помилки, які неможливо автовиправити — коміт блокується.
+
+### Налаштування
+
+Залежності встановлюються в кореневому `package.json`:
+
+```json
+{
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.1"
+  },
+  "lint-staged": {
+    "client/**/*.{js,jsx}": "npm --prefix client exec -- eslint --fix",
+    "server/**/*.{js}": "npm --prefix server exec -- eslint --fix"
+  }
+}
+```
+
+Хук знаходиться у `.husky/pre-commit`:
+
+```bash
+npx lint-staged
+```
+
+## 5. Інтеграція з процесом збірки
+
+Перед збіркою продакшн-бандлу автоматично виконуються всі перевірки якості коду. Це гарантує, що в білд не потраплять файли з помилками лінтера або типів.
+
+Послідовність команд у скрипті `npm run build` (кореневий `package.json`):
+
+```
+npm run build
+  └─ npm run check
+  │    ├─ npm run lint       → ESLint (client + server)
+  │    └─ npm run typecheck  → tsc --noEmit (client + server)
+  └─ npm --prefix client run build  → Vite production build
+```
+
+| Скрипт | Опис |
+|---|---|
+| `npm run check` | Послідовно запускає `lint` + `typecheck` для обох частин |
+| `npm run build` | Виконує `check`, і лише після успіху — збірку Vite |
+
+Якщо будь-який крок завершується з помилкою (exit code ≠ 0), збірка зупиняється.
 
 ## 6. Статична типізація
 
-> Наразі використовується `checkJs` через TypeScript compiler (`tsc`) для базової перевірки типів у `.js`-файлах. У майбутньому планується міграція на `.ts`/`.tsx`.
+Проєкт написаний на JavaScript, але використовує **TypeScript compiler (`tsc`)** у режимі `checkJs` для статичної перевірки типів без міграції на `.ts`/`.tsx`.
+
+### Як це працює
+
+У кожній частині проєкту (client, server) є файл `tsconfig.json` з налаштуванням:
+
+```jsonc
+{
+  "compilerOptions": {
+    "checkJs": true,       // перевіряти .js-файли
+    "allowJs": true,       // дозволити .js
+    "noEmit": true,        // не генерувати вихідних файлів
+    "strict": false        // поступовий перехід — strict вимкнено
+  }
+}
+```
+
+Це дозволяє отримати базові перевірки типів (невірні аргументи, відсутні властивості, невідповідність типів) без переписування коду.
+
+### Запуск
+
+```bash
+npm run typecheck              # з кореня — обидві частини
+npm --prefix client run typecheck  # тільки client
+npm --prefix server run typecheck  # тільки server
+```
+
+Скрипт `typecheck` у кожному під-проєкті виконує `tsc -p tsconfig.json`, що запускає компілятор у режимі перевірки (`--noEmit`).
+
+У майбутньому планується поступова міграція на `.ts`/`.tsx` з увімкненням `strict: true`.
