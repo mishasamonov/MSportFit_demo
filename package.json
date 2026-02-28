@@ -1,0 +1,21 @@
+{
+  "name": "msportfit-demo",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "lint": "npm --prefix client run lint && npm --prefix server run lint",
+    "lint:fix": "npm --prefix client run lint:fix && npm --prefix server run lint:fix",
+    "typecheck": "npm --prefix client run typecheck && npm --prefix server run typecheck",
+    "check": "npm run lint && npm run typecheck",
+    "build": "npm run check && npm --prefix client run build",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.1"
+  },
+  "lint-staged": {
+    "client/**/*.{js,jsx}": "npm --prefix client exec -- eslint --fix",
+    "server/**/*.js": "npm --prefix server exec -- eslint --fix"
+  }
+}
