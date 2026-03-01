@@ -6,6 +6,7 @@ const authMiddleware = require('../middleware/auth');
  * Усі маршрути захищені JWT (authMiddleware).
  *
  * @param {object} prisma - Екземпляр Prisma Client для роботи з базою даних.
+ * @returns {object} Express Router
  */
 function createFavoritesRouter(prisma) {
   const router = express.Router();

@@ -3,6 +3,7 @@ const express = require('express');
 /**
  * Маршрути для продуктів.
  * @param {object} prisma - Екземпляр Prisma Client для роботи з базою даних.
+ * @returns {object} Express Router
  */
 function createProductsRouter(prisma) {
   const router = express.Router();
