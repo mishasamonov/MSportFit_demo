@@ -17,3 +17,6 @@ coverage
 .cache
 client/.vite
 server/dist
+
+docs/site
+docs-site.zip

@@ -2,7 +2,8 @@ const express = require('express');
 
 /**
  * Маршрути для вправ.
- * @param {import('@prisma/client').PrismaClient} prisma
+ * @param {object} prisma - Екземпляр Prisma Client для роботи з базою даних.
+ * @returns {object} Express Router
  */
 function createExercisesRouter(prisma) {
   const router = express.Router();

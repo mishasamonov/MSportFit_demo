@@ -3,8 +3,39 @@ import { useNavigate } from 'react-router-dom';
 import { apiFetch } from '../lib/api';
 import { getToken, setToken as saveToken, clearToken } from '../lib/auth';
 
+/**
+ * Дані користувача, які повертає API.
+ * @typedef {Object} AuthUser
+ * @property {string} id ID користувача (UUID)
+ * @property {string} email Email користувача
+ * @property {string} [createdAt] ISO-рядок дати створення облікового запису
+ */
+
+/**
+ * Значення AuthContext, яке використовується у клієнті.
+ * @typedef {Object} AuthContextValue
+ * @property {AuthUser|null} user Поточний авторизований користувач або null
+ * @property {string|null} token JWT Bearer-токен або null
+ * @property {boolean} isAuthed Ознака авторизації (true якщо є user і token)
+ * @property {boolean} loading Стан завантаження під час початкової перевірки сесії
+ * @property {function(string, string): Promise<void>} login Вхід (email, password)
+ * @property {function(string, string): Promise<void>} register Реєстрація (email, password)
+ * @property {function(): void} logout Вихід (очищає токен та стан)
+ */
+
 const AuthContext = createContext(null);
 
+/**
+ * Провайдер контексту авторизації для застосунку MSportFit.
+ *
+ * При монтуванні перевіряє наявність збереженого JWT-токена і,
+ * якщо він є, завантажує дані поточного користувача через `GET /api/auth/me`.
+ * Надає нащадкам {@link AuthContextValue} через React Context.
+ *
+ * @param {object} props - Пропси компонента.
+ * @param {React.ReactNode} props.children - Дочірні React-елементи.
+ * @returns {React.ReactElement} Провайдер контексту з обгорнутими дочірніми елементами.
+ */
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setTokenState] = useState(() => getToken());
@@ -121,6 +152,22 @@ export function AuthProvider({ children }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
+/**
+ * React-хук для доступу до контексту авторизації.
+ *
+ * Повертає поточний {@link AuthContextValue}: дані користувача, токен,
+ * статус завантаження та методи `login`, `register`, `logout`.
+ *
+ * @returns {AuthContextValue} Значення контексту авторизації.
+ * @throws {Error} Якщо хук викликається поза деревом компонентів, що обгорнуті
+ *   у {@link AuthProvider}.
+ * @example
+ * function ProfileButton() {
+ *   const { user, logout, isAuthed } = useAuth();
+ *   if (!isAuthed) return null;
+ *   return <button onClick={logout}>{user.email}</button>;
+ * }
+ */
 export function useAuth() {
   const ctx = useContext(AuthContext);
   if (!ctx) {

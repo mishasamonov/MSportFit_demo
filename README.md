@@ -194,3 +194,46 @@ echo "Token: $TOKEN"
 curl http://localhost:3001/api/auth/me \
   -H "Authorization: Bearer $TOKEN"
 ```
+
+---
+
+## Документування коду (Lab 5)
+
+### Стандарт
+
+Проєкт використовує **JSDoc** для документування JS/JSX-коду на клієнті (React/Vite) та сервері (Node.js/Express).
+
+### Що документується
+
+Обов'язково документуються всі **публічні та експортовані інтерфейси**:
+
+- утиліти (`client/src/lib/`) — функції роботи з токеном, API-обгортки;
+- React-хуки та контексти (`client/src/context/`) — `AuthProvider`, `useAuth`, typedef-и;
+- Express-middleware (`server/src/middleware/`) — перевірка JWT, підготовка `req.user`;
+- фабрики роутерів (`server/src/routes/`) — опис ендпоінтів, параметри, повернені значення.
+
+### Вимоги до JSDoc-блоків
+
+| Елемент | Обов'язкові теги |
+|---------|-----------------|
+| Функція / метод | Опис, `@param`, `@returns` |
+| Функція, що кидає помилки | + `@throws` |
+| Публічна утиліта / хук | + `@example` |
+| Складний об'єкт / структура | `@typedef` з `@property` |
+
+### Як згенерувати документацію
+
+Детальна інструкція: [`docs/generate_docs.md`](docs/generate_docs.md).
+
+```bash
+# Виконується з кореня репозиторію
+npm run docs:build
+```
+
+Результат: `docs/site/` — HTML-сайт із документацією (відкрийте `docs/site/index.html`).
+
+> **Примітка:** директорія `docs/site/` додана до `.gitignore` і **не комітиться**.  
+> Для здачі заархівуйте її у zip (PowerShell):
+> ```powershell
+> Compress-Archive -Path docs/site/* -DestinationPath docs-site.zip -Force
+> ```

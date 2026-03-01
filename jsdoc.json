@@ -1,0 +1,17 @@
+{
+  "source": {
+    "include": ["client/src", "server/src", "server/scripts"],
+    "includePattern": ".+\\.(js|jsx)$",
+    "excludePattern": "(node_modules|dist|build)"
+  },
+  "plugins": ["plugins/markdown"],
+  "opts": {
+    "destination": "docs/site",
+    "recurse": true,
+    "encoding": "utf8"
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  }
+}
