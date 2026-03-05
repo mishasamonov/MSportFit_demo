@@ -4,38 +4,81 @@ require('dotenv').config();
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
 
+const logger = require('./utils/logger');
+const { requestContext, requestLogger } = require('./middleware/requestContext');
+const errorHandler = require('./middleware/errorHandler');
+
 const productsRoutesFactory = require('./routes/products');
 const exercisesRoutesFactory = require('./routes/exercises');
 const authRoutesFactory = require('./routes/auth');
 const favoritesRoutesFactory = require('./routes/favorites');
 
-// Перевірка наявності JWT_SECRET при старті
-if (!process.env.JWT_SECRET || process.env.JWT_SECRET.trim() === '') {
-  console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-  console.error('❌ ПОМИЛКА КОНФІГУРАЦІЇ: JWT_SECRET не налаштовано!');
-  console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-  console.error('');
-  console.error('Для роботи авторизації потрібен JWT_SECRET.');
-  console.error('');
-  console.error('Кроки виправлення:');
-  console.error('  1. Скопіюйте server/env.example → server/.env');
-  console.error('  2. Встановіть JWT_SECRET (довгий випадковий рядок)');
-  console.error('  3. Перезапустіть сервер');
-  console.error('');
-  console.error('Приклад: JWT_SECRET=my_super_secret_key_12345');
-  console.error('');
-  console.error('Сервер продовжує роботу, але /api/auth/* повертатимуть помилку.');
-  console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-  console.error('');
-} else {
-  console.log('✓ Auth config OK: JWT_SECRET налаштовано');
+// --- Process-level error handlers ---
+
+function onUncaughtException(err) {
+  logger.error('uncaughtException — процес завершується', {
+    module: 'process',
+    critical: true,
+    errMessage: err.message,
+    stack: err.stack,
+  });
+  process.removeListener('uncaughtException', onUncaughtException);
+  process.exitCode = 1;
+  throw err;
 }
 
+process.on('uncaughtException', onUncaughtException);
+
+process.on('unhandledRejection', (reason) => {
+  logger.error('unhandledRejection', {
+    module: 'process',
+    reason: reason instanceof Error ? reason.message : String(reason),
+    stack: reason instanceof Error ? reason.stack : undefined,
+  });
+});
+
+// --- JWT_SECRET validation ---
+
+if (!process.env.JWT_SECRET || process.env.JWT_SECRET.trim() === '') {
+  logger.error('JWT_SECRET не налаштовано — /api/auth/* повертатимуть помилку', {
+    module: 'config',
+    critical: true,
+    hint: 'Скопіюйте server/env.example → server/.env і встановіть JWT_SECRET',
+  });
+} else {
+  logger.info('Auth config OK: JWT_SECRET налаштовано', { module: 'config' });
+}
+
+// --- Prisma ---
+
+const prisma = new PrismaClient({
+  log: [
+    { emit: 'event', level: 'query' },
+    { emit: 'event', level: 'warn' },
+    { emit: 'event', level: 'error' },
+  ],
+});
+
+prisma.$on('query', (e) => {
+  logger.debug('Prisma query', { module: 'prisma', query: e.query, duration: e.duration });
+});
+
+prisma.$on('warn', (e) => {
+  logger.warn('Prisma warn', { module: 'prisma', message: e.message });
+});
+
+prisma.$on('error', (e) => {
+  logger.error('Prisma error', { module: 'prisma', message: e.message });
+});
+
+// --- Express app ---
+
 const app = express();
-const prisma = new PrismaClient();
 const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
+app.use(requestContext);
+app.use(requestLogger);
 
 app.get('/api/health', (req, res) => {
   res.json({ ok: true });
@@ -46,19 +89,16 @@ app.use('/api/exercises', exercisesRoutesFactory(prisma));
 app.use('/api/auth', authRoutesFactory(prisma));
 app.use('/api/favorites', favoritesRoutesFactory(prisma));
 
-// Fallback JSON error handler (safety net)
-// Note: most Prisma errors are handled directly in route handlers.
-// This ensures we always return JSON and never crash the server.
-// eslint-disable-next-line no-unused-vars
-app.use((err, req, res, next) => {
-  console.error('Unhandled error:', err);
-  const status = err.status && Number.isInteger(err.status) ? err.status : 500;
-  res.status(status).json({
-    error: err.name || 'InternalServerError',
-    message: err.message || 'Something went wrong',
-  });
+// 404 — передаємо у errorHandler
+app.use((req, res, next) => {
+  const err = new Error(`Маршрут не знайдено: ${req.method} ${req.originalUrl}`);
+  /** @type {any} */ (err).status = 404;
+  next(err);
 });
 
+// Глобальний обробник помилок
+app.use(errorHandler);
+
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  logger.info(`Сервер запущено на порту ${PORT}`, { module: 'server', port: PORT });
 });
