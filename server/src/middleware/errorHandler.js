@@ -2,13 +2,14 @@
 
 const { randomUUID } = require('crypto');
 const logger = require('../utils/logger');
+const { detectLang, getErrorText } = require('../i18n/errors');
 
 const isDev = process.env.NODE_ENV !== 'production';
 
 /**
  * Express error-handling middleware (4 аргументи — обовʼязково).
  *
- * Генерує унікальний errorId, формує безпечну відповідь JSON,
+ * Генерує унікальний errorId, формує безпечну локалізовану відповідь JSON,
  * логує деталі помилки з контекстом запиту.
  *
  * @param {Error} err
@@ -26,12 +27,8 @@ function errorHandler(err, req, res, _next) {
 
   const errorName = status === 404 ? 'NotFound' : err.name || 'InternalServerError';
 
-  const userMessage =
-    status === 404
-      ? 'Ресурс не знайдено'
-      : status >= 400 && status < 500
-        ? err.message || 'Некоректний запит'
-        : 'Внутрішня помилка сервера. Спробуйте пізніше';
+  const lang = detectLang(req.headers['accept-language']);
+  const { message, action } = getErrorText(status, lang);
 
   const log = anyReq.log || logger.child({ module: 'http' });
 
@@ -50,7 +47,7 @@ function errorHandler(err, req, res, _next) {
     stack: err.stack,
   });
 
-  const body = { errorId, error: errorName, message: userMessage };
+  const body = { errorId, error: errorName, message, action };
 
   if (isDev) {
     body.debug = { message: err.message, stack: err.stack };
