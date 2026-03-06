@@ -22,3 +22,45 @@
 .layout__main {
   padding: 1.5rem;
 }
+
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1.5rem;
+  text-align: center;
+}
+
+.not-found__code {
+  font-size: 6rem;
+  font-weight: 700;
+  color: #ccc;
+  line-height: 1;
+}
+
+.not-found__title {
+  margin: 0.5rem 0 1rem;
+  font-size: 1.6rem;
+  color: #333;
+}
+
+.not-found__hint {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.not-found__btn {
+  padding: 0.6rem 1.4rem;
+  background: #333;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.not-found__btn:hover {
+  background: #555;
+}
