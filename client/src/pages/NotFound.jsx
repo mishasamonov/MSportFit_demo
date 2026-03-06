@@ -12,9 +12,17 @@ function NotFound() {
         <br />
         Скористайтеся навігацією або поверніться на головну.
       </p>
-      <button className="not-found__btn" onClick={() => navigate('/')}>
-        На головну
-      </button>
+      <div className="not-found__actions">
+        <button className="not-found__btn" onClick={() => navigate('/')}>
+          На головну
+        </button>
+        <button
+          className="not-found__btn not-found__btn--secondary"
+          onClick={() => navigate('/report')}
+        >
+          Повідомити про проблему
+        </button>
+      </div>
     </div>
   );
 }
