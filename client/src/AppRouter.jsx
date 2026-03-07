@@ -12,6 +12,7 @@ import Register from './pages/Register';
 import Favorites from './pages/Favorites';
 import Calculators from './pages/Calculators';
 import NotFound from './pages/NotFound';
+import ReportIssue from './pages/ReportIssue';
 import { useAuth } from './context/AuthContext.jsx';
 
 function RequireAuth({ children }) {
@@ -50,6 +51,7 @@ function AppRouter() {
             </RequireAuth>
           }
         />
+        <Route path="report" element={<ReportIssue />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

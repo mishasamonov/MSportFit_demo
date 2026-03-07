@@ -7,6 +7,9 @@ build
 server/.env
 
 *.log
+logs/
+server/logs/
+*.audit.json
 
 .DS_Store
 .vscode
