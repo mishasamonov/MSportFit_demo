@@ -34,8 +34,9 @@ function requestContext(req, res, next) {
 }
 
 /**
- * Middleware: логує завершення відповіді.
+ * Middleware: логує завершення відповіді з метриками профілювання.
  * Рівень: 5xx → error, 4xx → warn, решта → info.
+ * Метрики: method, url, statusCode, durationMs, heapMemDelta.
  *
  * @param {import('express').Request} req
  * @param {import('express').Response} res
@@ -44,12 +45,21 @@ function requestContext(req, res, next) {
 function requestLogger(req, res, next) {
   const anyReq = /** @type {any} */ (req);
   const startedAt = Date.now();
+  const heapBefore = process.memoryUsage().heapUsed;
 
   res.on('finish', () => {
     const durationMs = Date.now() - startedAt;
+    const heapAfter = process.memoryUsage().heapUsed;
+    const heapMemDelta = heapAfter - heapBefore;
     const { statusCode } = res;
 
-    const meta = { statusCode, durationMs };
+    const meta = {
+      method: req.method,
+      url: req.originalUrl,
+      statusCode,
+      durationMs,
+      heapMemDelta,
+    };
     const log = anyReq.log || logger.child({ module: 'http' });
 
     if (statusCode >= 500) {

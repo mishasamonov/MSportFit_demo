@@ -5,9 +5,12 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "node src/index.js",
+    "start:cpu-prof": "node scripts/run-prof.js cpu",
+    "start:heap-prof": "node scripts/run-prof.js heap",
     "create-env": "node scripts/create-env.js",
     "seed": "node scripts/seed.js",
     "test:stage-d": "node scripts/test-stage-d.js",
+    "benchmark": "node scripts/benchmark.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
