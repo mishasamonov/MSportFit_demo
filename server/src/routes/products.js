@@ -1,4 +1,7 @@
 const express = require('express');
+const cache = require('../utils/cache');
+
+const CACHE_KEY = 'products:all';
 
 /**
  * Маршрути для продуктів.
@@ -10,10 +13,14 @@ function createProductsRouter(prisma) {
 
   // GET /api/products -> список продуктів (масив, як у Stage B)
   router.get('/', async (req, res) => {
+    const cached = cache.get(CACHE_KEY);
+    if (cached) return res.json(cached);
+
     try {
       const products = await prisma.product.findMany({
         orderBy: { createdAt: 'desc' },
       });
+      cache.set(CACHE_KEY, products);
       res.json(products);
     } catch (err) {
       console.error('GET /api/products error:', err);
@@ -95,6 +102,7 @@ function createProductsRouter(prisma) {
         },
       });
 
+      cache.del(CACHE_KEY);
       res.status(201).json(product);
     } catch (err) {
       console.error('POST /api/products error:', err);

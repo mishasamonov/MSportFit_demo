@@ -1,4 +1,7 @@
 const express = require('express');
+const cache = require('../utils/cache');
+
+const CACHE_KEY = 'exercises:all';
 
 /**
  * Маршрути для вправ.
@@ -10,10 +13,14 @@ function createExercisesRouter(prisma) {
 
   // GET /api/exercises -> список вправ
   router.get('/', async (req, res) => {
+    const cached = cache.get(CACHE_KEY);
+    if (cached) return res.json(cached);
+
     try {
       const exercises = await prisma.exercise.findMany({
         orderBy: { createdAt: 'desc' },
       });
+      cache.set(CACHE_KEY, exercises);
       res.json(exercises);
     } catch (err) {
       console.error('GET /api/exercises error:', err);
@@ -80,6 +87,7 @@ function createExercisesRouter(prisma) {
         },
       });
 
+      cache.del(CACHE_KEY);
       res.status(201).json(exercise);
     } catch (err) {
       console.error('POST /api/exercises error:', err);
