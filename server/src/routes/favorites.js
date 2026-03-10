@@ -21,9 +21,7 @@ function createFavoritesRouter(prisma) {
     try {
       const favorites = await prisma.favorite.findMany({
         where: { userId: req.user.id },
-        include: {
-          product: true,
-        },
+        select: { product: true },
         orderBy: { createdAt: 'desc' },
       });
 
@@ -108,9 +106,7 @@ function createFavoritesRouter(prisma) {
     try {
       const favorites = await prisma.exerciseFavorite.findMany({
         where: { userId: req.user.id },
-        include: {
-          exercise: true,
-        },
+        select: { exercise: true },
         orderBy: { createdAt: 'desc' },
       });
 

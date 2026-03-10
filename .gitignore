@@ -18,6 +18,8 @@ server/logs/
 
 coverage
 .cache
+server/profiles/
+
 client/.vite
 server/dist
 
