@@ -8,6 +8,7 @@ const productsRoutesFactory = require('./routes/products');
 const exercisesRoutesFactory = require('./routes/exercises');
 const authRoutesFactory = require('./routes/auth');
 const favoritesRoutesFactory = require('./routes/favorites');
+const programsRoutesFactory = require('./routes/programs');
 
 // Перевірка наявності JWT_SECRET при старті
 if (!process.env.JWT_SECRET || process.env.JWT_SECRET.trim() === '') {
@@ -45,6 +46,7 @@ app.use('/api/products', productsRoutesFactory(prisma));
 app.use('/api/exercises', exercisesRoutesFactory(prisma));
 app.use('/api/auth', authRoutesFactory(prisma));
 app.use('/api/favorites', favoritesRoutesFactory(prisma));
+app.use('/api/programs', programsRoutesFactory(prisma));
 
 // Fallback JSON error handler (safety net)
 // Note: most Prisma errors are handled directly in route handlers.
