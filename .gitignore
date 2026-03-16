@@ -17,3 +17,14 @@ coverage
 .cache
 client/.vite
 server/dist
+
+
+# generated docs
+docs/site/
+docs-site.zip
+
+# logs
+server/logs/
+
+# optional (якщо десь випадково згенерувалося)
+*.log
