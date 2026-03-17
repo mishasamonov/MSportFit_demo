@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { apiFetch } from '../../lib/api'
+import { mapGoal, mapLevel } from './programsHelpers'
+
+const metaBadgeStyle = {
+  color: '#888',
+  fontSize: '0.9em',
+}
 
 function ProgramsList() {
   const [programs, setPrograms] = useState([])
@@ -65,9 +71,8 @@ function ProgramsList() {
             <li key={program.id}>
               <h2>{program.title}</h2>
               <p>{program.description}</p>
-              <p>
-                Мета: {program.goal} | Рівень: {program.level} | Тривалість:{' '}
-                {program.weeks} тижн.
+              <p style={metaBadgeStyle}>
+                {mapGoal(program.goal)} &bull; {mapLevel(program.level)} &bull; {program.weeks} тижн.
               </p>
               <Link to={`/programs/${program.slug}`}>Детальніше</Link>
             </li>

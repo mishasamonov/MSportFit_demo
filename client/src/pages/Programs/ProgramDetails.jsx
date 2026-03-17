@@ -1,22 +1,59 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { apiFetch } from '../../lib/api'
+import { formatMeta, getScheduleOptions } from './programsHelpers'
 
 const DAY_OPTIONS = ['2', '3', '4']
+
+const exerciseBlockStyle = {
+  border: '1px solid #ccc',
+  borderRadius: '4px',
+  padding: '8px 12px',
+  marginBottom: '8px',
+}
+
+const mutedStyle = {
+  color: '#888',
+  fontSize: '0.9em',
+}
+
+function ExerciseName({ ex }) {
+  if (ex.slug) {
+    return (
+      <Link to={`/exercises/${ex.slug}`}>
+        <strong>{ex.name}</strong>
+      </Link>
+    )
+  }
+  return <strong>{ex.name}</strong>
+}
+
+function ExerciseBlock({ ex }) {
+  return (
+    <div style={exerciseBlockStyle}>
+      <div>
+        <ExerciseName ex={ex} />
+      </div>
+      <div>
+        Підходи: {ex.sets} | Повторення: {ex.reps}
+        {ex.restSec ? ` | Відпочинок: ${ex.restSec}с` : ''}
+      </div>
+      {ex.notes ? <div style={mutedStyle}>{ex.notes}</div> : null}
+      {ex.effort ? <div style={mutedStyle}>Інтенсивність: {ex.effort}</div> : null}
+      {ex.alternatives ? <div style={mutedStyle}>Альтернативи: є</div> : null}
+    </div>
+  )
+}
 
 function ExerciseList({ exercises }) {
   if (!Array.isArray(exercises) || exercises.length === 0) return null
 
   return (
-    <ul>
+    <div>
       {exercises.map((ex, idx) => (
-        <li key={idx}>
-          <strong>{ex.name}</strong> — {ex.sets}×{ex.reps}
-          {ex.restSec ? `, відпочинок ${ex.restSec}с` : ''}
-          {ex.notes ? ` (${ex.notes})` : ''}
-        </li>
+        <ExerciseBlock key={idx} ex={ex} />
       ))}
-    </ul>
+    </div>
   )
 }
 
@@ -31,6 +68,23 @@ function DayBlock({ day }) {
   )
 }
 
+function ScheduleHint({ daysPerWeek }) {
+  const options = getScheduleOptions(daysPerWeek)
+  if (options.length === 0) return null
+
+  return (
+    <div style={{ ...mutedStyle, marginTop: '4px' }}>
+      Рекомендований графік:{' '}
+      {options.map((opt, idx) => (
+        <span key={opt}>
+          {idx > 0 ? ' або ' : ''}
+          {opt}
+        </span>
+      ))}
+    </div>
+  )
+}
+
 function VariantDays({ variant, daysPerWeek }) {
   const [week, setWeek] = useState('A')
 
@@ -41,7 +95,7 @@ function VariantDays({ variant, daysPerWeek }) {
       <div>
         {variant.note && (
           <p>
-            <em>{variant.note}</em>
+            <em style={mutedStyle}>{variant.note}</em>
           </p>
         )}
         <div>
@@ -129,9 +183,7 @@ function ProgramDetails() {
     <div>
       <h1>{program.title}</h1>
       <p>{program.description}</p>
-      <p>
-        Мета: {program.goal} | Рівень: {program.level} | Тривалість: {program.weeks} тижн.
-      </p>
+      <p>{formatMeta(program.goal, program.level, program.weeks)}</p>
 
       <div>
         <strong>Тренувань на тиждень:</strong>{' '}
@@ -145,6 +197,7 @@ function ProgramDetails() {
             {opt}
           </button>
         ))}
+        <ScheduleHint daysPerWeek={daysPerWeek} />
       </div>
 
       {currentVariant ? (
