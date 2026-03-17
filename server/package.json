@@ -8,6 +8,7 @@
     "create-env": "node scripts/create-env.js",
     "seed": "node scripts/seed.js",
     "test:stage-d": "node scripts/test-stage-d.js",
+    "test:stage-e": "node scripts/test-stage-e.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
