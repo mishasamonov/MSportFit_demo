@@ -2,7 +2,8 @@ const express = require('express');
 
 /**
  * Маршрути для вправ.
- * @param {import('@prisma/client').PrismaClient} prisma
+ * @param {object} prisma - Екземпляр Prisma Client для роботи з базою даних.
+ * @returns {object} Express Router
  */
 function createExercisesRouter(prisma) {
   const router = express.Router();
@@ -51,14 +52,7 @@ function createExercisesRouter(prisma) {
 
   // POST /api/exercises -> створити вправу (мінімальна валідація)
   router.post('/', async (req, res) => {
-    const {
-      title,
-      category,
-      calories,
-      muscleGroup,
-      level,
-      videoUrl,
-    } = req.body || {};
+    const { title, category, calories, muscleGroup, level, videoUrl } = req.body || {};
 
     if (!title || typeof title !== 'string') {
       return res.status(400).json({
@@ -101,4 +95,3 @@ function createExercisesRouter(prisma) {
 }
 
 module.exports = createExercisesRouter;
-

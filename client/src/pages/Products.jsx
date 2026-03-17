@@ -1,53 +1,53 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Products() {
-  const [products, setProducts] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    let isMounted = true
+    let isMounted = true;
 
     async function loadProducts() {
       try {
-        setLoading(true)
-        setError(null)
+        setLoading(true);
+        setError(null);
 
-        const res = await fetch('/api/products')
+        const res = await fetch('/api/products');
         if (!res.ok) {
-          throw new Error(`Помилка завантаження: ${res.status}`)
+          throw new Error(`Помилка завантаження: ${res.status}`);
         }
 
-        const data = await res.json()
+        const data = await res.json();
         if (isMounted) {
-          setProducts(Array.isArray(data) ? data : data.items || [])
+          setProducts(Array.isArray(data) ? data : data.items || []);
         }
       } catch (err) {
-        console.error('Products fetch error', err)
+        console.error('Products fetch error', err);
         if (isMounted) {
-          setError(err.message || 'Не вдалося завантажити продукти')
+          setError(err.message || 'Не вдалося завантажити продукти');
         }
       } finally {
         if (isMounted) {
-          setLoading(false)
+          setLoading(false);
         }
       }
     }
 
-    loadProducts()
+    loadProducts();
 
     return () => {
-      isMounted = false
-    }
-  }, [])
+      isMounted = false;
+    };
+  }, []);
 
   if (loading) {
-    return <p>Завантаження продуктів...</p>
+    return <p>Завантаження продуктів...</p>;
   }
 
   if (error) {
-    return <p style={{ color: 'red' }}>Помилка: {error}</p>
+    return <p style={{ color: 'red' }}>Помилка: {error}</p>;
   }
 
   if (!products.length) {
@@ -56,7 +56,7 @@ function Products() {
         <h1>Каталог продуктів</h1>
         <p>Поки що немає жодного продукту.</p>
       </div>
-    )
+    );
   }
 
   return (
@@ -71,7 +71,7 @@ function Products() {
         ))}
       </ul>
     </div>
-  )
+  );
 }
 
-export default Products
+export default Products;

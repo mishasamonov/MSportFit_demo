@@ -1,64 +1,64 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { apiFetch } from '../lib/api'
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { apiFetch } from '../lib/api';
 
 function Favorites() {
-  const [products, setProducts] = useState([])
-  const [exercises, setExercises] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [products, setProducts] = useState([]);
+  const [exercises, setExercises] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    let isMounted = true
+    let isMounted = true;
 
     async function loadFavorites() {
       try {
-        setLoading(true)
-        setError(null)
+        setLoading(true);
+        setError(null);
 
         const [productsRes, exercisesRes] = await Promise.all([
           apiFetch('/api/favorites/products'),
           apiFetch('/api/favorites/exercises'),
-        ])
+        ]);
 
         if (!productsRes.ok || !exercisesRes.ok) {
-          throw new Error('Не вдалося завантажити обране')
+          throw new Error('Не вдалося завантажити обране');
         }
 
         const [productsData, exercisesData] = await Promise.all([
           productsRes.json(),
           exercisesRes.json(),
-        ])
+        ]);
 
-        if (!isMounted) return
+        if (!isMounted) return;
 
-        setProducts(Array.isArray(productsData) ? productsData : [])
-        setExercises(Array.isArray(exercisesData) ? exercisesData : [])
+        setProducts(Array.isArray(productsData) ? productsData : []);
+        setExercises(Array.isArray(exercisesData) ? exercisesData : []);
       } catch (err) {
-        console.error('Favorites fetch error', err)
+        console.error('Favorites fetch error', err);
         if (isMounted) {
-          setError(err.message || 'Не вдалося завантажити обране')
+          setError(err.message || 'Не вдалося завантажити обране');
         }
       } finally {
         if (isMounted) {
-          setLoading(false)
+          setLoading(false);
         }
       }
     }
 
-    loadFavorites()
+    loadFavorites();
 
     return () => {
-      isMounted = false
-    }
-  }, [])
+      isMounted = false;
+    };
+  }, []);
 
   if (loading) {
-    return <p>Завантаження обраного...</p>
+    return <p>Завантаження обраного...</p>;
   }
 
   if (error) {
-    return <p style={{ color: 'red' }}>Помилка: {error}</p>
+    return <p style={{ color: 'red' }}>Помилка: {error}</p>;
   }
 
   return (
@@ -97,7 +97,7 @@ function Favorites() {
         )}
       </section>
     </div>
-  )
+  );
 }
 
-export default Favorites
+export default Favorites;

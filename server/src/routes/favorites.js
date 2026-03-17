@@ -5,7 +5,8 @@ const authMiddleware = require('../middleware/auth');
  * Маршрути для обраного (продукти + вправи).
  * Усі маршрути захищені JWT (authMiddleware).
  *
- * @param {import('@prisma/client').PrismaClient} prisma
+ * @param {object} prisma - Екземпляр Prisma Client для роботи з базою даних.
+ * @returns {object} Express Router
  */
 function createFavoritesRouter(prisma) {
   const router = express.Router();
@@ -26,9 +27,7 @@ function createFavoritesRouter(prisma) {
         orderBy: { createdAt: 'desc' },
       });
 
-      const products = favorites
-        .map((f) => f.product)
-        .filter(Boolean);
+      const products = favorites.map((f) => f.product).filter(Boolean);
 
       return res.json(products);
     } catch (err) {
@@ -115,9 +114,7 @@ function createFavoritesRouter(prisma) {
         orderBy: { createdAt: 'desc' },
       });
 
-      const exercises = favorites
-        .map((f) => f.exercise)
-        .filter(Boolean);
+      const exercises = favorites.map((f) => f.exercise).filter(Boolean);
 
       return res.json(exercises);
     } catch (err) {
@@ -195,4 +192,3 @@ function createFavoritesRouter(prisma) {
 }
 
 module.exports = createFavoritesRouter;
-

@@ -1,8 +1,8 @@
-import { Outlet, Link } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext.jsx'
+import { Outlet, Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext.jsx';
 
 function Layout() {
-  const { isAuthed, logout } = useAuth()
+  const { isAuthed, logout } = useAuth();
 
   return (
     <div className="layout">
@@ -31,7 +31,7 @@ function Layout() {
         <Outlet />
       </main>
     </div>
-  )
+  );
 }
 
-export default Layout
+export default Layout;

@@ -7,6 +7,9 @@ build
 server/.env
 
 *.log
+logs/
+server/logs/
+*.audit.json
 
 .DS_Store
 .vscode
@@ -22,9 +25,3 @@ server/dist
 # generated docs
 docs/site/
 docs-site.zip
-
-# logs
-server/logs/
-
-# optional (якщо десь випадково згенерувалося)
-*.log

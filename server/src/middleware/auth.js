@@ -1,10 +1,26 @@
 const jwt = require('jsonwebtoken');
 
 /**
- * JWT middleware.
- * Очікує заголовок Authorization: "Bearer <token>".
- * Якщо токен валідний — встановлює req.user = { id } і викликає next().
- * Якщо ні — повертає 401.
+ * Express-middleware для перевірки JWT Bearer-токена.
+ *
+ * Очікує заголовок запиту у форматі:
+ * ```
+ * Authorization: Bearer <token>
+ * ```
+ *
+ * Поведінка:
+ * - Якщо заголовок відсутній або має невірний формат — повертає `401 Unauthorized`.
+ * - Якщо змінна середовища `JWT_SECRET` не встановлена — повертає `500 ServerConfigError`.
+ * - Якщо токен невалідний або прострочений — повертає `401 Unauthorized`.
+ * - Якщо токен валідний — встановлює `req.user = { id: decoded.sub }` і передає
+ *   управління до наступного middleware через `next()`.
+ *
+ * @param {object} req - Об'єкт запиту Express (Request).
+ *   Після успішної перевірки містить розширену властивість `req.user`.
+ * @param {object} res - Об'єкт відповіді Express (Response).
+ * @param {Function} next - Функція передачі управління (NextFunction)
+ *   наступному middleware або обробнику маршруту.
+ * @returns {void}
  */
 function authMiddleware(req, res, next) {
   const authHeader = req.headers.authorization || req.headers.Authorization;
@@ -57,4 +73,3 @@ function authMiddleware(req, res, next) {
 }
 
 module.exports = authMiddleware;
-

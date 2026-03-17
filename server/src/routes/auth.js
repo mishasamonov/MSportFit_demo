@@ -4,9 +4,19 @@ const jwt = require('jsonwebtoken');
 const authMiddleware = require('../middleware/auth');
 
 /**
- * Хелпер для створення JWT.
- * @param {string} userId
- * @returns {string}
+ * Створює підписаний JWT-токен для вказаного користувача.
+ *
+ * Використовує змінну середовища `JWT_SECRET` як секретний ключ підпису.
+ * Час дії визначається змінною `JWT_EXPIRES_IN` (за замовчуванням `'7d'`).
+ * Поле `sub` у payload містить `userId`.
+ *
+ * @param {string} userId - Унікальний ідентифікатор користувача (UUID).
+ * @returns {string} Підписаний JWT-токен.
+ * @throws {ServerConfigError} Якщо `JWT_SECRET` не встановлено у середовищі.
+ *   Помилка має властивість `status: 500`.
+ * @example
+ * const token = signToken('550e8400-e29b-41d4-a716-446655440000');
+ * // 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
  */
 function signToken(userId) {
   const secret = process.env.JWT_SECRET;
@@ -14,12 +24,12 @@ function signToken(userId) {
   if (!secret) {
     throw Object.assign(
       new Error(
-        'JWT_SECRET is not set. Create server/.env (copy from env.example) and restart server.'
+        'JWT_SECRET is not set. Create server/.env (copy from env.example) and restart server.',
       ),
       {
         name: 'ServerConfigError',
         status: 500,
-      }
+      },
     );
   }
 
@@ -29,8 +39,17 @@ function signToken(userId) {
 }
 
 /**
- * Маршрути авторизації.
- * @param {import('@prisma/client').PrismaClient} prisma
+ * Фабрика Express-роутера для ендпоінтів авторизації.
+ *
+ * Реєструє такі маршрути:
+ * - `POST /register` — реєстрація нового користувача (email + пароль ≥ 6 символів).
+ *   Повертає `201 { token, user: { id, email } }`.
+ * - `POST /login` — вхід у систему. Повертає `200 { token, user: { id, email } }`.
+ * - `GET  /me` *(protected)* — повертає профіль поточного користувача
+ *   `{ id, email, createdAt }`. Вимагає валідного Bearer-токена.
+ *
+ * @param {object} prisma - Екземпляр Prisma Client для роботи з базою даних.
+ * @returns {object} Налаштований Express Router.
  */
 function createAuthRouter(prisma) {
   const router = express.Router();
@@ -186,4 +205,3 @@ function createAuthRouter(prisma) {
 }
 
 module.exports = createAuthRouter;
-

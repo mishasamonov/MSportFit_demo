@@ -4,7 +4,7 @@ function Faq() {
       <h1>FAQ</h1>
       <p>Placeholder — питання та відповіді.</p>
     </div>
-  )
+  );
 }
 
-export default Faq
+export default Faq;

@@ -1,0 +1,4 @@
+node_modules
+prisma
+coverage
+.eslintrc.cjs
