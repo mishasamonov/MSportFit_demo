@@ -81,99 +81,118 @@ async function seedExercises() {
 }
 
 // ─── Program helpers ────────────────────────────────────────────────────────
+// Upper = Груди + Спина + Плечі
+// Lower = Ноги + Руки (біцепс і трицепс)
 
 const upperABulk = [
-  { name: 'Жим штанги лежачи',               sets: 4, reps: '6-10',  restSec: 120, notes: '' },
-  { name: 'Тяга штанги в нахилі',             sets: 4, reps: '6-10',  restSec: 120, notes: '' },
-  { name: 'Жим гантелей над головою',          sets: 3, reps: '8-10',  restSec: 90,  notes: '' },
-  { name: 'Підтягування широким хватом',       sets: 3, reps: '6-10',  restSec: 90,  notes: 'Якщо потрібно — з гумою' },
-  { name: 'Розгинання рук на брусах',          sets: 3, reps: '8-12',  restSec: 90,  notes: '' },
+  { name: 'Жим штанги лежачи',               sets: 4, reps: '6-8',   restSec: 150, notes: 'Груди — основна вправа',       effort: 'Останній підхід: RIR 0-1' },
+  { name: 'Тяга штанги в нахилі',             sets: 4, reps: '6-8',   restSec: 150, notes: 'Спина — основна вправа',       effort: 'RIR 1-2' },
+  { name: 'Підтягування широким хватом',       sets: 3, reps: '6-10',  restSec: 90,  notes: 'Якщо потрібно — з гумою',     effort: 'RIR 1-2' },
+  { name: 'Жим штанги стоячи над головою',     sets: 3, reps: '6-8',   restSec: 120, notes: 'Плечі — основна вправа',      effort: 'RIR 1-2' },
+  { name: 'Розведення гантелей через сторони', sets: 3, reps: '12-15', restSec: 60,  notes: 'Середня дельта',               effort: 'RIR 1' },
+  { name: 'Зворотні розведення в нахилі',      sets: 3, reps: '12-15', restSec: 60,  notes: 'Задня дельта — аксесуар',     effort: 'RIR 1' },
 ];
 
 const upperBBulk = [
-  { name: 'Жим гантелей на похилій лаві',     sets: 4, reps: '8-10',  restSec: 90,  notes: '' },
-  { name: 'Тяга гантелі однією рукою',         sets: 4, reps: '8-10',  restSec: 90,  notes: '' },
-  { name: 'Тяга верхнього блоку за голову',    sets: 3, reps: '8-12',  restSec: 90,  notes: '' },
-  { name: 'Розведення гантелей на дельти',     sets: 3, reps: '10-12', restSec: 60,  notes: '' },
-  { name: 'Підйом гантелей на біцепс',         sets: 3, reps: '10-12', restSec: 60,  notes: '' },
+  { name: 'Жим гантелей на похилій лаві',     sets: 4, reps: '8-10',  restSec: 90,  notes: 'Груди — верхня частина',      effort: 'RIR 1-2' },
+  { name: 'Тяга гантелі однією рукою',         sets: 4, reps: '8-10',  restSec: 90,  notes: 'Спина — аксесуар',            effort: 'RIR 1-2' },
+  { name: 'Тяга верхнього блоку вузьким хватом', sets: 3, reps: '8-12', restSec: 90, notes: 'Спина / широчайші',           effort: 'RIR 1-2' },
+  { name: 'Жим Арнольда сидячи',              sets: 3, reps: '8-10',  restSec: 90,  notes: 'Плечі — варіативний жим',     effort: 'RIR 1-2' },
+  { name: 'Розведення гантелей через сторони', sets: 3, reps: '12-15', restSec: 60,  notes: 'Середня дельта — аксесуар',  effort: 'RIR 1' },
 ];
 
 const lowerABulk = [
-  { name: 'Присідання зі штангою на спині',   sets: 4, reps: '6-10',  restSec: 120, notes: '' },
-  { name: 'Румунська тяга зі штангою',         sets: 3, reps: '8-10',  restSec: 90,  notes: '' },
-  { name: 'Жим ногами в тренажері',            sets: 3, reps: '10-12', restSec: 90,  notes: '' },
-  { name: 'Підйоми на носки стоячи',           sets: 4, reps: '12-15', restSec: 60,  notes: '' },
-  { name: 'Скручування на прес',               sets: 3, reps: '15-20', restSec: 60,  notes: '' },
+  { name: 'Присідання зі штангою на спині',   sets: 4, reps: '6-8',   restSec: 180, notes: 'Ноги — основна вправа',       effort: 'Останній підхід: RIR 0-1' },
+  { name: 'Румунська тяга зі штангою',         sets: 3, reps: '8-10',  restSec: 120, notes: 'Ноги / сідниці',              effort: 'RIR 1-2' },
+  { name: 'Жим ногами в тренажері',            sets: 3, reps: '10-12', restSec: 90,  notes: 'Ноги — аксесуар',            effort: 'RIR 1-2' },
+  { name: 'Підйоми на носки стоячи',           sets: 4, reps: '12-15', restSec: 60,  notes: 'Литкові',                    effort: 'RIR 1' },
+  { name: 'Скручування на прес',               sets: 3, reps: '15-20', restSec: 60,  notes: 'Прес — аксесуар',            effort: 'RIR 1' },
+  { name: 'Підйом штанги на біцепс',           sets: 3, reps: '8-12',  restSec: 60,  notes: 'Руки — біцепс',              effort: 'RIR 1-2' },
+  { name: 'Розгинання рук на брусах',          sets: 3, reps: '8-12',  restSec: 60,  notes: 'Руки — трицепс',             effort: 'RIR 1-2' },
 ];
 
 const lowerBBulk = [
-  { name: 'Фронтальне присідання',             sets: 4, reps: '6-10',  restSec: 120, notes: 'Або гобле-присідання' },
-  { name: 'Мертва тяга',                       sets: 3, reps: '5-8',   restSec: 120, notes: '' },
-  { name: 'Випади зі штангою',                 sets: 3, reps: '10/н',  restSec: 90,  notes: '' },
-  { name: 'Згинання ніг лежачи',               sets: 3, reps: '10-12', restSec: 60,  notes: '' },
-  { name: 'Планка',                            sets: 3, reps: '40-60с', restSec: 60, notes: '' },
+  { name: 'Фронтальне присідання',             sets: 4, reps: '6-8',   restSec: 180, notes: 'Або гобле-присідання',       effort: 'RIR 1-2' },
+  { name: 'Румунська тяга на одній нозі',       sets: 3, reps: '8-10/н', restSec: 90, notes: 'Ноги / сідниці — баланс',   effort: 'RIR 1-2' },
+  { name: 'Жим ногами вузькою постановкою',     sets: 3, reps: '10-12', restSec: 90,  notes: 'Акцент на квадрицепс',      effort: 'RIR 1-2' },
+  { name: 'Підйоми на носки сидячи',           sets: 4, reps: '15-20', restSec: 60,  notes: 'Камбалоподібний м\'яз',     effort: 'RIR 1' },
+  { name: 'Планка',                            sets: 3, reps: '45-60с', restSec: 60, notes: 'Прес — статика',            effort: 'Утримуй максимально рівно' },
+  { name: 'Молоткові згинання з гантелями',    sets: 3, reps: '10-12', restSec: 60,  notes: 'Руки — біцепс + плечопром.',effort: 'RIR 1-2' },
+  { name: 'Французький жим зі штангою',        sets: 3, reps: '8-12',  restSec: 60,  notes: 'Руки — трицепс',             effort: 'RIR 1-2' },
 ];
 
 const upperACut = [
-  { name: 'Віджимання від підлоги',            sets: 3, reps: '12-15', restSec: 60,  notes: '' },
-  { name: 'Тяга гантелі в нахилі',             sets: 3, reps: '12-15', restSec: 60,  notes: '' },
-  { name: 'Жим гантелей над головою сидячи',   sets: 3, reps: '12-15', restSec: 60,  notes: '' },
-  { name: 'Тяга верхнього блоку',              sets: 3, reps: '12-15', restSec: 60,  notes: '' },
-  { name: 'Розгинання рук на блоці',           sets: 3, reps: '12-15', restSec: 60,  notes: '' },
+  { name: 'Жим гантелей лежачи',               sets: 3, reps: '12-15', restSec: 60,  notes: 'Груди — основна вправа',    effort: 'RIR 1-2' },
+  { name: 'Тяга горизонтального блоку',         sets: 3, reps: '12-15', restSec: 60,  notes: 'Спина — сидячи',           effort: 'RIR 1-2' },
+  { name: 'Тяга верхнього блоку широким хватом',sets: 3, reps: '12-15', restSec: 60,  notes: 'Спина / широчайні',        effort: 'RIR 1-2' },
+  { name: 'Жим гантелей над головою сидячи',    sets: 3, reps: '12-15', restSec: 60,  notes: 'Плечі — основна вправа',   effort: 'RIR 1-2' },
+  { name: 'Розведення гантелей через сторони',  sets: 3, reps: '15-20', restSec: 45,  notes: 'Середня дельта',           effort: 'RIR 1' },
 ];
 
 const upperBCut = [
-  { name: 'Піке-віджимання',                   sets: 3, reps: '10-12', restSec: 60,  notes: '' },
-  { name: 'Тяга горизонтального блоку',        sets: 3, reps: '12-15', restSec: 60,  notes: '' },
-  { name: 'Австралійські підтягування',        sets: 3, reps: '10-15', restSec: 60,  notes: 'Або підтягування з гумою' },
-  { name: 'Підйом гантелей через сторони',     sets: 3, reps: '15-20', restSec: 45,  notes: '' },
-  { name: 'Підйом гантелей на біцепс',         sets: 3, reps: '12-15', restSec: 60,  notes: '' },
+  { name: 'Жим гантелей на похилій лаві',       sets: 3, reps: '12-15', restSec: 60,  notes: 'Груди — верхня частина',   effort: 'RIR 1-2' },
+  { name: 'Тяга гантелі в нахилі',              sets: 3, reps: '12-15', restSec: 60,  notes: 'Спина — аксесуар',         effort: 'RIR 1-2' },
+  { name: 'Австралійські підтягування',          sets: 3, reps: '10-15', restSec: 60,  notes: 'Або підтягування з гумою', effort: 'RIR 1-2' },
+  { name: 'Жим Арнольда сидячи',                sets: 3, reps: '12-15', restSec: 60,  notes: 'Плечі — варіативний жим',  effort: 'RIR 1-2' },
+  { name: 'Підйом гантелей через сторони',       sets: 3, reps: '15-20', restSec: 45,  notes: 'Середня дельта — аксесуар',effort: 'RIR 1' },
 ];
 
 const lowerACut = [
-  { name: 'Гобле-присідання',                  sets: 3, reps: '12-15', restSec: 60,  notes: '' },
-  { name: 'Випади в ходьбі',                   sets: 3, reps: '12/н',  restSec: 60,  notes: '' },
-  { name: 'Ягодичний міст з гантеллю',         sets: 3, reps: '15-20', restSec: 60,  notes: '' },
-  { name: 'Зашагування на платформу',          sets: 3, reps: '12/н',  restSec: 60,  notes: '' },
-  { name: 'Скалолаз',                          sets: 3, reps: '30с',   restSec: 45,  notes: '' },
+  { name: 'Гобле-присідання',                   sets: 3, reps: '12-15', restSec: 60,  notes: 'Ноги — основна вправа',    effort: 'RIR 1-2' },
+  { name: 'Румунська тяга з гантелями',          sets: 3, reps: '12-15', restSec: 60,  notes: 'Ноги / сідниці',           effort: 'RIR 1-2' },
+  { name: 'Жим ногами в тренажері',              sets: 3, reps: '12-15', restSec: 60,  notes: 'Ноги — аксесуар',          effort: 'RIR 1-2' },
+  { name: 'Підйоми на носки стоячи',             sets: 3, reps: '20-25', restSec: 45,  notes: 'Литкові',                  effort: 'RIR 1' },
+  { name: 'Скручування на прес',                 sets: 3, reps: '15-20', restSec: 45,  notes: 'Прес — аксесуар',          effort: 'RIR 1' },
+  { name: 'Підйом гантелей на біцепс',           sets: 3, reps: '12-15', restSec: 45,  notes: 'Руки — біцепс',            effort: 'RIR 1-2' },
+  { name: 'Розгинання рук на блоці',             sets: 3, reps: '12-15', restSec: 45,  notes: 'Руки — трицепс',           effort: 'RIR 1-2' },
 ];
 
 const lowerBCut = [
-  { name: 'Сумо-присідання',                   sets: 3, reps: '12-15', restSec: 60,  notes: '' },
-  { name: 'Румунська тяга з гантелями',         sets: 3, reps: '12-15', restSec: 60,  notes: '' },
-  { name: 'Стрибки на ящик',                   sets: 3, reps: '8-10',  restSec: 90,  notes: 'Або швидкі присідання' },
-  { name: 'Підйоми на носки сидячи',           sets: 3, reps: '20-25', restSec: 45,  notes: '' },
-  { name: 'Планка з підніманням руки',          sets: 3, reps: '20-30с/ст', restSec: 60, notes: '' },
+  { name: 'Сумо-присідання з гантеллю',          sets: 3, reps: '12-15', restSec: 60,  notes: 'Ноги / внутрішня частина стегна', effort: 'RIR 1-2' },
+  { name: 'Румунська тяга на одній нозі',         sets: 3, reps: '12/н',  restSec: 60,  notes: 'Ноги / сідниці — баланс',  effort: 'RIR 1-2' },
+  { name: 'Зашагування на платформу',             sets: 3, reps: '12/н',  restSec: 60,  notes: 'Ноги — аксесуар',          effort: 'RIR 1-2' },
+  { name: 'Підйоми на носки сидячи',              sets: 3, reps: '20-25', restSec: 45,  notes: 'Камбалоподібний м\'яз',    effort: 'RIR 1' },
+  { name: 'Планка',                               sets: 3, reps: '30-45с', restSec: 45, notes: 'Прес — статика',           effort: 'Утримуй максимально рівно' },
+  { name: 'Молоткові згинання з гантелями',       sets: 3, reps: '12-15', restSec: 45,  notes: 'Руки — біцепс + плечопром.',effort: 'RIR 1-2' },
+  { name: 'Відтягування верхнього блоку',         sets: 3, reps: '12-15', restSec: 45,  notes: 'Руки — трицепс',           effort: 'RIR 1-2' },
 ];
 
-function buildDays(upperA, lowerA, upperB, lowerB) {
-  return {
-    variants: {
-      '2': [
-        { day: 1, title: 'Верх', exercises: upperA },
-        { day: 2, title: 'Низ',  exercises: lowerA },
+const cardioGuidelinesCut = {
+  stepsPerDay:      '8–12 тис. кроків щодня',
+  sessionsPerWeek:  '2–4 рази/тиждень',
+  sessionDuration:  '20–40 хв',
+  intensity:        'помірна (зона 2)',
+  note:             'Кардіо роби після силового або в окремі дні',
+};
+
+function buildDays(upperA, lowerA, upperB, lowerB, cardioGuidelines) {
+  const variants = {
+    '2': [
+      { day: 1, title: 'Верх (Груди + Спина + Плечі)', exercises: upperA },
+      { day: 2, title: 'Низ (Ноги + Руки)',             exercises: lowerA },
+    ],
+    '3': {
+      note: 'Чергуй тижні A/B',
+      weekA: [
+        { day: 1, title: 'Верх А (Груди + Спина + Плечі)', exercises: upperA },
+        { day: 2, title: 'Низ А (Ноги + Руки)',             exercises: lowerA },
+        { day: 3, title: 'Верх Б (Груди + Спина + Плечі)', exercises: upperB },
       ],
-      '3': {
-        note: 'Чергуй тижні A/B',
-        weekA: [
-          { day: 1, title: 'Верх А',  exercises: upperA },
-          { day: 2, title: 'Низ А',   exercises: lowerA },
-          { day: 3, title: 'Верх Б',  exercises: upperB },
-        ],
-        weekB: [
-          { day: 1, title: 'Низ А',   exercises: lowerA },
-          { day: 2, title: 'Верх Б',  exercises: upperB },
-          { day: 3, title: 'Низ Б',   exercises: lowerB },
-        ],
-      },
-      '4': [
-        { day: 1, title: 'Верх А',  exercises: upperA },
-        { day: 2, title: 'Низ А',   exercises: lowerA },
-        { day: 3, title: 'Верх Б',  exercises: upperB },
-        { day: 4, title: 'Низ Б',   exercises: lowerB },
+      weekB: [
+        { day: 1, title: 'Низ А (Ноги + Руки)',             exercises: lowerA },
+        { day: 2, title: 'Верх Б (Груди + Спина + Плечі)', exercises: upperB },
+        { day: 3, title: 'Низ Б (Ноги + Руки)',             exercises: lowerB },
       ],
     },
+    '4': [
+      { day: 1, title: 'Верх А (Груди + Спина + Плечі)', exercises: upperA },
+      { day: 2, title: 'Низ А (Ноги + Руки)',             exercises: lowerA },
+      { day: 3, title: 'Верх Б (Груди + Спина + Плечі)', exercises: upperB },
+      { day: 4, title: 'Низ Б (Ноги + Руки)',             exercises: lowerB },
+    ],
   };
+
+  return cardioGuidelines ? { variants, cardioGuidelines } : { variants };
 }
 
 async function seedPrograms() {
@@ -201,7 +220,7 @@ async function seedPrograms() {
         goal:        'CUT',
         level:       'BEGINNER',
         weeks:       8,
-        days:        buildDays(upperACut, lowerACut, upperBCut, lowerBCut),
+        days:        buildDays(upperACut, lowerACut, upperBCut, lowerBCut, cardioGuidelinesCut),
       },
     ],
   });
