@@ -6,7 +6,8 @@ import ProductDetails from './pages/ProductDetails'
 import Exercises from './pages/Exercises'
 import ExerciseDetails from './pages/ExerciseDetails'
 import Faq from './pages/Faq'
-import Programs from './pages/Programs'
+import ProgramsList from './pages/Programs/ProgramsList'
+import ProgramDetails from './pages/Programs/ProgramDetails'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Favorites from './pages/Favorites'
@@ -38,7 +39,22 @@ function AppRouter() {
         <Route path="exercises" element={<Exercises />} />
         <Route path="exercises/:id" element={<ExerciseDetails />} />
         <Route path="faq" element={<Faq />} />
-        <Route path="programs" element={<Programs />} />
+        <Route
+          path="programs"
+          element={
+            <RequireAuth>
+              <ProgramsList />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="programs/:id"
+          element={
+            <RequireAuth>
+              <ProgramDetails />
+            </RequireAuth>
+          }
+        />
         <Route path="calculators" element={<Calculators />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
