@@ -12,6 +12,7 @@ const productsRoutesFactory = require('./routes/products');
 const exercisesRoutesFactory = require('./routes/exercises');
 const authRoutesFactory = require('./routes/auth');
 const favoritesRoutesFactory = require('./routes/favorites');
+const programsRoutesFactory = require('./routes/programs');
 const supportRouter = require('./routes/support');
 
 // --- Process-level error handlers ---
@@ -89,6 +90,7 @@ app.use('/api/products', productsRoutesFactory(prisma));
 app.use('/api/exercises', exercisesRoutesFactory(prisma));
 app.use('/api/auth', authRoutesFactory(prisma));
 app.use('/api/favorites', favoritesRoutesFactory(prisma));
+app.use('/api/programs', programsRoutesFactory(prisma));
 app.use('/api/support', supportRouter);
 
 // 404 — передаємо у errorHandler

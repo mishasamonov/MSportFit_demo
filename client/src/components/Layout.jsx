@@ -14,6 +14,7 @@ function Layout() {
         <Link to="/calculators">Калькулятори</Link>
         {isAuthed ? (
           <>
+            <Link to="/programs">Програми</Link>
             <Link to="/favorites">Обране</Link>
             <button type="button" onClick={logout}>
               Вийти

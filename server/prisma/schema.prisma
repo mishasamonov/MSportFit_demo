@@ -66,3 +66,27 @@ model ExerciseFavorite {
   @@index([userId])
   @@index([exerciseId])
 }
+
+enum ProgramGoal {
+  BULK
+  CUT
+}
+
+enum ProgramLevel {
+  BEGINNER
+  INTERMEDIATE
+}
+
+model Program {
+  id          String       @id @default(cuid())
+  slug        String       @unique
+  title       String
+  description String
+  goal        ProgramGoal
+  level       ProgramLevel
+  weeks       Int
+  days        Json
+  isActive    Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
