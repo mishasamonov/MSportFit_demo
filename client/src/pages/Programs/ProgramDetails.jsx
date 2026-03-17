@@ -68,6 +68,21 @@ function DayBlock({ day }) {
   )
 }
 
+function CardioGuidelinesBlock({ cardio }) {
+  if (!cardio) return null
+
+  return (
+    <div style={{ ...exerciseBlockStyle, marginTop: '16px' }}>
+      <strong>Кардіо (рекомендації)</strong>
+      <div>Кроки: {cardio.stepsPerDay}</div>
+      <div>Сесії: {cardio.sessionsPerWeek}</div>
+      <div>Тривалість: {cardio.sessionDuration}</div>
+      <div>Інтенсивність: {cardio.intensity}</div>
+      {cardio.note ? <div style={mutedStyle}>Примітка: {cardio.note}</div> : null}
+    </div>
+  )
+}
+
 function ScheduleHint({ daysPerWeek }) {
   const options = getScheduleOptions(daysPerWeek)
   if (options.length === 0) return null
@@ -178,6 +193,7 @@ function ProgramDetails() {
   if (!program) return null
 
   const currentVariant = program.days?.variants?.[daysPerWeek]
+  const cardio = program?.days?.cardioGuidelines
 
   return (
     <div>
@@ -199,6 +215,8 @@ function ProgramDetails() {
         ))}
         <ScheduleHint daysPerWeek={daysPerWeek} />
       </div>
+
+      <CardioGuidelinesBlock cardio={cardio} />
 
       {currentVariant ? (
         <VariantDays key={daysPerWeek} variant={currentVariant} daysPerWeek={daysPerWeek} />
