@@ -3,6 +3,46 @@ import { useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { apiFetch } from '../lib/api';
 
+const sectionStyle = {
+  marginTop: '24px',
+};
+
+const subSectionStyle = {
+  marginTop: '12px',
+};
+
+const ALTERNATIVES_MAP = {
+  home: 'Вдома',
+  outdoor: 'На вулиці / турнік / бруси',
+  band: 'З резиною',
+};
+
+function AlternativesSection({ alternatives }) {
+  if (!alternatives || typeof alternatives !== 'object') return null;
+
+  const entries = Object.entries(ALTERNATIVES_MAP).filter(
+    ([key]) => Array.isArray(alternatives[key]) && alternatives[key].length > 0,
+  );
+
+  if (entries.length === 0) return null;
+
+  return (
+    <div style={sectionStyle}>
+      <h3>Альтернативи</h3>
+      {entries.map(([key, label]) => (
+        <div key={key} style={subSectionStyle}>
+          <strong>{label}</strong>
+          <ul>
+            {alternatives[key].map((item, idx) => (
+              <li key={idx}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function ExerciseDetails() {
   const { id } = useParams();
   const { isAuthed } = useAuth();
@@ -116,18 +156,11 @@ function ExerciseDetails() {
 
   return (
     <div>
-      <h1>Деталі вправи</h1>
-      <p>
-        <strong>Назва:</strong> {exercise.title}
-      </p>
+      {/* A. Header / meta */}
+      <h1>{exercise.title}</h1>
       {exercise.category && (
         <p>
           <strong>Категорія:</strong> {exercise.category}
-        </p>
-      )}
-      {typeof exercise.calories === 'number' && (
-        <p>
-          <strong>Орієнтовні калорії:</strong> {exercise.calories}
         </p>
       )}
       {exercise.muscleGroup && (
@@ -140,15 +173,13 @@ function ExerciseDetails() {
           <strong>Рівень:</strong> {exercise.level}
         </p>
       )}
-      {exercise.videoUrl && (
+      {typeof exercise.calories === 'number' && (
         <p>
-          <strong>Відео:</strong>{' '}
-          <a href={exercise.videoUrl} target="_blank" rel="noreferrer">
-            Відкрити відео
-          </a>
+          <strong>Орієнтовні калорії:</strong> {exercise.calories}
         </p>
       )}
 
+      {/* Favorite toggle */}
       {!isAuthed ? (
         <p>Увійдіть, щоб додавати вправу в обране.</p>
       ) : (
@@ -156,6 +187,63 @@ function ExerciseDetails() {
           {isFavorite ? 'Видалити з обраного' : 'Додати в обране'}
         </button>
       )}
+
+      {/* B. Description */}
+      {exercise.description && (
+        <div style={sectionStyle}>
+          <h3>Опис</h3>
+          <p>{exercise.description}</p>
+        </div>
+      )}
+
+      {/* C. Video */}
+      {exercise.videoUrl && (
+        <div style={sectionStyle}>
+          <h3>Відео</h3>
+          <a href={exercise.videoUrl} target="_blank" rel="noreferrer">
+            Відкрити відео
+          </a>
+        </div>
+      )}
+
+      {/* D. Steps */}
+      {Array.isArray(exercise.steps) && exercise.steps.length > 0 && (
+        <div style={sectionStyle}>
+          <h3>Покрокове виконання</h3>
+          <ol>
+            {exercise.steps.map((step, idx) => (
+              <li key={idx}>{step}</li>
+            ))}
+          </ol>
+        </div>
+      )}
+
+      {/* E. Tips */}
+      {Array.isArray(exercise.tips) && exercise.tips.length > 0 && (
+        <div style={sectionStyle}>
+          <h3>Важливі поради</h3>
+          <ul>
+            {exercise.tips.map((tip, idx) => (
+              <li key={idx}>{tip}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* F. Mistakes */}
+      {Array.isArray(exercise.mistakes) && exercise.mistakes.length > 0 && (
+        <div style={sectionStyle}>
+          <h3>Поширені помилки</h3>
+          <ul>
+            {exercise.mistakes.map((mistake, idx) => (
+              <li key={idx}>{mistake}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* G. Alternatives */}
+      <AlternativesSection alternatives={exercise.alternatives} />
     </div>
   );
 }
