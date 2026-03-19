@@ -95,7 +95,7 @@ function ExerciseDetails() {
     let isMounted = true;
 
     async function loadFavoriteState() {
-      if (!isAuthed) {
+      if (!isAuthed || !exercise) {
         setIsFavorite(false);
         return;
       }
@@ -109,7 +109,7 @@ function ExerciseDetails() {
         if (!Array.isArray(data)) return;
 
         if (isMounted) {
-          setIsFavorite(data.some((e) => e.id === id));
+          setIsFavorite(data.some((e) => e.id === exercise.id));
         }
       } catch (err) {
         console.error('Exercise favorite state error', err);
@@ -121,7 +121,7 @@ function ExerciseDetails() {
     return () => {
       isMounted = false;
     };
-  }, [id, isAuthed]);
+  }, [exercise, isAuthed]);
 
   const handleToggleFavorite = async () => {
     if (!exercise || !isAuthed || favoriteLoading) return;
@@ -129,7 +129,7 @@ function ExerciseDetails() {
     setFavoriteLoading(true);
     try {
       const method = isFavorite ? 'DELETE' : 'POST';
-      const res = await apiFetch(`/api/favorites/exercises/${id}`, { method });
+      const res = await apiFetch(`/api/favorites/exercises/${exercise.id}`, { method });
       if (!res.ok) {
         throw new Error('Не вдалося оновити обране');
       }
