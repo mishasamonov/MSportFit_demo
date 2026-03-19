@@ -51,28 +51,103 @@ async function seedExercises() {
   await prisma.exercise.createMany({
     data: [
       {
+        slug: 'bodyweight-squat',
         title: 'Присідання з власною вагою',
         category: 'Ноги',
         calories: 100,
         muscleGroup: 'Quadriceps, Glutes',
         level: 'Beginner',
         videoUrl: 'https://www.youtube.com/watch?v=aclHkVaku9U',
+        description:
+          "Базова вправа для ніг та сідниць з власною вагою тіла. Розвиває квадрицепси, сідниці та м'язи-стабілізатори. Підходить для новачків і домашніх тренувань.",
+        steps: [
+          'Встань прямо, ноги на ширині плечей, носки злегка розвернуті назовні.',
+          'На вдиху починай згинати коліна, відводячи таз назад і вниз.',
+          'Опускайся до паралелі стегон з підлогою або нижче.',
+          'Коліна тримай над носками, спину — рівною, грудну клітку — розкритою.',
+          "На видиху відштовхнись п'ятами та повернись у вихідне положення.",
+        ],
+        tips: [
+          "Тримай п'яти на підлозі протягом усього руху.",
+          'Дивись прямо перед собою, щоб не округлювати спину.',
+          "Для глибшого присідання пробуй підкласти під п'яти тонкий підйом.",
+        ],
+        mistakes: [
+          "Відривання п'ят від підлоги.",
+          'Округлення попереку в нижній точці.',
+          'Завалювання колін всередину при підйомі.',
+        ],
+        alternatives: {
+          home: ['Болгарське присідання на одній нозі', 'Присідання з пульсом'],
+          outdoor: ['Присідання на лавці в парку', 'Стрибкові присідання'],
+          band: ['Присідання з гумовою стрічкою на стегнах', 'Бічні кроки з гумою'],
+        },
       },
       {
+        slug: 'push-up',
         title: 'Віджимання від підлоги',
         category: 'Груди',
         calories: 80,
         muscleGroup: 'Chest, Triceps',
         level: 'Beginner',
         videoUrl: 'https://www.youtube.com/watch?v=IODxDxX7oi4',
+        description:
+          'Класична вправа для верхньої частини тіла, що залучає груди, трицепси та плечі. Не потребує обладнання і може виконуватись будь-де.',
+        steps: [
+          "Прийми упор лежачи: долоні на ширині плечей, тіло — пряма лінія від голови до п'ят.",
+          'На вдиху згинай руки в ліктях, опускаючи груди до підлоги.',
+          'Лікті повинні йти назад під кутом 45°, а не розходитись в сторони.',
+          'Торкнись грудьми підлоги або зупинись за 2–3 см до неї.',
+          'На видиху відштовхнись долонями і повернись у вихідне положення.',
+        ],
+        tips: [
+          'Напружуй прес і сідниці для стабільності тіла.',
+          "Постав долоні трохи ширше плечей для зменшення навантаження на зап'ястя.",
+          'Починай з віджимань з колін, якщо повні важкі.',
+        ],
+        mistakes: [
+          'Провисання таза або підняття сідниць вгору.',
+          'Постановка ліктів під кутом 90° до тіла — це навантажує плечовий суглоб.',
+          'Неповний діапазон руху — груди мають торкатись або майже торкатись підлоги.',
+        ],
+        alternatives: {
+          home: ['Алмазні віджимання (акцент на трицепс)', 'Широкі віджимання (акцент на груди)'],
+          outdoor: ['Віджимання від лавки', 'Віджимання від бордюру'],
+          band: ['Жим з гумовою стрічкою стоячи', 'Зведення рук з гумою'],
+        },
       },
       {
+        slug: 'plank',
         title: 'Планка',
         category: 'Кор',
         calories: 60,
         muscleGroup: 'Core',
         level: 'Intermediate',
         videoUrl: 'https://www.youtube.com/watch?v=BQu26ABuVS0',
+        description:
+          'Статична вправа для зміцнення кору, що утримує тіло в горизонтальному положенні. Залучає прес, спину, плечі та сідниці одночасно.',
+        steps: [
+          'Прийми упор на передпліччях: лікті під плечима, долоні паралельні.',
+          "Підніми тіло на носках, тримаючи пряму лінію від голови до п'ят.",
+          'Напружуй прес, стягуючи пупок до хребта.',
+          'Не допускай провисання таза або підняття сідниць.',
+          'Утримуй положення від 20 секунд і поступово збільшуй час.',
+        ],
+        tips: [
+          'Дивись у підлогу між руками, щоб не перенапружувати шию.',
+          'Дихай рівно — не затримуй дихання.',
+          'Стисни кулаки для кращої стабілізації плечового поясу.',
+        ],
+        mistakes: [
+          'Прогин у попереку — таз не повинен провисати.',
+          'Підняття сідниць вгору — тіло має бути рівним.',
+          'Затримка дихання протягом усього часу виконання.',
+        ],
+        alternatives: {
+          home: ['Бічна планка', 'Планка з підйомом руки/ноги'],
+          outdoor: ['Планка на лавці', 'Планка на піску'],
+          band: ['Планка з відведенням ноги з гумою', 'Планка з тягою гуми однією рукою'],
+        },
       },
     ],
   });
@@ -87,6 +162,7 @@ async function seedExercises() {
 const upperABulk = [
   {
     name: 'Жим штанги лежачи',
+    exerciseSlug: 'barbell-bench-press',
     sets: 4,
     reps: '6-8',
     restSec: 150,
@@ -95,6 +171,7 @@ const upperABulk = [
   },
   {
     name: 'Тяга штанги в нахилі',
+    exerciseSlug: 'barbell-row',
     sets: 4,
     reps: '6-8',
     restSec: 150,
@@ -103,6 +180,7 @@ const upperABulk = [
   },
   {
     name: 'Підтягування широким хватом',
+    exerciseSlug: 'wide-grip-pull-up',
     sets: 3,
     reps: '6-10',
     restSec: 90,
@@ -111,6 +189,7 @@ const upperABulk = [
   },
   {
     name: 'Жим штанги стоячи над головою',
+    exerciseSlug: 'barbell-overhead-press',
     sets: 3,
     reps: '6-8',
     restSec: 120,
@@ -119,6 +198,7 @@ const upperABulk = [
   },
   {
     name: 'Розведення гантелей через сторони',
+    exerciseSlug: 'dumbbell-lateral-raise',
     sets: 3,
     reps: '12-15',
     restSec: 60,
@@ -127,6 +207,7 @@ const upperABulk = [
   },
   {
     name: 'Зворотні розведення в нахилі',
+    exerciseSlug: 'reverse-fly',
     sets: 3,
     reps: '12-15',
     restSec: 60,
@@ -138,6 +219,7 @@ const upperABulk = [
 const upperBBulk = [
   {
     name: 'Жим гантелей на похилій лаві',
+    exerciseSlug: 'incline-dumbbell-press',
     sets: 4,
     reps: '8-10',
     restSec: 90,
@@ -146,6 +228,7 @@ const upperBBulk = [
   },
   {
     name: 'Тяга гантелі однією рукою',
+    exerciseSlug: 'single-arm-dumbbell-row',
     sets: 4,
     reps: '8-10',
     restSec: 90,
@@ -154,6 +237,7 @@ const upperBBulk = [
   },
   {
     name: 'Тяга верхнього блоку вузьким хватом',
+    exerciseSlug: 'close-grip-lat-pulldown',
     sets: 3,
     reps: '8-12',
     restSec: 90,
@@ -162,6 +246,7 @@ const upperBBulk = [
   },
   {
     name: 'Жим Арнольда сидячи',
+    exerciseSlug: 'arnold-press',
     sets: 3,
     reps: '8-10',
     restSec: 90,
@@ -170,6 +255,7 @@ const upperBBulk = [
   },
   {
     name: 'Розведення гантелей через сторони',
+    exerciseSlug: 'dumbbell-lateral-raise',
     sets: 3,
     reps: '12-15',
     restSec: 60,
@@ -181,6 +267,7 @@ const upperBBulk = [
 const lowerABulk = [
   {
     name: 'Присідання зі штангою на спині',
+    exerciseSlug: 'barbell-back-squat',
     sets: 4,
     reps: '6-8',
     restSec: 180,
@@ -189,6 +276,7 @@ const lowerABulk = [
   },
   {
     name: 'Румунська тяга зі штангою',
+    exerciseSlug: 'romanian-deadlift-barbell',
     sets: 3,
     reps: '8-10',
     restSec: 120,
@@ -197,6 +285,7 @@ const lowerABulk = [
   },
   {
     name: 'Жим ногами в тренажері',
+    exerciseSlug: 'leg-press',
     sets: 3,
     reps: '10-12',
     restSec: 90,
@@ -205,6 +294,7 @@ const lowerABulk = [
   },
   {
     name: 'Підйоми на носки стоячи',
+    exerciseSlug: 'standing-calf-raise',
     sets: 4,
     reps: '12-15',
     restSec: 60,
@@ -213,6 +303,7 @@ const lowerABulk = [
   },
   {
     name: 'Скручування на прес',
+    exerciseSlug: 'crunch',
     sets: 3,
     reps: '15-20',
     restSec: 60,
@@ -221,6 +312,7 @@ const lowerABulk = [
   },
   {
     name: 'Підйом штанги на біцепс',
+    exerciseSlug: 'barbell-curl',
     sets: 3,
     reps: '8-12',
     restSec: 60,
@@ -229,6 +321,7 @@ const lowerABulk = [
   },
   {
     name: 'Розгинання рук на брусах',
+    exerciseSlug: 'dip',
     sets: 3,
     reps: '8-12',
     restSec: 60,
@@ -240,6 +333,7 @@ const lowerABulk = [
 const lowerBBulk = [
   {
     name: 'Фронтальне присідання',
+    exerciseSlug: 'front-squat',
     sets: 4,
     reps: '6-8',
     restSec: 180,
@@ -248,6 +342,7 @@ const lowerBBulk = [
   },
   {
     name: 'Румунська тяга на одній нозі',
+    exerciseSlug: 'single-leg-romanian-deadlift',
     sets: 3,
     reps: '8-10/н',
     restSec: 90,
@@ -256,6 +351,7 @@ const lowerBBulk = [
   },
   {
     name: 'Жим ногами вузькою постановкою',
+    exerciseSlug: 'narrow-stance-leg-press',
     sets: 3,
     reps: '10-12',
     restSec: 90,
@@ -264,6 +360,7 @@ const lowerBBulk = [
   },
   {
     name: 'Підйоми на носки сидячи',
+    exerciseSlug: 'seated-calf-raise',
     sets: 4,
     reps: '15-20',
     restSec: 60,
@@ -272,6 +369,7 @@ const lowerBBulk = [
   },
   {
     name: 'Планка',
+    exerciseSlug: 'plank',
     sets: 3,
     reps: '45-60с',
     restSec: 60,
@@ -280,6 +378,7 @@ const lowerBBulk = [
   },
   {
     name: 'Молоткові згинання з гантелями',
+    exerciseSlug: 'hammer-curl',
     sets: 3,
     reps: '10-12',
     restSec: 60,
@@ -288,6 +387,7 @@ const lowerBBulk = [
   },
   {
     name: 'Французький жим зі штангою',
+    exerciseSlug: 'barbell-skull-crusher',
     sets: 3,
     reps: '8-12',
     restSec: 60,
@@ -299,6 +399,7 @@ const lowerBBulk = [
 const upperACut = [
   {
     name: 'Жим гантелей лежачи',
+    exerciseSlug: 'dumbbell-bench-press',
     sets: 3,
     reps: '12-15',
     restSec: 60,
@@ -307,6 +408,7 @@ const upperACut = [
   },
   {
     name: 'Тяга горизонтального блоку',
+    exerciseSlug: 'seated-cable-row',
     sets: 3,
     reps: '12-15',
     restSec: 60,
@@ -315,6 +417,7 @@ const upperACut = [
   },
   {
     name: 'Тяга верхнього блоку широким хватом',
+    exerciseSlug: 'wide-grip-lat-pulldown',
     sets: 3,
     reps: '12-15',
     restSec: 60,
@@ -323,6 +426,7 @@ const upperACut = [
   },
   {
     name: 'Жим гантелей над головою сидячи',
+    exerciseSlug: 'seated-dumbbell-overhead-press',
     sets: 3,
     reps: '12-15',
     restSec: 60,
@@ -331,6 +435,7 @@ const upperACut = [
   },
   {
     name: 'Розведення гантелей через сторони',
+    exerciseSlug: 'dumbbell-lateral-raise',
     sets: 3,
     reps: '15-20',
     restSec: 45,
@@ -342,6 +447,7 @@ const upperACut = [
 const upperBCut = [
   {
     name: 'Жим гантелей на похилій лаві',
+    exerciseSlug: 'incline-dumbbell-press',
     sets: 3,
     reps: '12-15',
     restSec: 60,
@@ -350,6 +456,7 @@ const upperBCut = [
   },
   {
     name: 'Тяга гантелі в нахилі',
+    exerciseSlug: 'dumbbell-row',
     sets: 3,
     reps: '12-15',
     restSec: 60,
@@ -358,6 +465,7 @@ const upperBCut = [
   },
   {
     name: 'Австралійські підтягування',
+    exerciseSlug: 'australian-pull-up',
     sets: 3,
     reps: '10-15',
     restSec: 60,
@@ -366,6 +474,7 @@ const upperBCut = [
   },
   {
     name: 'Жим Арнольда сидячи',
+    exerciseSlug: 'arnold-press',
     sets: 3,
     reps: '12-15',
     restSec: 60,
@@ -374,6 +483,7 @@ const upperBCut = [
   },
   {
     name: 'Підйом гантелей через сторони',
+    exerciseSlug: 'dumbbell-lateral-raise',
     sets: 3,
     reps: '15-20',
     restSec: 45,
@@ -385,6 +495,7 @@ const upperBCut = [
 const lowerACut = [
   {
     name: 'Гобле-присідання',
+    exerciseSlug: 'goblet-squat',
     sets: 3,
     reps: '12-15',
     restSec: 60,
@@ -393,6 +504,7 @@ const lowerACut = [
   },
   {
     name: 'Румунська тяга з гантелями',
+    exerciseSlug: 'romanian-deadlift-dumbbell',
     sets: 3,
     reps: '12-15',
     restSec: 60,
@@ -401,6 +513,7 @@ const lowerACut = [
   },
   {
     name: 'Жим ногами в тренажері',
+    exerciseSlug: 'leg-press',
     sets: 3,
     reps: '12-15',
     restSec: 60,
@@ -409,6 +522,7 @@ const lowerACut = [
   },
   {
     name: 'Підйоми на носки стоячи',
+    exerciseSlug: 'standing-calf-raise',
     sets: 3,
     reps: '20-25',
     restSec: 45,
@@ -417,6 +531,7 @@ const lowerACut = [
   },
   {
     name: 'Скручування на прес',
+    exerciseSlug: 'crunch',
     sets: 3,
     reps: '15-20',
     restSec: 45,
@@ -425,6 +540,7 @@ const lowerACut = [
   },
   {
     name: 'Підйом гантелей на біцепс',
+    exerciseSlug: 'dumbbell-curl',
     sets: 3,
     reps: '12-15',
     restSec: 45,
@@ -433,6 +549,7 @@ const lowerACut = [
   },
   {
     name: 'Розгинання рук на блоці',
+    exerciseSlug: 'cable-tricep-pushdown',
     sets: 3,
     reps: '12-15',
     restSec: 45,
@@ -444,6 +561,7 @@ const lowerACut = [
 const lowerBCut = [
   {
     name: 'Сумо-присідання з гантеллю',
+    exerciseSlug: 'sumo-squat-dumbbell',
     sets: 3,
     reps: '12-15',
     restSec: 60,
@@ -452,6 +570,7 @@ const lowerBCut = [
   },
   {
     name: 'Румунська тяга на одній нозі',
+    exerciseSlug: 'single-leg-romanian-deadlift',
     sets: 3,
     reps: '12/н',
     restSec: 60,
@@ -460,6 +579,7 @@ const lowerBCut = [
   },
   {
     name: 'Зашагування на платформу',
+    exerciseSlug: 'step-up',
     sets: 3,
     reps: '12/н',
     restSec: 60,
@@ -468,6 +588,7 @@ const lowerBCut = [
   },
   {
     name: 'Підйоми на носки сидячи',
+    exerciseSlug: 'seated-calf-raise',
     sets: 3,
     reps: '20-25',
     restSec: 45,
@@ -476,6 +597,7 @@ const lowerBCut = [
   },
   {
     name: 'Планка',
+    exerciseSlug: 'plank',
     sets: 3,
     reps: '30-45с',
     restSec: 45,
@@ -484,6 +606,7 @@ const lowerBCut = [
   },
   {
     name: 'Молоткові згинання з гантелями',
+    exerciseSlug: 'hammer-curl',
     sets: 3,
     reps: '12-15',
     restSec: 45,
@@ -492,6 +615,7 @@ const lowerBCut = [
   },
   {
     name: 'Відтягування верхнього блоку',
+    exerciseSlug: 'cable-tricep-pushdown',
     sets: 3,
     reps: '12-15',
     restSec: 45,

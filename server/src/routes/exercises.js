@@ -24,14 +24,22 @@ function createExercisesRouter(prisma) {
     }
   });
 
-  // GET /api/exercises/:id -> вправа за id
+  // GET /api/exercises/:id -> вправа за id або slug
   router.get('/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
-      const exercise = await prisma.exercise.findUnique({
-        where: { id },
-      });
+      let exercise = null;
+
+      try {
+        exercise = await prisma.exercise.findUnique({ where: { id } });
+      } catch {
+        // param може бути slug, а не UUID — продовжуємо пошук за slug
+      }
+
+      if (!exercise) {
+        exercise = await prisma.exercise.findUnique({ where: { slug: id } });
+      }
 
       if (!exercise) {
         return res.status(404).json({

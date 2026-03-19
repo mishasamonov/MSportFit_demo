@@ -30,12 +30,18 @@ model Product {
 
 model Exercise {
   id              String             @id @default(uuid())
+  slug            String?            @unique
   title           String
   category        String?
   calories        Int?
   muscleGroup     String?
   level           String?
   videoUrl        String?
+  description     String?
+  steps           Json?
+  tips            Json?
+  mistakes        Json?
+  alternatives    Json?
   createdAt       DateTime           @default(now())
   favoritedBy     ExerciseFavorite[]
 }

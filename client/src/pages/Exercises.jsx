@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+const metaStyle = {
+  color: '#666',
+  fontSize: '0.9em',
+};
+
 function Exercises() {
   const [exercises, setExercises] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -65,8 +70,14 @@ function Exercises() {
       <ul>
         {exercises.map((exercise) => (
           <li key={exercise.id}>
-            <Link to={`/exercises/${exercise.id}`}>{exercise.title}</Link>
+            <Link to={`/exercises/${exercise.slug || exercise.id}`}>{exercise.title}</Link>
             {exercise.category && <span> — {exercise.category}</span>}
+            {(exercise.muscleGroup || exercise.level) && (
+              <span style={metaStyle}>
+                {exercise.muscleGroup ? ` · ${exercise.muscleGroup}` : ''}
+                {exercise.level ? ` · ${exercise.level}` : ''}
+              </span>
+            )}
           </li>
         ))}
       </ul>
