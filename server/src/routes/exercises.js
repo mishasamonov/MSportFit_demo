@@ -8,10 +8,33 @@ const express = require('express');
 function createExercisesRouter(prisma) {
   const router = express.Router();
 
-  // GET /api/exercises -> список вправ
+  // GET /api/exercises -> список вправ з опціональними фільтрами
   router.get('/', async (req, res) => {
     try {
+      const { search, muscleGroup, level, equipment } = req.query;
+      const where = {};
+
+      if (search) {
+        where.OR = [
+          { title: { contains: search, mode: 'insensitive' } },
+          { category: { contains: search, mode: 'insensitive' } },
+        ];
+      }
+
+      if (muscleGroup) {
+        where.muscleGroup = { contains: muscleGroup, mode: 'insensitive' };
+      }
+
+      if (level) {
+        where.level = { equals: level, mode: 'insensitive' };
+      }
+
+      if (equipment) {
+        where.equipment = { contains: equipment, mode: 'insensitive' };
+      }
+
       const exercises = await prisma.exercise.findMany({
+        where,
         orderBy: { createdAt: 'desc' },
       });
       res.json(exercises);

@@ -36,6 +36,7 @@ model Exercise {
   calories        Int?
   muscleGroup     String?
   level           String?
+  equipment       String             @default("Без обладнання")
   videoUrl        String?
   description     String?
   steps           Json?
