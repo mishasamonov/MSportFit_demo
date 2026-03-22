@@ -17,7 +17,6 @@ function createExercisesRouter(prisma) {
       if (search) {
         where.OR = [
           { title: { contains: search, mode: 'insensitive' } },
-          { description: { contains: search, mode: 'insensitive' } },
           { category: { contains: search, mode: 'insensitive' } },
         ];
       }
