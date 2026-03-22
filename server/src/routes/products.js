@@ -8,10 +8,22 @@ const express = require('express');
 function createProductsRouter(prisma) {
   const router = express.Router();
 
-  // GET /api/products -> список продуктів (масив, як у Stage B)
+  // GET /api/products -> список продуктів з опціональними фільтрами search/category
   router.get('/', async (req, res) => {
     try {
+      const { search, category } = req.query;
+      const where = {};
+
+      if (search) {
+        where.title = { contains: search, mode: 'insensitive' };
+      }
+
+      if (category) {
+        where.category = { equals: category, mode: 'insensitive' };
+      }
+
       const products = await prisma.product.findMany({
+        where,
         orderBy: { createdAt: 'desc' },
       });
       res.json(products);
