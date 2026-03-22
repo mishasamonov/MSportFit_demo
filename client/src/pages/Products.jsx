@@ -4,7 +4,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 const CATEGORY_OPTIONS = [
   { value: '', label: 'Усі категорії' },
   { value: 'Крупи', label: 'Крупи' },
-  { value: 'М\u02BCясо', label: 'М\u02BCясо' },
+  { value: 'Мʼясо', label: 'Мʼясо' },
   { value: 'Молочні продукти', label: 'Молочні продукти' },
   { value: 'Фрукти', label: 'Фрукти' },
   { value: 'Овочі', label: 'Овочі' },
@@ -89,37 +89,49 @@ function Products() {
   const hasActiveFilters = searchParam || categoryParam;
 
   return (
-    <div>
-      <h1>Каталог продуктів</h1>
+    <div className="catalog-page">
+      <h1 className="catalog-page__title">Каталог продуктів</h1>
 
-      <form className="products-filters" onSubmit={applyFilters}>
-        <input
-          className="products-filters__search"
-          type="text"
-          placeholder="Пошук за назвою…"
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-        />
+      <form className="catalog-filters" onSubmit={applyFilters}>
+        <div className="catalog-filters__group">
+          <label htmlFor="filter-search" className="catalog-filters__label">
+            Пошук
+          </label>
+          <input
+            id="filter-search"
+            className="catalog-filters__input"
+            type="text"
+            placeholder="Пошук за назвою…"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
+        </div>
 
-        <select
-          className="products-filters__category"
-          value={categoryInput}
-          onChange={(e) => setCategoryInput(e.target.value)}
-        >
-          {CATEGORY_OPTIONS.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
+        <div className="catalog-filters__group">
+          <label htmlFor="filter-category" className="catalog-filters__label">
+            Категорія
+          </label>
+          <select
+            id="filter-category"
+            className="catalog-filters__select"
+            value={categoryInput}
+            onChange={(e) => setCategoryInput(e.target.value)}
+          >
+            {CATEGORY_OPTIONS.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        </div>
 
-        <button className="products-filters__btn" type="submit">
+        <button className="catalog-filters__btn" type="submit">
           Застосувати
         </button>
 
         {hasActiveFilters && (
           <button
-            className="products-filters__btn products-filters__btn--reset"
+            className="catalog-filters__btn catalog-filters__btn--reset"
             type="button"
             onClick={resetFilters}
           >
@@ -128,12 +140,14 @@ function Products() {
         )}
       </form>
 
-      {loading && <p>Завантаження продуктів...</p>}
+      {loading && <p className="catalog-message">Завантаження продуктів...</p>}
 
-      {!loading && error && <p style={{ color: 'red' }}>Помилка: {error}</p>}
+      {!loading && error && (
+        <p className="catalog-message catalog-message--error">Помилка: {error}</p>
+      )}
 
       {!loading && !error && !products.length && (
-        <p>
+        <p className="catalog-message">
           {hasActiveFilters
             ? 'Нічого не знайдено за обраними фільтрами.'
             : 'Поки що немає жодного продукту.'}
@@ -141,11 +155,18 @@ function Products() {
       )}
 
       {!loading && !error && products.length > 0 && (
-        <ul>
+        <ul className="catalog-list">
           {products.map((product) => (
-            <li key={product.id}>
-              <Link to={`/products/${product.id}`}>{product.title}</Link>
-              {product.category && <span> — {product.category}</span>}
+            <li key={product.id} className="catalog-list__item">
+              <Link to={`/products/${product.id}`} className="catalog-list__link">
+                {product.title}
+              </Link>
+              {product.category && (
+                <span className="catalog-list__meta">
+                  <span className="catalog-list__separator"> — </span>
+                  {product.category}
+                </span>
+              )}
             </li>
           ))}
         </ul>

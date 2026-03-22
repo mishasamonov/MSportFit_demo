@@ -7,42 +7,6 @@ const EQUIPMENT = ['Без обладнання', 'Гантелі', 'Штанг�
 
 const FILTER_KEYS = ['search', 'muscleGroup', 'level', 'equipment'];
 
-const metaStyle = {
-  color: '#666',
-  fontSize: '0.9em',
-};
-
-const filtersFormStyle = {
-  display: 'flex',
-  flexWrap: 'wrap',
-  gap: '0.75rem',
-  alignItems: 'flex-end',
-  marginBottom: '1.5rem',
-  padding: '1rem',
-  border: '1px solid #ddd',
-  borderRadius: '8px',
-  background: '#fafafa',
-};
-
-const filterGroupStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '0.25rem',
-};
-
-const labelStyle = {
-  fontSize: '0.8rem',
-  fontWeight: 600,
-  color: '#555',
-};
-
-const controlStyle = {
-  padding: '0.4rem 0.5rem',
-  border: '1px solid #ccc',
-  borderRadius: '4px',
-  fontSize: '0.9rem',
-};
-
 function buildFetchUrl(params) {
   const qs = new URLSearchParams();
   for (const key of FILTER_KEYS) {
@@ -128,16 +92,13 @@ function Exercises() {
   };
 
   return (
-    <div>
-      <h1>Вправи</h1>
+    <div className="catalog-page">
+      <h1 className="catalog-page__title">Вправи</h1>
 
-      <div style={filtersFormStyle}>
-        <form
-          onSubmit={handleSearchSubmit}
-          style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-end' }}
-        >
-          <div style={filterGroupStyle}>
-            <label htmlFor="filter-search" style={labelStyle}>
+      <div className="catalog-filters">
+        <form onSubmit={handleSearchSubmit} className="catalog-filters__search-form">
+          <div className="catalog-filters__group">
+            <label htmlFor="filter-search" className="catalog-filters__label">
               Пошук
             </label>
             <input
@@ -147,23 +108,23 @@ function Exercises() {
               placeholder="Назва або опис…"
               defaultValue={currentSearch}
               key={currentSearch}
-              style={{ ...controlStyle, minWidth: '180px' }}
+              className="catalog-filters__input"
             />
           </div>
-          <button type="submit" style={{ ...controlStyle, cursor: 'pointer' }}>
+          <button type="submit" className="catalog-filters__btn">
             Знайти
           </button>
         </form>
 
-        <div style={filterGroupStyle}>
-          <label htmlFor="filter-muscleGroup" style={labelStyle}>
+        <div className="catalog-filters__group">
+          <label htmlFor="filter-muscleGroup" className="catalog-filters__label">
             {"М'язова група"}
           </label>
           <select
             id="filter-muscleGroup"
             value={currentMuscleGroup}
             onChange={(e) => updateFilter('muscleGroup', e.target.value)}
-            style={controlStyle}
+            className="catalog-filters__select"
           >
             <option value="">Усі</option>
             {MUSCLE_GROUPS.map((g) => (
@@ -174,15 +135,15 @@ function Exercises() {
           </select>
         </div>
 
-        <div style={filterGroupStyle}>
-          <label htmlFor="filter-level" style={labelStyle}>
+        <div className="catalog-filters__group">
+          <label htmlFor="filter-level" className="catalog-filters__label">
             Рівень
           </label>
           <select
             id="filter-level"
             value={currentLevel}
             onChange={(e) => updateFilter('level', e.target.value)}
-            style={controlStyle}
+            className="catalog-filters__select"
           >
             <option value="">Усі</option>
             {LEVELS.map((l) => (
@@ -193,15 +154,15 @@ function Exercises() {
           </select>
         </div>
 
-        <div style={filterGroupStyle}>
-          <label htmlFor="filter-equipment" style={labelStyle}>
+        <div className="catalog-filters__group">
+          <label htmlFor="filter-equipment" className="catalog-filters__label">
             Обладнання
           </label>
           <select
             id="filter-equipment"
             value={currentEquipment}
             onChange={(e) => updateFilter('equipment', e.target.value)}
-            style={controlStyle}
+            className="catalog-filters__select"
           >
             <option value="">Усі</option>
             {EQUIPMENT.map((eq) => (
@@ -216,19 +177,21 @@ function Exercises() {
           <button
             type="button"
             onClick={handleReset}
-            style={{ ...controlStyle, cursor: 'pointer', color: '#c00' }}
+            className="catalog-filters__btn catalog-filters__btn--reset"
           >
             Скинути фільтри
           </button>
         )}
       </div>
 
-      {loading && <p>Завантаження вправ...</p>}
+      {loading && <p className="catalog-message">Завантаження вправ...</p>}
 
-      {!loading && error && <p style={{ color: 'red' }}>Помилка: {error}</p>}
+      {!loading && error && (
+        <p className="catalog-message catalog-message--error">Помилка: {error}</p>
+      )}
 
       {!loading && !error && !exercises.length && (
-        <p>
+        <p className="catalog-message">
           {hasActiveFilters
             ? 'Нічого не знайдено за обраними фільтрами.'
             : 'Поки що немає жодної вправи.'}
@@ -236,13 +199,23 @@ function Exercises() {
       )}
 
       {!loading && !error && exercises.length > 0 && (
-        <ul>
+        <ul className="catalog-list">
           {exercises.map((exercise) => (
-            <li key={exercise.id}>
-              <Link to={`/exercises/${exercise.slug || exercise.id}`}>{exercise.title}</Link>
-              {exercise.category && <span> — {exercise.category}</span>}
+            <li key={exercise.id} className="catalog-list__item">
+              <Link
+                to={`/exercises/${exercise.slug || exercise.id}`}
+                className="catalog-list__link"
+              >
+                {exercise.title}
+              </Link>
+              {exercise.category && (
+                <span className="catalog-list__meta">
+                  <span className="catalog-list__separator"> — </span>
+                  {exercise.category}
+                </span>
+              )}
               {(exercise.muscleGroup || exercise.level) && (
-                <span style={metaStyle}>
+                <span className="catalog-list__meta">
                   {exercise.muscleGroup ? ` · ${exercise.muscleGroup}` : ''}
                   {exercise.level ? ` · ${exercise.level}` : ''}
                 </span>
