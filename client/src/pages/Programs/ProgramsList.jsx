@@ -1,62 +1,62 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { apiFetch } from '../../lib/api'
-import { mapGoal, mapLevel } from './programsHelpers'
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { apiFetch } from '../../lib/api';
+import { mapGoal, mapLevel } from './programsHelpers';
 
 const metaBadgeStyle = {
   color: '#888',
   fontSize: '0.9em',
-}
+};
 
 function ProgramsList() {
-  const [programs, setPrograms] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [programs, setPrograms] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    let isMounted = true
+    let isMounted = true;
 
     async function loadPrograms() {
       try {
-        setLoading(true)
-        setError(null)
+        setLoading(true);
+        setError(null);
 
-        const res = await apiFetch('/api/programs')
+        const res = await apiFetch('/api/programs');
 
         if (!res.ok) {
-          throw new Error('Не вдалося завантажити програми')
+          throw new Error('Не вдалося завантажити програми');
         }
 
-        const data = await res.json()
+        const data = await res.json();
 
-        if (!isMounted) return
+        if (!isMounted) return;
 
-        setPrograms(Array.isArray(data) ? data : [])
+        setPrograms(Array.isArray(data) ? data : []);
       } catch (err) {
-        console.error('ProgramsList fetch error', err)
+        console.error('ProgramsList fetch error', err);
         if (isMounted) {
-          setError(err.message || 'Не вдалося завантажити програми')
+          setError(err.message || 'Не вдалося завантажити програми');
         }
       } finally {
         if (isMounted) {
-          setLoading(false)
+          setLoading(false);
         }
       }
     }
 
-    loadPrograms()
+    loadPrograms();
 
     return () => {
-      isMounted = false
-    }
-  }, [])
+      isMounted = false;
+    };
+  }, []);
 
   if (loading) {
-    return <p>Завантаження програм...</p>
+    return <p>Завантаження програм...</p>;
   }
 
   if (error) {
-    return <p style={{ color: 'red' }}>Помилка: {error}</p>
+    return <p style={{ color: 'red' }}>Помилка: {error}</p>;
   }
 
   return (
@@ -72,7 +72,8 @@ function ProgramsList() {
               <h2>{program.title}</h2>
               <p>{program.description}</p>
               <p style={metaBadgeStyle}>
-                {mapGoal(program.goal)} &bull; {mapLevel(program.level)} &bull; {program.weeks} тижн.
+                {mapGoal(program.goal)} &bull; {mapLevel(program.level)} &bull; {program.weeks}{' '}
+                тижн.
               </p>
               <Link to={`/programs/${program.slug}`}>Детальніше</Link>
             </li>
@@ -80,7 +81,7 @@ function ProgramsList() {
         </ul>
       )}
     </div>
-  )
+  );
 }
 
-export default ProgramsList
+export default ProgramsList;

@@ -2,22 +2,127 @@
   min-height: 100vh;
 }
 
-.layout__nav {
+/* ── Header ── */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #1a1a1e;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.header__inner {
   display: flex;
-  gap: 1rem;
-  padding: 1rem;
-  background: #eee;
-  flex-wrap: wrap;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  height: 54px;
+  gap: 2rem;
 }
 
-.layout__nav a {
-  color: #333;
+/* Brand lockup */
+
+.header__brand {
+  display: flex;
+  align-items: center;
   text-decoration: none;
+  flex-shrink: 0;
 }
 
-.layout__nav a:hover {
-  text-decoration: underline;
+.header__brand-logo {
+  display: block;
+  max-height: 40px;
+  width: auto;
+  object-fit: contain;
 }
+
+/* Center nav */
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  margin: 0 auto;
+}
+
+.header__nav-link {
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+.header__nav-link:hover {
+  color: #fff;
+}
+
+.header__nav-link.active {
+  color: #e8630a;
+}
+
+/* Auth area */
+
+.header__auth {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  flex-shrink: 0;
+}
+
+.header__auth-link {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+.header__auth-link:hover {
+  color: #fff;
+}
+
+.header__btn {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.header__btn--register {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 1rem;
+  background: #e8630a;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.header__btn--register:hover {
+  background: #d25a09;
+}
+
+.header__btn--logout {
+  padding: 0.4rem 1rem;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.header__btn--logout:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* ── Layout main ── */
 
 .layout__main {
   padding: 1.5rem;
