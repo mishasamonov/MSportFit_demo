@@ -35,6 +35,7 @@ const ADVANTAGES = [
 
 const PROGRAMS_PREVIEW = [
   {
+    slug: 'mass-gain',
     title: 'Набір м\u2019язової маси',
     description:
       'Комплексна силова програма з прогресивним навантаженням для нарощування м\u2019язів',
@@ -43,6 +44,7 @@ const PROGRAMS_PREVIEW = [
     goal: 'Маса',
   },
   {
+    slug: 'weight-loss',
     title: 'Схуднення',
     description:
       'Поєднання кардіо та силових тренувань для жироспалювання зі збереженням м\u2019язів',
@@ -186,7 +188,11 @@ function Home() {
           </div>
           <div className="home-programs__grid">
             {PROGRAMS_PREVIEW.map((program) => (
-              <Link to="/programs" className="home-programs__card" key={program.title}>
+              <Link
+                to={`/programs/${program.slug}`}
+                className="home-programs__card"
+                key={program.title}
+              >
                 <div className="home-programs__media">
                   <span className="home-programs__chip">{program.duration}</span>
                 </div>

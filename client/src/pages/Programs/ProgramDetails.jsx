@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { apiFetch } from '../../lib/api';
-import { formatMeta, getScheduleOptions } from './programsHelpers';
+import { formatMeta, getScheduleOptions, resolveProgramApiSlug } from './programsHelpers';
 
 const DAY_OPTIONS = ['2', '3', '4'];
 
@@ -152,7 +152,8 @@ function ProgramDetails() {
         setLoading(true);
         setError(null);
 
-        const res = await apiFetch(`/api/programs/${encodeURIComponent(id)}`);
+        const apiSlug = resolveProgramApiSlug(id);
+        const res = await apiFetch(`/api/programs/${encodeURIComponent(apiSlug)}`);
 
         if (!res.ok) {
           throw new Error('Не вдалося завантажити програму');

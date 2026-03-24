@@ -1,3 +1,13 @@
+/** Стабільні URL з головної -> slug у БД (seed). */
+const PROGRAM_ROUTE_TO_API_SLUG = {
+  'mass-gain': 'upper-lower-bulk',
+  'weight-loss': 'upper-lower-cut',
+};
+
+export function resolveProgramApiSlug(routeSlug) {
+  return PROGRAM_ROUTE_TO_API_SLUG[routeSlug] ?? routeSlug;
+}
+
 const GOAL_MAP = {
   BULK: 'Набір маси',
   CUT: 'Схуднення',
