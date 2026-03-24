@@ -2,6 +2,19 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+
+  --color-bg: #111114;
+  --color-surface: #1a1a1e;
+  --color-surface-elevated: #222226;
+  --color-border: rgba(255, 255, 255, 0.07);
+  --color-accent: #e8630a;
+  --color-accent-hover: #d25a09;
+  --color-text: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.55);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --max-width: 1200px;
 }
 
 body {

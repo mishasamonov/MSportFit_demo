@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 const TABS = {
   TDEE: 'tdee',
@@ -6,8 +7,26 @@ const TABS = {
   MACRO: 'macro',
 };
 
+const TAB_FROM_PARAM = {
+  bmi: TABS.BMI,
+  tdee: TABS.TDEE,
+  macro: TABS.MACRO,
+  macros: TABS.MACRO,
+};
+
 function Calculators() {
-  const [activeTab, setActiveTab] = useState(TABS.BMI);
+  const [searchParams] = useSearchParams();
+  const tabParam = searchParams.get('tab');
+  const resolvedTab = TAB_FROM_PARAM[tabParam];
+  const [activeTab, setActiveTab] = useState(resolvedTab || TABS.BMI);
+  const [prevTabParam, setPrevTabParam] = useState(tabParam);
+
+  if (tabParam !== prevTabParam) {
+    setPrevTabParam(tabParam);
+    if (resolvedTab) {
+      setActiveTab(resolvedTab);
+    }
+  }
 
   // TDEE state
   const [sex, setSex] = useState('male');
