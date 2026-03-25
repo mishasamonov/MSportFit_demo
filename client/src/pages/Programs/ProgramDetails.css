@@ -511,6 +511,7 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: 1.25rem 1.35rem;
+  cursor: pointer;
   transition:
     border-color 0.25s,
     box-shadow 0.25s;
@@ -521,6 +522,16 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
+.pd-training-card--active {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px var(--color-accent), 0 8px 24px rgba(232, 99, 10, 0.15);
+}
+
+.pd-training-card--active:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px var(--color-accent), 0 8px 24px rgba(232, 99, 10, 0.2);
+}
+
 .pd-training-card__name {
   font-size: 1rem;
   font-weight: 700;
@@ -528,11 +539,270 @@
   letter-spacing: -0.01em;
 }
 
+.pd-training-card--active .pd-training-card__name {
+  color: var(--color-accent);
+}
+
 .pd-training-card__focus {
   font-size: 0.88rem;
   color: var(--color-text-secondary);
   line-height: 1.5;
   margin: 0;
+}
+
+/* ── Workout detail panel ── */
+
+.pd-workout-panel {
+  margin-top: 1.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  padding: 1.75rem 2rem;
+  animation: pd-panel-in 0.3s ease;
+}
+
+@keyframes pd-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pd-workout-panel__title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 0.35rem;
+  letter-spacing: -0.01em;
+}
+
+.pd-workout-panel__desc {
+  font-size: 0.88rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 1.25rem;
+  line-height: 1.5;
+}
+
+.pd-workout-panel__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* ── Exercise item ── */
+
+.pd-exercise {
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.25rem;
+  transition: border-color 0.2s;
+}
+
+.pd-exercise:hover {
+  border-color: rgba(232, 99, 10, 0.12);
+}
+
+.pd-exercise__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.pd-exercise__number {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(232, 99, 10, 0.12);
+  color: var(--color-accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-radius: 50%;
+  margin-top: 0.1rem;
+}
+
+.pd-exercise__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.pd-exercise__name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 0.2rem;
+  color: var(--color-text);
+  line-height: 1.35;
+}
+
+.pd-exercise__target {
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.pd-exercise__params {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+  flex-shrink: 0;
+}
+
+.pd-exercise__param {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  white-space: nowrap;
+}
+
+.pd-exercise__rest {
+  font-size: 0.78rem;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+/* ── Exercise name link ── */
+
+.pd-exercise__name-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.pd-exercise__name-link:hover .pd-exercise__name {
+  color: var(--color-accent);
+}
+
+/* ── Exercise actions row ── */
+
+.pd-exercise__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 0.65rem;
+  flex-wrap: wrap;
+}
+
+/* ── Technique CTA link ── */
+
+.pd-exercise__technique-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--color-accent);
+  background: rgba(232, 99, 10, 0.08);
+  border: 1px solid rgba(232, 99, 10, 0.25);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s,
+    transform 0.15s;
+}
+
+.pd-exercise__technique-link:hover {
+  background: rgba(232, 99, 10, 0.15);
+  border-color: var(--color-accent);
+  box-shadow: 0 2px 8px rgba(232, 99, 10, 0.12);
+  transform: translateY(-1px);
+}
+
+/* ── Alternatives toggle ── */
+
+.pd-exercise__alt-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.pd-exercise__alt-toggle:hover {
+  color: var(--color-accent);
+  border-color: rgba(232, 99, 10, 0.3);
+}
+
+.pd-exercise__alt-toggle--open {
+  color: var(--color-accent);
+  border-color: rgba(232, 99, 10, 0.3);
+  background: rgba(232, 99, 10, 0.06);
+}
+
+.pd-exercise__alternatives {
+  margin-top: 0.6rem;
+  padding: 0.65rem 0.85rem;
+  background: rgba(232, 99, 10, 0.04);
+  border: 1px solid rgba(232, 99, 10, 0.12);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+  animation: pd-alt-in 0.2s ease;
+}
+
+@keyframes pd-alt-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pd-exercise__alt-row {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.pd-exercise__alt-row + .pd-exercise__alt-row {
+  margin-top: 0.35rem;
+}
+
+.pd-exercise__alt-row strong {
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.pd-exercise__alt-link {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s, opacity 0.2s;
+}
+
+.pd-exercise__alt-link:hover {
+  text-decoration: underline;
+  opacity: 0.85;
 }
 
 /* ── CTA area ── */
@@ -652,5 +922,22 @@
   .pd-guidance {
     padding: 1rem 1.1rem;
     max-width: 100%;
+  }
+
+  .pd-workout-panel {
+    padding: 1.15rem 1rem;
+  }
+
+  .pd-exercise__header {
+    flex-wrap: wrap;
+  }
+
+  .pd-exercise__params {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    padding-left: calc(28px + 0.85rem);
   }
 }

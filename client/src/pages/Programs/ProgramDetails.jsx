@@ -4,7 +4,9 @@ import {
   getProgramBySlug,
   getProgramScheduleHints,
   getTrainingGuidance,
+  getWorkoutByKey,
 } from './programDetailsData';
+import { resolveExerciseSlug } from '../../data/exerciseDetailsMap';
 import './ProgramDetails.css';
 
 const DAY_OPTIONS = [2, 3, 4];
@@ -174,7 +176,95 @@ function TrainingGuidance() {
   );
 }
 
-function TrainingDaysSection({ trainingDays, activeDays, onChangeDays, activeWeek, onChangeWeek }) {
+function AltLine({ label, name }) {
+  const slug = resolveExerciseSlug(name);
+  return (
+    <p className="pd-exercise__alt-row">
+      <strong>{label}:</strong>{' '}
+      {slug ? (
+        <Link to={`/exercises/${slug}`} className="pd-exercise__alt-link">
+          {name} →
+        </Link>
+      ) : (
+        <span>{name}</span>
+      )}
+    </p>
+  );
+}
+
+function ExerciseItem({ exercise, index }) {
+  const [altOpen, setAltOpen] = useState(false);
+
+  return (
+    <div className="pd-exercise">
+      <div className="pd-exercise__header">
+        <span className="pd-exercise__number">{index + 1}</span>
+        <div className="pd-exercise__info">
+          {exercise.slug ? (
+            <Link to={`/exercises/${exercise.slug}`} className="pd-exercise__name-link">
+              <h4 className="pd-exercise__name">{exercise.name}</h4>
+            </Link>
+          ) : (
+            <h4 className="pd-exercise__name">{exercise.name}</h4>
+          )}
+          <p className="pd-exercise__target">{exercise.target}</p>
+        </div>
+        <div className="pd-exercise__params">
+          <span className="pd-exercise__param">
+            {exercise.sets} &times; {exercise.reps}
+          </span>
+          <span className="pd-exercise__rest">Відпочинок: {exercise.rest}</span>
+        </div>
+      </div>
+      <div className="pd-exercise__actions">
+        <button
+          type="button"
+          className={`pd-exercise__alt-toggle${altOpen ? ' pd-exercise__alt-toggle--open' : ''}`}
+          onClick={() => setAltOpen((prev) => !prev)}
+        >
+          Альтернативи {altOpen ? '\u25B4' : '\u25BE'}
+        </button>
+        {exercise.slug && (
+          <Link to={`/exercises/${exercise.slug}`} className="pd-exercise__technique-link">
+            Переглянути техніку &rarr;
+          </Link>
+        )}
+      </div>
+      {altOpen && (
+        <div className="pd-exercise__alternatives">
+          <AltLine label="🏋️ Зал" name={exercise.alternatives.gym} />
+          <AltLine label="🏠 Дім / вулиця" name={exercise.alternatives.home} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function WorkoutPanel({ day, workout }) {
+  if (!workout || !day) return null;
+
+  return (
+    <div className="pd-workout-panel">
+      <h3 className="pd-workout-panel__title">{day.name}</h3>
+      <p className="pd-workout-panel__desc">{workout.description}</p>
+      <div className="pd-workout-panel__list">
+        {workout.exercises.map((ex, idx) => (
+          <ExerciseItem key={ex.name} exercise={ex} index={idx} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function TrainingDaysSection({
+  trainingDays,
+  activeDays,
+  onChangeDays,
+  activeWeek,
+  onChangeWeek,
+  selectedDayIndex,
+  onSelectDay,
+}) {
   const variant = trainingDays[activeDays];
   if (!variant) return null;
 
@@ -183,6 +273,10 @@ function TrainingDaysSection({ trainingDays, activeDays, onChangeDays, activeWee
       ? variant.weekB
       : variant.weekA
     : variant.days;
+
+  const safeIndex = selectedDayIndex < days.length ? selectedDayIndex : 0;
+  const selectedDay = days[safeIndex];
+  const workout = selectedDay ? getWorkoutByKey(selectedDay.workoutKey) : null;
 
   return (
     <Section id="training-structure" title="Структура тренувань">
@@ -205,13 +299,27 @@ function TrainingDaysSection({ trainingDays, activeDays, onChangeDays, activeWee
       {variant.hasWeeks && <WeekToggle activeWeek={activeWeek} onChange={onChangeWeek} />}
 
       <div className="pd-training-grid">
-        {days.map((day) => (
-          <div key={day.name} className="pd-training-card">
+        {days.map((day, idx) => (
+          <div
+            key={day.name}
+            className={`pd-training-card${idx === safeIndex ? ' pd-training-card--active' : ''}`}
+            onClick={() => onSelectDay(idx)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onSelectDay(idx);
+              }
+            }}
+          >
             <h3 className="pd-training-card__name">{day.name}</h3>
             <p className="pd-training-card__focus">{day.focus}</p>
           </div>
         ))}
       </div>
+
+      <WorkoutPanel day={selectedDay} workout={workout} />
     </Section>
   );
 }
@@ -220,6 +328,17 @@ function ProgramDetails() {
   const { id } = useParams();
   const [activeDays, setActiveDays] = useState(3);
   const [activeWeek, setActiveWeek] = useState('A');
+  const [selectedDayIndex, setSelectedDayIndex] = useState(0);
+
+  const handleChangeDays = (days) => {
+    setActiveDays(days);
+    setSelectedDayIndex(0);
+  };
+
+  const handleChangeWeek = (week) => {
+    setActiveWeek(week);
+    setSelectedDayIndex(0);
+  };
 
   const program = getProgramBySlug(id);
 
@@ -277,9 +396,11 @@ function ProgramDetails() {
         <TrainingDaysSection
           trainingDays={program.trainingDays}
           activeDays={activeDays}
-          onChangeDays={setActiveDays}
+          onChangeDays={handleChangeDays}
           activeWeek={activeWeek}
-          onChangeWeek={setActiveWeek}
+          onChangeWeek={handleChangeWeek}
+          selectedDayIndex={selectedDayIndex}
+          onSelectDay={setSelectedDayIndex}
         />
 
         <div className="pd-cta">

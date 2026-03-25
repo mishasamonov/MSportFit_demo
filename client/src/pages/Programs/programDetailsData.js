@@ -11,6 +11,336 @@ const TRAINING_GUIDANCE = {
   ],
 };
 
+const WORKOUTS = {
+  upper1: {
+    title: 'Upper Body — варіант 1',
+    description: 'Груди (жимові), спина (тягові), плечі — акцент на базових рухах',
+    exercises: [
+      {
+        name: 'Жим гантелей на похилій лаві',
+        slug: 'incline-dumbbell-press',
+        target: 'верх грудних, передня дельта, трицепс',
+        sets: 4,
+        reps: '6–12',
+        rest: '2–3 хв',
+        alternatives: {
+          gym: 'Жим у Сміті на похилій лаві',
+          home: 'Віджимання з ногами на підвищенні',
+        },
+      },
+      {
+        name: 'Зведення рук у тренажері (бабочка)',
+        slug: 'pec-deck-fly',
+        target: 'грудні',
+        sets: 3,
+        reps: '6–12',
+        rest: '60–90 с',
+        alternatives: {
+          gym: 'Зведення рук у кросовері',
+          home: 'Віджимання широким хватом',
+        },
+      },
+      {
+        name: 'Тяга верхнього блока зворотним хватом',
+        slug: 'reverse-grip-lat-pulldown',
+        target: 'найширші, біцепс',
+        sets: 4,
+        reps: '6–12',
+        rest: '2–3 хв',
+        alternatives: {
+          gym: 'Тяга верхнього блока вузьким нейтральним хватом',
+          home: 'Підтягування зворотним хватом',
+        },
+      },
+      {
+        name: 'Пуловер на верхньому блоці з канатною рукояткою',
+        slug: 'cable-pullover',
+        target: 'найширші, круглі м\u2019язи спини',
+        sets: 3,
+        reps: '6–12',
+        rest: '60–90 с',
+        alternatives: {
+          gym: 'Горизонтальна тяга в тренажері',
+          home: 'Пуловер з резиною зверху',
+        },
+      },
+      {
+        name: 'Жим гантелей сидячи',
+        slug: 'seated-dumbbell-shoulder-press',
+        target: 'передня і середня дельта',
+        sets: 3,
+        reps: '6–12',
+        rest: '90–120 с',
+        alternatives: {
+          gym: 'Жим штанги сидячи',
+          home: 'Жим резини над головою',
+        },
+      },
+      {
+        name: 'Махи з гантелями в сторони стоячи',
+        slug: 'standing-dumbbell-lateral-raise',
+        target: 'середня дельта',
+        sets: 3,
+        reps: '8–15',
+        rest: '60–90 с',
+        alternatives: {
+          gym: 'Махи в кросовері на середню дельту',
+          home: 'Махи з резиною в сторони',
+        },
+      },
+    ],
+  },
+
+  lowerArms1: {
+    title: 'Lower Body + Arms — варіант 1',
+    description: 'Квадрицепс, біцепс стегна, сідниці, біцепс, трицепс',
+    exercises: [
+      {
+        name: 'Жим ногами в тренажері',
+        slug: 'leg-press',
+        target: 'квадрицепс, сідниці',
+        sets: 4,
+        reps: '6–12',
+        rest: '2–3 хв',
+        alternatives: {
+          gym: 'Випади з гантелями',
+          home: 'Присідання з рюкзаком',
+        },
+      },
+      {
+        name: 'Румунська тяга',
+        slug: 'barbell-romanian-deadlift',
+        target: 'біцепс стегна, сідниці, поперек-стабілізатори',
+        sets: 4,
+        reps: '6–12',
+        rest: '2–3 хв',
+        alternatives: {
+          gym: 'Згинання ніг у тренажері',
+          home: 'Румунська тяга з резиною',
+        },
+      },
+      {
+        name: 'Підйом гантелей на біцепс із супінацією',
+        slug: 'dumbbell-supination-curl',
+        target: 'біцепс',
+        sets: 4,
+        reps: '6–12',
+        rest: '60–90 с',
+        alternatives: {
+          gym: 'Підйом штанги на біцепс',
+          home: 'Згинання рук з резиною прямим хватом',
+        },
+      },
+      {
+        name: 'Згинання рук на нижньому блоці прямою рукояткою',
+        slug: 'cable-bar-bicep-curl',
+        target: 'біцепс',
+        sets: 3,
+        reps: '6–12',
+        rest: '60–90 с',
+        alternatives: {
+          gym: 'Згинання рук на нижньому блоці з канатною рукояткою',
+          home: 'Згинання рук з резиною молотковим хватом',
+        },
+      },
+      {
+        name: 'Розгинання гантелі з-за голови сидячи',
+        slug: 'seated-overhead-dumbbell-extension',
+        target: 'довга головка трицепса',
+        sets: 4,
+        reps: '6–12',
+        rest: '60–90 с',
+        alternatives: {
+          gym: 'Розгинання рук над головою на верхньому блоці з канатом',
+          home: 'Розгинання рук з резиною над головою',
+        },
+      },
+      {
+        name: 'Розгинання рук на верхньому блоці прямою рукояткою',
+        slug: 'cable-bar-pushdown',
+        target: 'трицепс',
+        sets: 3,
+        reps: '6–12',
+        rest: '60–90 с',
+        alternatives: {
+          gym: 'Розгинання рук на верхньому блоці з канатом',
+          home: 'Віджимання вузьким хватом',
+        },
+      },
+    ],
+  },
+
+  upper2: {
+    title: 'Upper Body — варіант 2',
+    description: 'Груди, спина, дельти — варіація кутів та хватів',
+    exercises: [
+      {
+        name: 'Жим у Сміті на похилій лаві',
+        slug: 'smith-machine-incline-press',
+        target: 'верх грудних, передня дельта, трицепс',
+        sets: 4,
+        reps: '6–12',
+        rest: '2–3 хв',
+        alternatives: {
+          gym: 'Жим гантелей на похилій лаві',
+          home: 'Віджимання з резиною',
+        },
+      },
+      {
+        name: 'Зведення рук у кросовері',
+        slug: 'cable-crossover-fly',
+        target: 'грудні',
+        sets: 3,
+        reps: '6–12',
+        rest: '60–90 с',
+        alternatives: {
+          gym: 'Зведення рук у тренажері (бабочка)',
+          home: 'Зведення рук з резиною',
+        },
+      },
+      {
+        name: 'Тяга верхнього блока прямим хватом',
+        slug: 'wide-grip-lat-pulldown',
+        target: 'найширші, верх спини',
+        sets: 4,
+        reps: '6–12',
+        rest: '2–3 хв',
+        alternatives: {
+          gym: 'Тяга верхнього блока зворотним хватом',
+          home: 'Підтягування прямим хватом',
+        },
+      },
+      {
+        name: 'Тяга нижнього блока до живота',
+        slug: 'seated-cable-row',
+        target: 'середина спини, найширші',
+        sets: 3,
+        reps: '6–12',
+        rest: '90–120 с',
+        alternatives: {
+          gym: 'Горизонтальна тяга в тренажері',
+          home: 'Тяга резини до поясу',
+        },
+      },
+      {
+        name: 'Протяжка в кросовері з нижнього блока',
+        slug: 'cable-upright-row',
+        target: 'середня дельта, верх трапеції',
+        sets: 3,
+        reps: '6–12',
+        rest: '60–90 с',
+        alternatives: {
+          gym: 'Махи в кросовері на середню дельту',
+          home: 'Тяга резини до підборіддя',
+        },
+      },
+      {
+        name: 'Відведення гантелей у нахилі на задню дельту',
+        slug: 'bent-over-rear-delt-fly',
+        target: 'задня дельта',
+        sets: 3,
+        reps: '8–15',
+        rest: '60–90 с',
+        alternatives: {
+          gym: 'Face pull з канатною рукояткою в кросовері',
+          home: 'Face pull з резиною',
+        },
+      },
+    ],
+  },
+
+  lowerArms2: {
+    title: 'Lower Body + Arms — варіант 2',
+    description: 'Квадрицепс, біцепс стегна, литки, біцепс, трицепс',
+    exercises: [
+      {
+        name: 'Розгинання ніг у тренажері',
+        slug: 'leg-extension',
+        target: 'квадрицепс',
+        sets: 4,
+        reps: '6–12',
+        rest: '60–90 с',
+        alternatives: {
+          gym: 'Жим ногами в тренажері',
+          home: 'Присідання з резиною на плечах',
+        },
+      },
+      {
+        name: 'Згинання ніг лежачи в тренажері',
+        slug: 'lying-leg-curl',
+        target: 'біцепс стегна',
+        sets: 4,
+        reps: '6–12',
+        rest: '60–90 с',
+        alternatives: {
+          gym: 'Румунська тяга',
+          home: 'Випади з випригуванням',
+        },
+      },
+      {
+        name: 'Підйоми на носки в Сміті з підставкою під стопи',
+        slug: 'smith-machine-calf-raise',
+        target: 'литкові м\u2019язи',
+        sets: 3,
+        reps: '10–15',
+        rest: '45–60 с',
+        alternatives: {
+          gym: 'Підйоми на носки з гантеллю',
+          home: 'Підйоми на носки на сходинці на одній нозі',
+        },
+      },
+      {
+        name: 'Підйом гантелей на похилій лаві на біцепс',
+        slug: 'incline-dumbbell-curl',
+        target: 'біцепс',
+        sets: 4,
+        reps: '6–12',
+        rest: '60–90 с',
+        alternatives: {
+          gym: 'Підйом гантелей на біцепс із супінацією',
+          home: 'Згинання рук з резиною прямим хватом',
+        },
+      },
+      {
+        name: 'Згинання рук на нижньому блоці з канатною рукояткою',
+        slug: 'cable-rope-curl',
+        target: 'біцепс, плечовий м\u2019яз',
+        sets: 3,
+        reps: '6–12',
+        rest: '60–90 с',
+        alternatives: {
+          gym: 'Згинання рук на нижньому блоці прямою рукояткою',
+          home: 'Згинання рук з резиною молотковим хватом',
+        },
+      },
+      {
+        name: 'Жим вузьким хватом у Сміті',
+        slug: 'smith-machine-close-grip-press',
+        target: 'трицепс',
+        sets: 4,
+        reps: '6–12',
+        rest: '90–120 с',
+        alternatives: {
+          gym: 'Віджимання на брусах',
+          home: 'Віджимання вузьким хватом',
+        },
+      },
+      {
+        name: 'Розгинання рук на верхньому блоці з канатом',
+        slug: 'cable-rope-pushdown',
+        target: 'трицепс',
+        sets: 3,
+        reps: '6–12',
+        rest: '60–90 с',
+        alternatives: {
+          gym: 'Розгинання рук на верхньому блоці прямою рукояткою',
+          home: 'Розгинання рук з резиною',
+        },
+      },
+    ],
+  },
+};
+
 const PROGRAM_DETAILS = {
   'mass-gain': {
     slug: 'mass-gain',
@@ -61,8 +391,8 @@ const PROGRAM_DETAILS = {
         label: '2 дні на тиждень',
         note: 'Мінімальний ефективний формат. Кожне тренування повністю охоплює відповідні м\u2019язові групи з максимальним фокусом.',
         days: [
-          { name: 'День 1 — Upper Body', focus: 'Груди, спина, плечі' },
-          { name: 'День 2 — Lower Body + Arms', focus: 'Ноги, руки' },
+          { name: 'День 1 — Upper Body', focus: 'Груди, спина, плечі', workoutKey: 'upper1' },
+          { name: 'День 2 — Lower Body + Arms', focus: 'Ноги, руки', workoutKey: 'lowerArms1' },
         ],
       },
       3: {
@@ -70,24 +400,24 @@ const PROGRAM_DETAILS = {
         note: 'Чергування двох схем за двотижневим циклом. Оберіть тиждень, щоб побачити розклад.',
         hasWeeks: true,
         weekA: [
-          { name: 'День 1 — Upper Body', focus: 'Груди, спина, плечі' },
-          { name: 'День 2 — Lower Body + Arms', focus: 'Ноги, руки' },
-          { name: 'День 3 — Upper Body', focus: 'Груди, спина, плечі' },
+          { name: 'День 1 — Upper Body', focus: 'Груди, спина, плечі', workoutKey: 'upper1' },
+          { name: 'День 2 — Lower Body + Arms', focus: 'Ноги, руки', workoutKey: 'lowerArms1' },
+          { name: 'День 3 — Upper Body', focus: 'Груди, спина, плечі', workoutKey: 'upper2' },
         ],
         weekB: [
-          { name: 'День 1 — Lower Body + Arms', focus: 'Ноги, руки' },
-          { name: 'День 2 — Upper Body', focus: 'Груди, спина, плечі' },
-          { name: 'День 3 — Lower Body + Arms', focus: 'Ноги, руки' },
+          { name: 'День 1 — Lower Body + Arms', focus: 'Ноги, руки', workoutKey: 'lowerArms2' },
+          { name: 'День 2 — Upper Body', focus: 'Груди, спина, плечі', workoutKey: 'upper1' },
+          { name: 'День 3 — Lower Body + Arms', focus: 'Ноги, руки', workoutKey: 'lowerArms1' },
         ],
       },
       4: {
         label: '4 дні на тиждень',
         note: 'Максимальний тренувальний об\u2019єм. Два тренування Upper Body та два Lower Body + Arms на тиждень із днем відпочинку між парами.',
         days: [
-          { name: 'День 1 — Upper Body', focus: 'Груди, спина, плечі' },
-          { name: 'День 2 — Lower Body + Arms', focus: 'Ноги, руки' },
-          { name: 'День 3 — Upper Body', focus: 'Груди, спина, плечі' },
-          { name: 'День 4 — Lower Body + Arms', focus: 'Ноги, руки' },
+          { name: 'День 1 — Upper Body', focus: 'Груди, спина, плечі', workoutKey: 'upper1' },
+          { name: 'День 2 — Lower Body + Arms', focus: 'Ноги, руки', workoutKey: 'lowerArms1' },
+          { name: 'День 3 — Upper Body', focus: 'Груди, спина, плечі', workoutKey: 'upper2' },
+          { name: 'День 4 — Lower Body + Arms', focus: 'Ноги, руки', workoutKey: 'lowerArms2' },
         ],
       },
     },
@@ -144,10 +474,12 @@ const PROGRAM_DETAILS = {
           {
             name: 'День 1 — Upper Body + кардіо',
             focus: 'Груди, спина, плечі + кардіо після тренування',
+            workoutKey: 'upper1',
           },
           {
             name: 'День 2 — Lower Body + Arms + кардіо',
             focus: 'Ноги, руки + кардіо після тренування',
+            workoutKey: 'lowerArms1',
           },
         ],
       },
@@ -156,24 +488,24 @@ const PROGRAM_DETAILS = {
         note: 'Чергування двох схем за двотижневим циклом. Кардіо можна додавати після 1–2 силових тренувань або виділити окремий легкий активний день.',
         hasWeeks: true,
         weekA: [
-          { name: 'День 1 — Upper Body', focus: 'Груди, спина, плечі' },
-          { name: 'День 2 — Lower Body + Arms', focus: 'Ноги, руки' },
-          { name: 'День 3 — Upper Body', focus: 'Груди, спина, плечі' },
+          { name: 'День 1 — Upper Body', focus: 'Груди, спина, плечі', workoutKey: 'upper1' },
+          { name: 'День 2 — Lower Body + Arms', focus: 'Ноги, руки', workoutKey: 'lowerArms1' },
+          { name: 'День 3 — Upper Body', focus: 'Груди, спина, плечі', workoutKey: 'upper2' },
         ],
         weekB: [
-          { name: 'День 1 — Lower Body + Arms', focus: 'Ноги, руки' },
-          { name: 'День 2 — Upper Body', focus: 'Груди, спина, плечі' },
-          { name: 'День 3 — Lower Body + Arms', focus: 'Ноги, руки' },
+          { name: 'День 1 — Lower Body + Arms', focus: 'Ноги, руки', workoutKey: 'lowerArms2' },
+          { name: 'День 2 — Upper Body', focus: 'Груди, спина, плечі', workoutKey: 'upper1' },
+          { name: 'День 3 — Lower Body + Arms', focus: 'Ноги, руки', workoutKey: 'lowerArms1' },
         ],
       },
       4: {
         label: '4 дні на тиждень',
         note: 'Максимальний тренувальний об\u2019єм. Кардіо можна додавати після окремих силових тренувань або виконувати як окрему низькоінтенсивну сесію залежно від рівня відновлення.',
         days: [
-          { name: 'День 1 — Upper Body', focus: 'Груди, спина, плечі' },
-          { name: 'День 2 — Lower Body + Arms', focus: 'Ноги, руки' },
-          { name: 'День 3 — Upper Body', focus: 'Груди, спина, плечі' },
-          { name: 'День 4 — Lower Body + Arms', focus: 'Ноги, руки' },
+          { name: 'День 1 — Upper Body', focus: 'Груди, спина, плечі', workoutKey: 'upper1' },
+          { name: 'День 2 — Lower Body + Arms', focus: 'Ноги, руки', workoutKey: 'lowerArms1' },
+          { name: 'День 3 — Upper Body', focus: 'Груди, спина, плечі', workoutKey: 'upper2' },
+          { name: 'День 4 — Lower Body + Arms', focus: 'Ноги, руки', workoutKey: 'lowerArms2' },
         ],
       },
     },
@@ -190,4 +522,8 @@ export function getTrainingGuidance() {
 
 export function getProgramScheduleHints(daysPerWeek) {
   return getScheduleOptions(daysPerWeek);
+}
+
+export function getWorkoutByKey(key) {
+  return WORKOUTS[key] ?? null;
 }
