@@ -1,0 +1,351 @@
+/* ── Register page (Stage H, MSportFit dark premium) — aligned with Login ── */
+
+.register-page {
+  margin: -1.5rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+  min-height: calc(100vh + 3rem);
+  overflow: hidden;
+}
+
+/* ── Hero ── */
+
+.register-hero {
+  position: relative;
+  padding: 2.5rem 1.5rem 1.5rem;
+  overflow: hidden;
+}
+
+.register-hero__glow {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 560px;
+  height: 300px;
+  background: radial-gradient(ellipse, rgba(232, 99, 10, 0.08) 0%, transparent 68%);
+  pointer-events: none;
+}
+
+.register-hero__content {
+  position: relative;
+  z-index: 1;
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.15rem;
+}
+
+.register-hero__text {
+  text-align: left;
+  min-width: 0;
+  flex: 1;
+}
+
+.register-hero__icon-box {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  background: rgba(232, 99, 10, 0.12);
+  border: 1px solid rgba(232, 99, 10, 0.28);
+  box-shadow: 0 0 28px rgba(232, 99, 10, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-accent);
+}
+
+.register-hero__title {
+  font-size: 2.1rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.register-hero__subtitle {
+  font-size: 0.98rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin: 0.35rem 0 0;
+  max-width: 560px;
+}
+
+/* ── Body + card ── */
+
+.register-body {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0.25rem 1.5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 540px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem 2rem 1.75rem;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
+  transition: border-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.register-card:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.register-card__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.register-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.register-field__label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.02em;
+}
+
+.register-field__input-wrap {
+  position: relative;
+  display: block;
+}
+
+.register-field__input-icon {
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  color: rgba(255, 255, 255, 0.28);
+  pointer-events: none;
+}
+
+.register-field__input {
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.72rem 0.85rem;
+  font-size: 0.92rem;
+  color: var(--color-text);
+  caret-color: var(--color-accent);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+  line-height: 1.45;
+}
+
+.register-field__input--with-leading-icon {
+  padding-left: 2.55rem;
+}
+
+.register-field__input--with-toggle {
+  padding-right: 2.85rem;
+}
+
+.register-field__input:focus {
+  border-color: rgba(232, 99, 10, 0.4);
+  box-shadow: 0 0 0 2px rgba(232, 99, 10, 0.1);
+}
+
+/* WebKit autofill: keep dark surface, readable text, themed caret; avoid white flash */
+.register-field__input:-webkit-autofill,
+.register-field__input:-webkit-autofill:hover,
+.register-field__input:-webkit-autofill:focus,
+.register-field__input:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--color-text) !important;
+  caret-color: var(--color-accent);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 0 0 1000px var(--color-surface-elevated) inset !important;
+  transition: background-color 99999s ease-out 0s;
+}
+
+.register-field__input:-webkit-autofill:focus {
+  border-color: rgba(232, 99, 10, 0.4);
+  box-shadow:
+    0 0 0 2px rgba(232, 99, 10, 0.1),
+    0 0 0 1000px var(--color-surface-elevated) inset !important;
+}
+
+.register-field__toggle {
+  position: absolute;
+  right: 0.35rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  line-height: 0;
+  font-size: 0;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.register-field__toggle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.register-field__toggle-icon svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.register-field__toggle:hover {
+  color: var(--color-accent);
+  background: rgba(232, 99, 10, 0.08);
+}
+
+.register-field__toggle:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(232, 99, 10, 0.25);
+}
+
+.register-field__input::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* ── Error ── */
+
+.register-card__error {
+  color: #f87171;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  padding: 0.65rem 0.85rem;
+  background: rgba(232, 64, 64, 0.08);
+  border: 1px solid rgba(232, 64, 64, 0.22);
+  border-radius: var(--radius-sm);
+  margin: 0;
+}
+
+/* ── Submit ── */
+
+.register-card__submit {
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.88rem 1.25rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  border: 1px solid var(--color-accent);
+  font-family: inherit;
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.register-card__submit:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(232, 99, 10, 0.3);
+}
+
+.register-card__submit:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.register-card__submit:disabled:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+/* ── Footer link ── */
+
+.register-card__footer {
+  margin: 1.35rem 0 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.register-card__footer-muted {
+  color: var(--color-text-secondary);
+}
+
+.register-card__link {
+  color: var(--color-accent);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.register-card__link:hover {
+  color: var(--color-accent-hover);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .register-card,
+  .register-field__input,
+  .register-field__toggle,
+  .register-card__submit {
+    transition: none;
+  }
+
+  .register-card__submit:hover:not(:disabled) {
+    transform: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .register-hero {
+    padding: 2rem 1.25rem 1.5rem;
+  }
+
+  .register-hero__title {
+    font-size: 1.75rem;
+  }
+
+  .register-card {
+    padding: 1.5rem 1.25rem 1.35rem;
+  }
+}
