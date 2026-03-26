@@ -1,6 +1,7 @@
 import { Outlet, Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import logoNavbar from '../assets/brand/logo-navbar.png';
+import Footer from './Footer';
 
 function Layout() {
   const { isAuthed, logout } = useAuth();
@@ -60,6 +61,8 @@ function Layout() {
       <main className="layout__main">
         <Outlet />
       </main>
+
+      <Footer />
     </div>
   );
 }

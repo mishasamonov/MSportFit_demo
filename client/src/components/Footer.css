@@ -1,0 +1,261 @@
+/* Global footer — MSportFit dark / orange */
+
+.ft {
+  margin-top: auto;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -8px 32px rgba(232, 99, 10, 0.04);
+}
+
+.ft__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1rem 1.5rem 0.95rem;
+  box-sizing: border-box;
+}
+
+.ft__top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) repeat(2, minmax(0, 0.82fr)) minmax(0, 0.62fr);
+  gap: 1.1rem 2.65rem;
+  align-items: start;
+}
+
+/* ── Brand ── */
+
+.ft__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.ft__brand-head {
+  margin-bottom: 0.15rem;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  line-height: 0;
+}
+
+.ft__brand-logo {
+  display: block;
+  height: auto;
+  max-height: 108px;
+  width: auto;
+  max-width: min(100%, 340px);
+  object-fit: contain;
+  object-position: left top;
+  clip-path: inset(14px 0 12px 0);
+  margin-top: -14px;
+  margin-bottom: -12px;
+}
+
+.ft__brand-desc {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+  max-width: 22rem;
+  margin-right: auto;
+  text-align: left;
+}
+
+@media (min-width: 961px) {
+  .ft__brand {
+    padding-right: 0.85rem;
+  }
+}
+
+/* ── Columns (nav + extra + social) ── */
+
+.ft__col-title {
+  margin: 0 0 0.9rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.ft__link-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+}
+
+.ft__link {
+  display: inline-block;
+  font-size: 0.84375rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.68);
+  text-decoration: none;
+  padding: 0.12rem 0;
+  border-radius: var(--radius-sm);
+  transition: color 0.2s ease;
+}
+
+.ft__link:hover {
+  color: var(--color-accent);
+}
+
+.ft__link:focus-visible {
+  outline: 2px solid rgba(232, 99, 10, 0.45);
+  outline-offset: 2px;
+}
+
+.ft__col--nav,
+.ft__col--extra,
+.ft__col--social {
+  padding-top: 0.15rem;
+  justify-self: start;
+  text-align: left;
+  width: 100%;
+}
+
+.ft__col--nav .ft__link-list,
+.ft__col--extra .ft__link-list {
+  align-items: flex-start;
+}
+
+.ft__col--social .ft__social-list {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* ── Social ── */
+
+.ft__social-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.ft__social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: visible;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--color-border);
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 0;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.ft__social-link:hover {
+  background: rgba(232, 99, 10, 0.1);
+  border-color: rgba(232, 99, 10, 0.35);
+  color: var(--color-accent);
+  box-shadow: 0 0 16px rgba(232, 99, 10, 0.1);
+}
+
+.ft__social-link:focus-visible {
+  outline: 2px solid rgba(232, 99, 10, 0.45);
+  outline-offset: 2px;
+}
+
+.ft__social-svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: block;
+  overflow: visible;
+}
+
+.ft__social-svg--telegram {
+  width: 20px;
+  height: 20px;
+}
+
+/* ── Bottom strip ── */
+
+.ft__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.45rem 1rem;
+  margin-top: 1.15rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.ft__copy {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.ft__credit {
+  margin: 0;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+@media (max-width: 960px) {
+  .ft__inner {
+    padding: 1.05rem 1.35rem 0.9rem;
+  }
+
+  .ft__top {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.15rem 1.25rem;
+  }
+
+  .ft__brand {
+    grid-column: 1 / -1;
+  }
+
+  .ft__col--nav,
+  .ft__col--extra,
+  .ft__col--social {
+    justify-self: stretch;
+  }
+
+}
+
+@media (max-width: 560px) {
+  .ft__inner {
+    padding: 1rem 1.1rem 0.85rem;
+  }
+
+  .ft__top {
+    grid-template-columns: 1fr;
+    gap: 1.05rem;
+  }
+
+  .ft__brand-logo {
+    max-height: 96px;
+    clip-path: inset(12px 0 10px 0);
+    margin-top: -12px;
+    margin-bottom: -10px;
+  }
+
+  .ft__link-list {
+    gap: 0.22rem;
+  }
+
+  .ft__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 1rem;
+    padding-top: 0.65rem;
+  }
+}
