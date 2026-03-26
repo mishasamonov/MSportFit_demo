@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { apiFetch } from '../lib/api';
 import { getExerciseFallback, resolveExerciseSlug } from '../data/exerciseDetailsMap';
+import { IconHeart } from '../components/HomeIcons';
 import './ExerciseDetails.css';
 
 const ALTERNATIVES_GROUPS = [
@@ -379,8 +380,17 @@ function ExerciseDetails() {
                 className={`ed-hero__fav-btn${isFavorite ? ' ed-hero__fav-btn--active' : ''}`}
                 onClick={handleToggleFavorite}
                 disabled={favoriteLoading}
+                aria-pressed={isFavorite}
+                aria-label={isFavorite ? 'Прибрати з обраного' : 'Додати в обране'}
               >
-                {isFavorite ? '★ В обраному' : '☆ Додати в обране'}
+                {favoriteLoading ? (
+                  'Оновлення…'
+                ) : (
+                  <>
+                    <IconHeart filled={isFavorite} className="ed-hero__fav-heart" />
+                    <span>{isFavorite ? 'В обраному' : 'Додати в обране'}</span>
+                  </>
+                )}
               </button>
             )}
           </div>
