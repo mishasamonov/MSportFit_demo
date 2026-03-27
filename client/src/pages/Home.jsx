@@ -9,6 +9,7 @@ import {
   IconFlame,
   IconMacros,
 } from '../components/HomeIcons';
+import exercisesCatalogPreview from '../assets/previews/exercises-catalog-preview.png';
 import './Home.css';
 
 const ADVANTAGES = [
@@ -55,11 +56,13 @@ const PROGRAMS_PREVIEW = [
   },
 ];
 
-const EXERCISES_PREVIEW = [
-  { title: 'Присідання зі штангою', muscleGroup: 'Ноги' },
-  { title: 'Жим лежачи', muscleGroup: 'Груди' },
-  { title: 'Станова тяга', muscleGroup: 'Спина' },
-  { title: 'Підтягування', muscleGroup: 'Спина' },
+const EXERCISES_BENEFIT_CHIPS = [
+  'Для залу та вулиці',
+  'З інвентарем і без нього',
+  'Зручний пошук і фільтри',
+  'Техніка виконання',
+  'Типові помилки',
+  'Поради та застереження',
 ];
 
 const PRODUCTS_PREVIEW = [
@@ -213,27 +216,47 @@ function Home() {
         </div>
       </section>
 
-      <section className="home-exercises">
+      <section className="home-exercises" aria-labelledby="home-exercises-heading">
         <div className="home-container">
-          <div className="home-section-header">
-            <div>
-              <h2 className="home-section-title">Бібліотека вправ</h2>
-              <p className="home-section-subtitle">Навчайтеся правильній техніці</p>
-            </div>
-            <Link to="/exercises" className="home-section-link">
-              Всі вправи <span aria-hidden="true">&rarr;</span>
-            </Link>
-          </div>
-          <div className="home-exercises__grid">
-            {EXERCISES_PREVIEW.map((exercise) => (
-              <Link to="/exercises" className="home-exercises__card" key={exercise.title}>
-                <div className="home-exercises__media" />
-                <div className="home-exercises__body">
-                  <h3 className="home-exercises__card-title">{exercise.title}</h3>
-                  <span className="home-exercises__tag">{exercise.muscleGroup}</span>
-                </div>
+          <div className="home-exercises__layout">
+            <div className="home-exercises__content">
+              <h2 className="home-exercises__title" id="home-exercises-heading">
+                Каталог вправ
+              </h2>
+              <p className="home-exercises__lead">
+                Знаходьте вправи за м&apos;язовою групою, рівнем підготовки та обладнанням.
+                Переглядайте техніку виконання, важливі поради й типові помилки.
+              </p>
+              <ul className="home-exercises__chips" aria-label="Переваги каталогу вправ">
+                {EXERCISES_BENEFIT_CHIPS.map((label) => (
+                  <li key={label} className="home-exercises__chip">
+                    {label}
+                  </li>
+                ))}
+              </ul>
+              <Link to="/exercises" className="home-exercises__cta">
+                Перейти до каталогу вправ <span aria-hidden="true">&rarr;</span>
               </Link>
-            ))}
+            </div>
+
+            <div className="home-exercises__preview">
+              <Link
+                to="/exercises"
+                className="home-exercises__preview-link"
+                aria-label="Відкрити каталог вправ — попередній перегляд інтерфейсу"
+              >
+                <span className="home-exercises__preview-frame">
+                  <img
+                    className="home-exercises__preview-img"
+                    src={exercisesCatalogPreview}
+                    alt="Сторінка каталогу вправ: пошук, фільтри та картки вправ"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span className="home-exercises__preview-overlay" aria-hidden="true" />
+                </span>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
