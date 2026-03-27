@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext.jsx';
 import {
   IconPrograms,
   IconExercises,
@@ -128,6 +129,8 @@ const CALC_ICONS = {
 };
 
 function Home() {
+  const { isAuthed } = useAuth();
+
   return (
     <div className="home-page">
       <section className="home-hero">
@@ -314,14 +317,21 @@ function Home() {
       <section className="home-cta">
         <div className="home-container">
           <div className="home-cta__card">
-            <h2 className="home-cta__title">Готові почати свій шлях?</h2>
+            <h2 className="home-cta__title">
+              {isAuthed ? 'Продовжуйте свій шлях' : 'Готові почати свій шлях?'}
+            </h2>
             <p className="home-cta__text">
-              Створіть акаунт, щоб зберігати улюблені програми та вправи, відстежувати харчування і
-              користуватися фітнес-калькуляторами для планування тренувань
+              {isAuthed
+                ? 'Оберіть програму тренувань, керуйте обраним та використовуйте калькулятори для планування тренувань і харчування.'
+                : 'Створіть акаунт, щоб зберігати улюблені програми та вправи, відстежувати харчування і користуватися фітнес-калькуляторами для планування тренувань'}
             </p>
             <div className="home-cta__actions">
-              <Link to="/register" className="home-cta__btn home-cta__btn--primary">
-                Створити акаунт <span aria-hidden="true">&rarr;</span>
+              <Link
+                to={isAuthed ? '/programs' : '/register'}
+                className="home-cta__btn home-cta__btn--primary"
+              >
+                {isAuthed ? 'До програм тренувань' : 'Створити акаунт'}{' '}
+                <span aria-hidden="true">&rarr;</span>
               </Link>
               <Link to="/faq" className="home-cta__btn home-cta__btn--secondary">
                 Часті запитання
