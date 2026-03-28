@@ -120,7 +120,7 @@ function Faq() {
 
   return (
     <div className="faq-page">
-      <section className="faq-hero">
+      <section className="faq-hero faq-hero--centered">
         <div className="faq-hero__glow" />
         <div className="faq-hero__content">
           <div className="faq-hero__icon-box">

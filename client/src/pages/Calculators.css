@@ -64,6 +64,28 @@
   max-width: 560px;
 }
 
+.calc-hero--centered {
+  padding-bottom: 2.75rem;
+}
+
+.calc-hero--centered .calc-hero__content {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.35rem;
+}
+
+.calc-hero--centered .calc-hero__content > div:not(.calc-hero__icon-box) {
+  width: 100%;
+  max-width: 36rem;
+  margin-inline: auto;
+}
+
+.calc-hero--centered .calc-hero__subtitle {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* ===== BODY CONTAINER ===== */
 
 .calc-body {

@@ -307,7 +307,7 @@ function Calculators() {
   return (
     <div className="calc-page">
       {/* ── HERO ── */}
-      <section className="calc-hero">
+      <section className="calc-hero calc-hero--centered">
         <div className="calc-hero__glow" />
         <div className="calc-hero__content">
           <div className="calc-hero__icon-box">
