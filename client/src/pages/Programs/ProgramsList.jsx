@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { PROGRAM_CARD_COVER_BY_SLUG } from '../../data/programCardCovers.js';
 import './ProgramsList.css';
 
 const PROGRAMS = [
@@ -52,6 +53,11 @@ function ProgramsList() {
             {PROGRAMS.map((program) => (
               <article className="program-card" key={program.slug}>
                 <div className="program-card__media">
+                  <img
+                    className="program-card__media-img"
+                    src={PROGRAM_CARD_COVER_BY_SLUG[program.slug]}
+                    alt=""
+                  />
                   <span className="program-card__chip">{program.duration}</span>
                 </div>
 

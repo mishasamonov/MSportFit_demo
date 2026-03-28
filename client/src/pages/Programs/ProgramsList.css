@@ -11,7 +11,7 @@
 
 .programs-hero {
   position: relative;
-  padding: 5rem 1.5rem 3.5rem;
+  padding: 4rem 1.5rem 3.5rem;
   text-align: center;
   overflow: hidden;
 }
@@ -98,32 +98,42 @@
 
 .program-card__media {
   position: relative;
-  height: 180px;
-  background: linear-gradient(135deg, #2a2a30, var(--color-surface));
+  width: 100%;
+  aspect-ratio: 5 / 3;
+  overflow: hidden;
+  background: var(--color-surface);
 }
 
-.program-card:nth-child(1) .program-card__media {
-  background: linear-gradient(
-    135deg,
-    #2d2520 0%,
-    #1e1a18 60%,
-    var(--color-surface)
-  );
+.program-card__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent 62%, rgba(0, 0, 0, 0.26) 100%);
+  border-radius: inherit;
 }
 
-.program-card:nth-child(2) .program-card__media {
-  background: linear-gradient(
-    135deg,
-    #1e2530 0%,
-    #181c22 60%,
-    var(--color-surface)
-  );
+.program-card__media-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.programs-grid > .program-card:nth-child(1) .program-card__media-img {
+  object-position: 72% 42%;
+}
+
+.programs-grid > .program-card:nth-child(2) .program-card__media-img {
+  object-position: 32% 42%;
 }
 
 .program-card__chip {
   position: absolute;
   top: 0.75rem;
   right: 0.75rem;
+  z-index: 1;
   padding: 0.25rem 0.7rem;
   font-size: 0.75rem;
   font-weight: 600;
@@ -254,7 +264,7 @@
 
 @media (max-width: 768px) {
   .programs-hero {
-    padding: 3.5rem 1rem 2.5rem;
+    padding: 3rem 1rem 2.5rem;
   }
 
   .programs-hero__title {

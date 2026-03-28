@@ -74,6 +74,7 @@
 
 .home-section-link:hover span,
 .home-calcs__card:hover .home-calcs__card-link span,
+.home-programs__card:hover .home-programs__card-cta span,
 .home-hero__btn:hover span,
 .home-exercises__cta:hover span,
 .home-cta__btn:hover span {
@@ -303,32 +304,43 @@
 
 .home-programs__media {
   position: relative;
-  height: 220px;
-  background: linear-gradient(135deg, #2a2a30, var(--color-surface));
+  width: 100%;
+  aspect-ratio: 8 / 5;
+  overflow: hidden;
+  background: var(--color-surface);
 }
 
-.home-programs__card:nth-child(1) .home-programs__media {
-  background: linear-gradient(
-    135deg,
-    #2d2520 0%,
-    #1e1a18 60%,
-    var(--color-surface)
-  );
+.home-programs__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent 62%, rgba(0, 0, 0, 0.26) 100%);
+  border-radius: inherit;
 }
 
-.home-programs__card:nth-child(2) .home-programs__media {
-  background: linear-gradient(
-    135deg,
-    #1e2530 0%,
-    #181c22 60%,
-    var(--color-surface)
-  );
+.home-programs__media-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Набір маси: фокус праворуч; Схуднення: фокус ліворуч (відповідає композиції фото) */
+.home-programs__grid > .home-programs__card:nth-child(1) .home-programs__media-img {
+  object-position: 72% 42%;
+}
+
+.home-programs__grid > .home-programs__card:nth-child(2) .home-programs__media-img {
+  object-position: 32% 42%;
 }
 
 .home-programs__chip {
   position: absolute;
   top: 0.75rem;
   right: 0.75rem;
+  z-index: 1;
   padding: 0.25rem 0.65rem;
   font-size: 0.75rem;
   font-weight: 600;
@@ -358,6 +370,13 @@
   flex: 1;
 }
 
+.home-programs__footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
 .home-programs__meta {
   display: flex;
   gap: 0.5rem;
@@ -371,6 +390,52 @@
   background: var(--color-surface-elevated);
   color: var(--color-text-secondary);
   border: 1px solid var(--color-border);
+}
+
+.home-programs__card-cta {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 0.4rem;
+  padding: 0.38rem 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--color-text-secondary);
+  background: rgba(232, 99, 10, 0.06);
+  border: 1px solid rgba(232, 99, 10, 0.22);
+  border-radius: 100px;
+  transition:
+    color 0.2s,
+    background 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.home-programs__card:hover .home-programs__card-cta {
+  color: var(--color-accent);
+  background: rgba(232, 99, 10, 0.11);
+  border-color: rgba(232, 99, 10, 0.4);
+  box-shadow: 0 0 0 1px rgba(232, 99, 10, 0.12);
+}
+
+.home-programs__card:focus-visible .home-programs__card-cta {
+  color: var(--color-accent);
+  background: rgba(232, 99, 10, 0.12);
+  border-color: rgba(232, 99, 10, 0.5);
+  box-shadow: 0 0 0 3px rgba(232, 99, 10, 0.22);
+}
+
+.home-programs__card-cta span {
+  display: inline-block;
+  color: var(--color-accent);
+  opacity: 0.88;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.home-programs__card:hover .home-programs__card-cta span,
+.home-programs__card:focus-visible .home-programs__card-cta span {
+  opacity: 1;
 }
 
 /* ── Exercises (catalog feature block) ── */

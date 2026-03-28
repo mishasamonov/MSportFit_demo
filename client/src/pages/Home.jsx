@@ -10,6 +10,7 @@ import {
   IconMacros,
 } from '../components/HomeIcons';
 import exercisesCatalogPreview from '../assets/previews/exercises-catalog-preview.png';
+import { PROGRAM_CARD_COVER_BY_SLUG } from '../data/programCardCovers.js';
 import './Home.css';
 
 const ADVANTAGES = [
@@ -42,8 +43,7 @@ const PROGRAMS_PREVIEW = [
     description:
       'Комплексна силова програма з прогресивним навантаженням для нарощування м\u2019язів',
     duration: '8 тижнів',
-    level: 'Середній',
-    goal: 'Маса',
+    footerChips: ['Середній рівень', '2–4 дні/тиждень', 'Upper/Lower split'],
   },
   {
     slug: 'weight-loss',
@@ -51,8 +51,7 @@ const PROGRAMS_PREVIEW = [
     description:
       'Поєднання кардіо та силових тренувань для жироспалювання зі збереженням м\u2019язів',
     duration: '10 тижнів',
-    level: 'Початковий',
-    goal: 'Схуднення',
+    footerChips: ['Початковий рівень', '2–4 дні/тиждень', 'Кардіо + силові'],
   },
 ];
 
@@ -200,14 +199,27 @@ function Home() {
                 key={program.title}
               >
                 <div className="home-programs__media">
+                  <img
+                    className="home-programs__media-img"
+                    src={PROGRAM_CARD_COVER_BY_SLUG[program.slug]}
+                    alt=""
+                  />
                   <span className="home-programs__chip">{program.duration}</span>
                 </div>
                 <div className="home-programs__body">
                   <h3 className="home-programs__card-title">{program.title}</h3>
                   <p className="home-programs__card-desc">{program.description}</p>
-                  <div className="home-programs__meta">
-                    <span className="home-programs__tag">{program.level}</span>
-                    <span className="home-programs__tag">{program.goal}</span>
+                  <div className="home-programs__footer">
+                    <div className="home-programs__meta" aria-label="Коротко про програму">
+                      {program.footerChips.map((label) => (
+                        <span className="home-programs__tag" key={`${program.slug}-${label}`}>
+                          {label}
+                        </span>
+                      ))}
+                    </div>
+                    <span className="home-programs__card-cta">
+                      Переглянути план <span aria-hidden="true">&rarr;</span>
+                    </span>
                   </div>
                 </div>
               </Link>
