@@ -50,44 +50,54 @@ function ProgramsList() {
       <section className="programs-list">
         <div className="programs-container">
           <div className="programs-grid">
-            {PROGRAMS.map((program) => (
-              <article className="program-card" key={program.slug}>
-                <div className="program-card__media">
-                  <img
-                    className="program-card__media-img"
-                    src={PROGRAM_CARD_COVER_BY_SLUG[program.slug]}
-                    alt=""
-                  />
-                  <span className="program-card__chip">{program.duration}</span>
-                </div>
-
-                <div className="program-card__body">
-                  <h2 className="program-card__title">{program.title}</h2>
-                  <p className="program-card__desc">{program.description}</p>
-
-                  <ul className="program-card__benefits">
-                    {program.benefits.map((b) => (
-                      <li key={b} className="program-card__benefit">
-                        {b}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="program-card__meta">
-                    <span className="program-card__tag">{program.level}</span>
-                    {program.daysPerWeek.map((d) => (
-                      <span key={d} className="program-card__tag program-card__tag--days">
-                        {d} дн/тижд
-                      </span>
-                    ))}
+            {PROGRAMS.map((program) => {
+              const titleId = `program-title-${program.slug}`;
+              return (
+                <Link
+                  key={program.slug}
+                  to={`/programs/${program.slug}`}
+                  className="program-card program-card--link"
+                  aria-labelledby={titleId}
+                >
+                  <div className="program-card__media">
+                    <img
+                      className="program-card__media-img"
+                      src={PROGRAM_CARD_COVER_BY_SLUG[program.slug]}
+                      alt=""
+                    />
+                    <span className="program-card__chip">{program.duration}</span>
                   </div>
 
-                  <Link to={`/programs/${program.slug}`} className="program-card__cta">
-                    Переглянути програму <span aria-hidden="true">&rarr;</span>
-                  </Link>
-                </div>
-              </article>
-            ))}
+                  <div className="program-card__body">
+                    <h2 className="program-card__title" id={titleId}>
+                      {program.title}
+                    </h2>
+                    <p className="program-card__desc">{program.description}</p>
+
+                    <ul className="program-card__benefits">
+                      {program.benefits.map((b) => (
+                        <li key={b} className="program-card__benefit">
+                          {b}
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="program-card__meta">
+                      <span className="program-card__tag">{program.level}</span>
+                      {program.daysPerWeek.map((d) => (
+                        <span key={d} className="program-card__tag program-card__tag--days">
+                          {d} дн/тижд
+                        </span>
+                      ))}
+                    </div>
+
+                    <span className="program-card__cta">
+                      Переглянути програму <span aria-hidden="true">&rarr;</span>
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>

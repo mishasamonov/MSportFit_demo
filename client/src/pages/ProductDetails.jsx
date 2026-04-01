@@ -427,7 +427,7 @@ function ProductDetails() {
                 )}
               </p>
             </div>
-            <Link to="/favorites" className="pd-fav-strip__link">
+            <Link to="/favorites?tab=products" className="pd-fav-strip__link">
               {isAuthed ? 'Моє обране' : 'До розділу'}
               <span className="pd-fav-strip__arrow" aria-hidden="true">
                 →

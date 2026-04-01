@@ -88,6 +88,16 @@
     box-shadow 0.25s;
 }
 
+a.program-card--link {
+  text-decoration: none;
+  color: inherit;
+  outline-offset: 3px;
+}
+
+a.program-card--link:focus-visible {
+  outline: 2px solid var(--color-accent);
+}
+
 .program-card:hover {
   border-color: rgba(232, 99, 10, 0.2);
   transform: translateY(-4px);
@@ -245,7 +255,7 @@
     transform 0.15s;
 }
 
-.program-card__cta:hover {
+.program-card--link:hover .program-card__cta {
   background: var(--color-accent-hover);
   border-color: var(--color-accent-hover);
   transform: translateY(-1px);
@@ -256,7 +266,7 @@
   transition: transform 0.2s;
 }
 
-.program-card__cta:hover span {
+.program-card--link:hover .program-card__cta span {
   transform: translateX(3px);
 }
 

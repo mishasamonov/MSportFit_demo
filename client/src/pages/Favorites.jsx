@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { apiFetch } from '../lib/api';
 import { IconFlame } from '../components/HomeIcons';
 import './Exercises.css';
@@ -39,6 +39,10 @@ function HeartIcon() {
 }
 
 function Favorites() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tabQuery = searchParams.get('tab');
+  const tabFromUrl = tabQuery === TAB_PROD ? TAB_PROD : tabQuery === TAB_EX ? TAB_EX : null;
+
   const [products, setProducts] = useState([]);
   const [exercises, setExercises] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -47,6 +51,11 @@ function Favorites() {
   const [removingEx, setRemovingEx] = useState(() => new Set());
   const [removingProd, setRemovingProd] = useState(() => new Set());
   const tabInitRef = useRef(false);
+
+  const selectTab = (tab) => {
+    setActiveTab(tab);
+    setSearchParams({ tab }, { replace: true });
+  };
 
   const loadFavorites = useCallback(async () => {
     try {
@@ -82,14 +91,24 @@ function Favorites() {
   }, [loadFavorites]);
 
   useEffect(() => {
+    if (tabFromUrl) {
+      setActiveTab(tabFromUrl);
+    }
+  }, [tabFromUrl]);
+
+  useEffect(() => {
     if (loading) return;
+    if (tabFromUrl) {
+      tabInitRef.current = true;
+      return;
+    }
     if (!tabInitRef.current) {
       tabInitRef.current = true;
       if (exercises.length === 0 && products.length > 0) {
         setActiveTab(TAB_PROD);
       }
     }
-  }, [loading, exercises.length, products.length]);
+  }, [loading, exercises.length, products.length, tabFromUrl]);
 
   const handleRemoveExercise = async (exerciseId, e) => {
     e.preventDefault();
@@ -208,7 +227,7 @@ function Favorites() {
                 aria-selected={activeTab === TAB_EX}
                 aria-controls="fav-panel-ex"
                 className={`fav-tabs__btn${activeTab === TAB_EX ? ' fav-tabs__btn--active' : ''}`}
-                onClick={() => setActiveTab(TAB_EX)}
+                onClick={() => selectTab(TAB_EX)}
               >
                 Вправи{exCountLabel}
               </button>
@@ -219,7 +238,7 @@ function Favorites() {
                 aria-selected={activeTab === TAB_PROD}
                 aria-controls="fav-panel-prod"
                 className={`fav-tabs__btn${activeTab === TAB_PROD ? ' fav-tabs__btn--active' : ''}`}
-                onClick={() => setActiveTab(TAB_PROD)}
+                onClick={() => selectTab(TAB_PROD)}
               >
                 Продукти{prodCountLabel}
               </button>
