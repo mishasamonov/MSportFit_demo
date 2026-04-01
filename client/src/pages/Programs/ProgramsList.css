@@ -65,6 +65,7 @@
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 1.5rem;
+  animation: msf-page-main-enter 0.26s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .programs-grid {
@@ -287,5 +288,11 @@ a.program-card--link:focus-visible {
 
   .programs-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .programs-container {
+    animation: none;
   }
 }

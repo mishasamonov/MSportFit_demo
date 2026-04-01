@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { apiFetch } from '../lib/api';
@@ -32,7 +32,7 @@ function Exercises() {
   const [error, setError] = useState(null);
   const { isAuthed } = useAuth();
   const [favoriteIds, setFavoriteIds] = useState(new Set());
-  const [favToggling, setFavToggling] = useState(new Set());
+  const favInflightRef = useRef(new Set());
 
   const currentSearch = searchParams.get('search') || '';
   const currentMuscleGroup = searchParams.get('muscleGroup') || '';
@@ -107,9 +107,8 @@ function Exercises() {
   const handleToggleFavorite = async (exerciseId, e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!isAuthed || favToggling.has(exerciseId)) return;
-
-    setFavToggling((prev) => new Set(prev).add(exerciseId));
+    if (!isAuthed || favInflightRef.current.has(exerciseId)) return;
+    favInflightRef.current.add(exerciseId);
 
     const wasFavorite = favoriteIds.has(exerciseId);
     setFavoriteIds((prev) => {
@@ -130,11 +129,7 @@ function Exercises() {
         return next;
       });
     } finally {
-      setFavToggling((prev) => {
-        const next = new Set(prev);
-        next.delete(exerciseId);
-        return next;
-      });
+      favInflightRef.current.delete(exerciseId);
     }
   };
 
@@ -296,7 +291,6 @@ function Exercises() {
                         type="button"
                         className={`ex-card__fav-btn${favoriteIds.has(exercise.id) ? ' ex-card__fav-btn--active' : ''}`}
                         onClick={(e) => handleToggleFavorite(exercise.id, e)}
-                        disabled={favToggling.has(exercise.id)}
                         aria-label={
                           favoriteIds.has(exercise.id) ? 'Прибрати з обраного' : 'Додати в обране'
                         }

@@ -455,7 +455,11 @@ function Calculators() {
                         <div
                           key={cat.id}
                           className={`calc-bmi-scale__item${bmiScaleId === cat.id ? ' calc-bmi-scale__item--active' : ''}`}
-                          style={{ '--scale-color': cat.color }}
+                          style={
+                            /** @type {import('react').CSSProperties} */ (
+                              Object.assign({}, { '--scale-color': cat.color })
+                            )
+                          }
                         >
                           <span className="calc-bmi-scale__range">{cat.range}</span>
                           <span className="calc-bmi-scale__label">{cat.label}</span>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useBackOrNavigate } from '../hooks/useBackOrNavigate.js';
 import { useAuth } from '../context/AuthContext.jsx';
@@ -49,8 +49,8 @@ function ProductDetails() {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [favoriteLoading, setFavoriteLoading] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const favoriteReqRef = useRef(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -124,21 +124,25 @@ function ProductDetails() {
   }, [id, isAuthed]);
 
   const handleToggleFavorite = async () => {
-    if (!product || !isAuthed || favoriteLoading) return;
+    if (!product || !isAuthed || favoriteReqRef.current) return;
 
-    setFavoriteLoading(true);
+    const prevFavorite = isFavorite;
+    const nextFavorite = !prevFavorite;
+    setIsFavorite(nextFavorite);
+    favoriteReqRef.current = true;
+
     try {
-      const method = isFavorite ? 'DELETE' : 'POST';
+      const method = nextFavorite ? 'POST' : 'DELETE';
       const res = await apiFetch(`/api/favorites/products/${id}`, { method });
       if (!res.ok) {
         throw new Error('Не вдалося оновити обране');
       }
-      setIsFavorite(!isFavorite);
     } catch (err) {
+      setIsFavorite(prevFavorite);
       console.error('Toggle favorite product error', err);
       alert(err.message || 'Помилка оновлення обраного');
     } finally {
-      setFavoriteLoading(false);
+      favoriteReqRef.current = false;
     }
   };
 
@@ -255,18 +259,11 @@ function ProductDetails() {
                     type="button"
                     className={`pd-hero__fav-btn${isFavorite ? ' pd-hero__fav-btn--active' : ''}`}
                     onClick={handleToggleFavorite}
-                    disabled={favoriteLoading}
                     aria-pressed={isFavorite}
                     aria-label={isFavorite ? 'Прибрати з обраного' : 'Додати в обране'}
                   >
-                    {favoriteLoading ? (
-                      'Оновлення…'
-                    ) : (
-                      <>
-                        <IconHeart filled={isFavorite} className="pd-hero__fav-heart" />
-                        <span>{isFavorite ? 'В обраному' : 'Додати в обране'}</span>
-                      </>
-                    )}
+                    <IconHeart filled={isFavorite} className="pd-hero__fav-heart" />
+                    <span>{isFavorite ? 'В обраному' : 'Додати в обране'}</span>
                   </button>
                 )}
               </div>

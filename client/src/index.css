@@ -17,6 +17,29 @@
   --max-width: 1200px;
 }
 
+html {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+@keyframes msf-page-main-enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 body {
   margin: 0;
   min-width: 320px;

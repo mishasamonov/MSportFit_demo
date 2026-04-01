@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { apiFetch } from '../lib/api';
@@ -30,7 +30,7 @@ function Products() {
   const [error, setError] = useState(null);
   const { isAuthed } = useAuth();
   const [favoriteIds, setFavoriteIds] = useState(new Set());
-  const [favToggling, setFavToggling] = useState(new Set());
+  const favInflightRef = useRef(new Set());
 
   const currentSearch = searchParams.get('search') || '';
   const currentCategory = searchParams.get('category') || '';
@@ -110,9 +110,8 @@ function Products() {
   const handleToggleFavorite = async (productId, e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!isAuthed || favToggling.has(productId)) return;
-
-    setFavToggling((prev) => new Set(prev).add(productId));
+    if (!isAuthed || favInflightRef.current.has(productId)) return;
+    favInflightRef.current.add(productId);
 
     const wasFavorite = favoriteIds.has(productId);
     setFavoriteIds((prev) => {
@@ -133,11 +132,7 @@ function Products() {
         return next;
       });
     } finally {
-      setFavToggling((prev) => {
-        const next = new Set(prev);
-        next.delete(productId);
-        return next;
-      });
+      favInflightRef.current.delete(productId);
     }
   };
 
@@ -260,7 +255,6 @@ function Products() {
                         type="button"
                         className={`prod-card__fav-btn${favoriteIds.has(product.id) ? ' prod-card__fav-btn--active' : ''}`}
                         onClick={(e) => handleToggleFavorite(product.id, e)}
-                        disabled={favToggling.has(product.id)}
                         aria-label={
                           favoriteIds.has(product.id) ? 'Прибрати з обраного' : 'Додати в обране'
                         }

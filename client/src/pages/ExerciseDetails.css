@@ -5,6 +5,7 @@
   background: var(--color-bg);
   color: var(--color-text);
   overflow: hidden;
+  min-height: calc(100vh + 3rem);
 }
 
 /* ── Hero section ── */

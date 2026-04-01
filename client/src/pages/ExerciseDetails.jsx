@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useBackOrNavigate } from '../hooks/useBackOrNavigate.js';
 import { useAuth } from '../context/AuthContext.jsx';
@@ -180,9 +180,9 @@ function ExerciseDetails() {
   const [exercise, setExercise] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [favoriteLoading, setFavoriteLoading] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [source, setSource] = useState(null);
+  const favoriteReqRef = useRef(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -268,21 +268,25 @@ function ExerciseDetails() {
   }, [exercise, isAuthed, source]);
 
   const handleToggleFavorite = async () => {
-    if (!exercise || !isAuthed || favoriteLoading || source !== 'api') return;
+    if (!exercise || !isAuthed || source !== 'api' || favoriteReqRef.current) return;
 
-    setFavoriteLoading(true);
+    const prevFavorite = isFavorite;
+    const nextFavorite = !prevFavorite;
+    setIsFavorite(nextFavorite);
+    favoriteReqRef.current = true;
+
     try {
-      const method = isFavorite ? 'DELETE' : 'POST';
+      const method = nextFavorite ? 'POST' : 'DELETE';
       const res = await apiFetch(`/api/favorites/exercises/${exercise.id}`, { method });
       if (!res.ok) {
         throw new Error('Не вдалося оновити обране');
       }
-      setIsFavorite(!isFavorite);
     } catch (err) {
+      setIsFavorite(prevFavorite);
       console.error('Toggle favorite exercise error', err);
       alert(err.message || 'Помилка оновлення обраного');
     } finally {
-      setFavoriteLoading(false);
+      favoriteReqRef.current = false;
     }
   };
 
@@ -380,18 +384,11 @@ function ExerciseDetails() {
                 type="button"
                 className={`ed-hero__fav-btn${isFavorite ? ' ed-hero__fav-btn--active' : ''}`}
                 onClick={handleToggleFavorite}
-                disabled={favoriteLoading}
                 aria-pressed={isFavorite}
                 aria-label={isFavorite ? 'Прибрати з обраного' : 'Додати в обране'}
               >
-                {favoriteLoading ? (
-                  'Оновлення…'
-                ) : (
-                  <>
-                    <IconHeart filled={isFavorite} className="ed-hero__fav-heart" />
-                    <span>{isFavorite ? 'В обраному' : 'Додати в обране'}</span>
-                  </>
-                )}
+                <IconHeart filled={isFavorite} className="ed-hero__fav-heart" />
+                <span>{isFavorite ? 'В обраному' : 'Додати в обране'}</span>
               </button>
             )}
           </div>
