@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useBackOrNavigate } from '../hooks/useBackOrNavigate.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import { apiFetch } from '../lib/api';
 import { IconFlame, IconHeart } from '../components/HomeIcons';
@@ -43,6 +44,7 @@ function macroSharePercents(protein, fat, carbs) {
 
 function ProductDetails() {
   const { id } = useParams();
+  const goBackToProducts = useBackOrNavigate('/products');
   const { isAuthed } = useAuth();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -155,9 +157,13 @@ function ProductDetails() {
       <div className="pd-page">
         <div className="pd-state pd-state--center">
           <p className="prod-message__text prod-message__text--error">Помилка: {error}</p>
-          <Link to="/products" className="pd-hero__back pd-hero__back--spaced">
+          <button
+            type="button"
+            className="pd-hero__back pd-hero__back--spaced"
+            onClick={goBackToProducts}
+          >
             ← До каталогу продуктів
-          </Link>
+          </button>
         </div>
       </div>
     );
@@ -174,9 +180,13 @@ function ProductDetails() {
           <p className="prod-empty__text">
             Спробуйте повернутися до каталогу та обрати інший продукт.
           </p>
-          <Link to="/products" className="pd-hero__back pd-hero__back--spaced">
+          <button
+            type="button"
+            className="pd-hero__back pd-hero__back--spaced"
+            onClick={goBackToProducts}
+          >
             ← До каталогу продуктів
-          </Link>
+          </button>
         </div>
       </div>
     );
@@ -204,9 +214,9 @@ function ProductDetails() {
       <section className="pd-hero" aria-labelledby="pd-product-title">
         <div className="pd-hero__glow" aria-hidden="true" />
         <div className="pd-hero__inner">
-          <Link to="/products" className="pd-hero__back">
+          <button type="button" className="pd-hero__back" onClick={goBackToProducts}>
             ← До каталогу продуктів
-          </Link>
+          </button>
 
           <div className="pd-hero__head">
             <div className="pd-hero__head-main">

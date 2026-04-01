@@ -65,6 +65,15 @@
   color: var(--color-accent);
 }
 
+button.pd-hero__back {
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  background: none;
+}
+
 .pd-hero__back--spaced {
   margin-top: 1rem;
   justify-content: center;

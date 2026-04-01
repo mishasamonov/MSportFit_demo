@@ -2,14 +2,14 @@ import { Outlet, Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import logoNavbar from '../assets/brand/logo-navbar.png';
 import Footer from './Footer';
-import ScrollToTop from './ScrollToTop';
+import ScrollRestoration from './ScrollRestoration';
 
 function Layout() {
   const { isAuthed, logout } = useAuth();
 
   return (
     <div className="layout">
-      <ScrollToTop />
+      <ScrollRestoration />
       <header className="header">
         <div className="header__inner">
           <Link to="/" className="header__brand">

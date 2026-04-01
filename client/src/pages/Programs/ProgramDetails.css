@@ -35,6 +35,15 @@
   color: var(--color-accent);
 }
 
+button.pd-hero__back {
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  background: none;
+}
+
 .pd-hero__title {
   font-size: 2.75rem;
   font-weight: 800;

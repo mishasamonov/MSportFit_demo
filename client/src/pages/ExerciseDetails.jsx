@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { useBackOrNavigate } from '../hooks/useBackOrNavigate.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import { apiFetch } from '../lib/api';
 import { getExerciseFallback, resolveExerciseSlug } from '../data/exerciseDetailsMap';
@@ -174,7 +175,7 @@ function EquipmentSection({ equipment }) {
 
 function ExerciseDetails() {
   const { id } = useParams();
-  const navigate = useNavigate();
+  const goBackOrExercises = useBackOrNavigate('/exercises');
   const { isAuthed } = useAuth();
   const [exercise, setExercise] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -329,7 +330,7 @@ function ExerciseDetails() {
     <div className="ed-page">
       <section className="ed-hero">
         <div className="ed-hero__inner">
-          <button type="button" className="ed-hero__back" onClick={() => navigate(-1)}>
+          <button type="button" className="ed-hero__back" onClick={goBackOrExercises}>
             &larr; Назад
           </button>
 

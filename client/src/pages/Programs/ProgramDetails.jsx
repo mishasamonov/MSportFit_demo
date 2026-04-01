@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { useBackOrNavigate } from '../../hooks/useBackOrNavigate.js';
 import {
   getProgramBySlug,
   getProgramScheduleHints,
@@ -12,15 +13,43 @@ import './ProgramDetails.css';
 const DAY_OPTIONS = [2, 3, 4];
 const WEEK_OPTIONS = ['A', 'B'];
 
-function NotFound() {
+function defaultDaysForProgram(trainingDays) {
+  if (trainingDays[3]) return 3;
+  const first = DAY_OPTIONS.find((d) => trainingDays[d]);
+  return first ?? 3;
+}
+
+function parseDaysParam(raw, trainingDays) {
+  const n = Number.parseInt(String(raw ?? ''), 10);
+  if (DAY_OPTIONS.includes(n) && trainingDays[n]) return n;
+  return defaultDaysForProgram(trainingDays);
+}
+
+function parseWeekParam(raw, hasWeeks) {
+  if (!hasWeeks) return 'A';
+  const w = String(raw ?? 'a')
+    .trim()
+    .toLowerCase();
+  return w === 'b' ? 'B' : 'A';
+}
+
+function parseDayIndexParam(raw, daysLength) {
+  if (daysLength < 1) return 0;
+  const n = Number.parseInt(String(raw ?? ''), 10);
+  if (!Number.isFinite(n) || n < 1) return 0;
+  if (n > daysLength) return daysLength - 1;
+  return n - 1;
+}
+
+function NotFound({ onBackToPrograms }) {
   return (
     <div className="pd-page">
       <div className="pd-not-found">
         <h1 className="pd-not-found__title">Програму не знайдено</h1>
         <p className="pd-not-found__text">Такої програми не існує або вона була видалена.</p>
-        <Link to="/programs" className="pd-btn pd-btn--primary">
+        <button type="button" className="pd-btn pd-btn--primary" onClick={onBackToPrograms}>
           Повернутись до програм
-        </Link>
+        </button>
       </div>
     </div>
   );
@@ -326,31 +355,74 @@ function TrainingDaysSection({
 
 function ProgramDetails() {
   const { id } = useParams();
-  const [activeDays, setActiveDays] = useState(3);
-  const [activeWeek, setActiveWeek] = useState('A');
-  const [selectedDayIndex, setSelectedDayIndex] = useState(0);
-
-  const handleChangeDays = (days) => {
-    setActiveDays(days);
-    setSelectedDayIndex(0);
-  };
-
-  const handleChangeWeek = (week) => {
-    setActiveWeek(week);
-    setSelectedDayIndex(0);
-  };
+  const [searchParams, setSearchParams] = useSearchParams();
+  const goBackToPrograms = useBackOrNavigate('/programs');
 
   const program = getProgramBySlug(id);
 
-  if (!program) return <NotFound />;
+  if (!program) return <NotFound onBackToPrograms={goBackToPrograms} />;
+
+  const trainingDaysMap = program.trainingDays;
+  const activeDays = parseDaysParam(searchParams.get('days'), trainingDaysMap);
+  const variant = trainingDaysMap[activeDays];
+  const activeWeek = parseWeekParam(searchParams.get('week'), variant?.hasWeeks);
+  const days =
+    variant?.hasWeeks && activeWeek === 'B'
+      ? variant.weekB
+      : variant?.hasWeeks
+        ? variant.weekA
+        : (variant?.days ?? []);
+  const selectedDayIndex = parseDayIndexParam(searchParams.get('day'), days.length);
+
+  const handleChangeDays = (nextDays) => {
+    setSearchParams(
+      (prev) => {
+        const p = new URLSearchParams(prev);
+        p.set('days', String(nextDays));
+        p.set('day', '1');
+        const v = trainingDaysMap[nextDays];
+        if (v?.hasWeeks) {
+          const cur = String(p.get('week') ?? 'a').toLowerCase();
+          p.set('week', cur === 'b' ? 'b' : 'a');
+        } else {
+          p.delete('week');
+        }
+        return p;
+      },
+      { replace: true },
+    );
+  };
+
+  const handleChangeWeek = (week) => {
+    setSearchParams(
+      (prev) => {
+        const p = new URLSearchParams(prev);
+        p.set('week', week === 'B' ? 'b' : 'a');
+        p.set('day', '1');
+        return p;
+      },
+      { replace: true },
+    );
+  };
+
+  const handleSelectDay = (idx) => {
+    setSearchParams(
+      (prev) => {
+        const p = new URLSearchParams(prev);
+        p.set('day', String(idx + 1));
+        return p;
+      },
+      { replace: true },
+    );
+  };
 
   return (
     <div className="pd-page">
       <section className="pd-hero">
         <div className="pd-hero__inner">
-          <Link to="/programs" className="pd-hero__back">
+          <button type="button" className="pd-hero__back" onClick={goBackToPrograms}>
             &larr; Усі програми
-          </Link>
+          </button>
           <h1 className="pd-hero__title">{program.title}</h1>
           <p className="pd-hero__desc">{program.description}</p>
           <MetaRow
@@ -400,13 +472,13 @@ function ProgramDetails() {
           activeWeek={activeWeek}
           onChangeWeek={handleChangeWeek}
           selectedDayIndex={selectedDayIndex}
-          onSelectDay={setSelectedDayIndex}
+          onSelectDay={handleSelectDay}
         />
 
         <div className="pd-cta">
-          <Link to="/programs" className="pd-btn pd-btn--primary">
+          <button type="button" className="pd-btn pd-btn--primary" onClick={goBackToPrograms}>
             &larr; Повернутись до програм
-          </Link>
+          </button>
         </div>
       </div>
     </div>
