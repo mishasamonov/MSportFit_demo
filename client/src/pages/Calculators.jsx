@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import MsportFitSelect from '../components/MsportFitSelect';
 import './Calculators.css';
 
 const TABS = {
@@ -563,18 +564,13 @@ function Calculators() {
                       <label className="calc-panel__label" htmlFor="calc-tdee-activity">
                         Рівень активності
                       </label>
-                      <select
+                      <MsportFitSelect
                         id="calc-tdee-activity"
-                        className="calc-panel__select"
+                        variant="calc"
                         value={activity}
-                        onChange={(e) => setActivity(e.target.value)}
-                      >
-                        {ACTIVITY_OPTIONS.map((opt) => (
-                          <option key={opt.value} value={opt.value}>
-                            {opt.label}
-                          </option>
-                        ))}
-                      </select>
+                        options={ACTIVITY_OPTIONS}
+                        onChange={(v) => setActivity(v)}
+                      />
                     </div>
                   </div>
 
@@ -666,7 +662,7 @@ function Calculators() {
                       </span>
                     </div>
 
-                    <div className="calc-panel__row">
+                    <div className="calc-panel__row calc-panel__row--macro-split">
                       <div className="calc-panel__field">
                         <label className="calc-panel__label" htmlFor="calc-macro-weight">
                           Вага (кг)
@@ -685,18 +681,13 @@ function Calculators() {
                         <label className="calc-panel__label" htmlFor="calc-macro-goal">
                           Мета
                         </label>
-                        <select
+                        <MsportFitSelect
                           id="calc-macro-goal"
-                          className="calc-panel__select"
+                          variant="calc"
                           value={macroGoal}
-                          onChange={(e) => handleMacroGoalChange(e.target.value)}
-                        >
-                          {MACRO_GOALS.map((g) => (
-                            <option key={g.value} value={g.value}>
-                              {g.label}
-                            </option>
-                          ))}
-                        </select>
+                          options={MACRO_GOALS}
+                          onChange={(v) => handleMacroGoalChange(v)}
+                        />
                       </div>
                     </div>
                   </div>

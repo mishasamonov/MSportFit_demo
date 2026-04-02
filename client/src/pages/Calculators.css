@@ -198,6 +198,13 @@
   gap: 1.25rem;
 }
 
+/* Мета: довгі підписи — ширша колонка під селект, вага лишається компактнішою */
+@media (min-width: 769px) {
+  .calc-panel__row--macro-split {
+    grid-template-columns: minmax(0, 0.95fr) minmax(20rem, 1.25fr);
+  }
+}
+
 .calc-panel__field {
   display: flex;
   flex-direction: column;
@@ -211,8 +218,7 @@
   letter-spacing: 0.02em;
 }
 
-.calc-panel__input,
-.calc-panel__select {
+.calc-panel__input {
   background: var(--color-surface-elevated);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
@@ -226,28 +232,21 @@
   font-family: inherit;
 }
 
-.calc-panel__input:focus,
-.calc-panel__select:focus {
+.calc-panel__input:focus {
   border-color: rgba(232, 99, 10, 0.4);
   box-shadow: 0 0 0 2px rgba(232, 99, 10, 0.1);
 }
 
+.calc-panel__field .msf-rs__container {
+  width: 100%;
+}
+
+.calc-panel__field:has(.msf-rs__container) {
+  min-width: 0;
+}
+
 .calc-panel__input::placeholder {
   color: rgba(255, 255, 255, 0.25);
-}
-
-.calc-panel__select {
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.4)' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.85rem center;
-  padding-right: 2.25rem;
-  cursor: pointer;
-}
-
-.calc-panel__select option {
-  background: var(--color-surface-elevated);
-  color: var(--color-text);
 }
 
 .calc-panel__helper {

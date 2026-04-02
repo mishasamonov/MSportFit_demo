@@ -18,7 +18,8 @@
     "msportfit-demo": "file:..",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^7.0.1"
+    "react-router-dom": "^7.0.1",
+    "react-select": "^5.10.2"
   },
   "devDependencies": {
     "@types/react": "^19.2.14",

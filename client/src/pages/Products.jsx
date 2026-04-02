@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { apiFetch } from '../lib/api';
 import { IconFlame } from '../components/HomeIcons';
+import MsportFitSelect from '../components/MsportFitSelect';
 import './Products.css';
 
 const CATEGORY_OPTIONS = [
@@ -201,18 +202,13 @@ function Products() {
             <label htmlFor="prod-filter-category" className="prod-filters__label">
               Категорія
             </label>
-            <select
+            <MsportFitSelect
               id="prod-filter-category"
+              variant="filter"
               value={currentCategory}
-              onChange={(e) => updateFilter('category', e.target.value)}
-              className="prod-filters__select"
-            >
-              {CATEGORY_OPTIONS.map((opt) => (
-                <option key={opt.value} value={opt.value}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
+              options={CATEGORY_OPTIONS}
+              onChange={(v) => updateFilter('category', v)}
+            />
           </div>
 
           {hasActiveFilters && (

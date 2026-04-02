@@ -97,8 +97,7 @@
   letter-spacing: 0.02em;
 }
 
-.ex-filters__input,
-.ex-filters__select {
+.ex-filters__input {
   padding: 0.5rem 0.7rem;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
@@ -107,14 +106,27 @@
   color: var(--color-text);
   background: var(--color-surface-elevated);
   transition: border-color 0.2s, box-shadow 0.2s;
-  appearance: auto;
 }
 
-.ex-filters__input:focus,
-.ex-filters__select:focus {
+.ex-filters__input:focus {
   outline: none;
   border-color: rgba(232, 99, 10, 0.4);
   box-shadow: 0 0 0 2px rgba(232, 99, 10, 0.1);
+}
+
+.ex-filters__group .msf-rs__container {
+  width: 100%;
+}
+
+.ex-filters__group:has(.msf-rs__container) {
+  flex: 1 1 14rem;
+  min-width: 14rem;
+  max-width: 100%;
+}
+
+.ex-filters__group.ex-filters__group--muscle-select:has(.msf-rs__container) {
+  flex: 1 1 16.5rem;
+  min-width: 16.5rem;
 }
 
 .ex-filters__input {
@@ -448,6 +460,16 @@
     min-width: 0;
   }
 
+  .ex-filters__group:has(.msf-rs__container) {
+    min-width: min(12.5rem, 100%);
+    flex: 1 1 12rem;
+  }
+
+  .ex-filters__group.ex-filters__group--muscle-select:has(.msf-rs__container) {
+    min-width: min(14.25rem, 100%);
+    flex: 1 1 13.5rem;
+  }
+
   .ex-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
@@ -471,8 +493,14 @@
     width: 100%;
   }
 
-  .ex-filters__select {
-    width: 100%;
+  .ex-filters__group:has(.msf-rs__container) {
+    min-width: 0;
+    flex: 1 1 100%;
+  }
+
+  .ex-filters__group.ex-filters__group--muscle-select:has(.msf-rs__container) {
+    min-width: 0;
+    flex: 1 1 100%;
   }
 
   .ex-card {

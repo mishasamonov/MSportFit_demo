@@ -2,11 +2,25 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { apiFetch } from '../lib/api';
+import MsportFitSelect from '../components/MsportFitSelect';
 import './Exercises.css';
 
 const MUSCLE_GROUPS = ['Груди', 'Спина', 'Ноги', 'Плечі', 'Біцепс', 'Трицепс', 'Сідниці', 'Кор'];
 const LEVELS = ['Початковий', 'Середній'];
 const EQUIPMENT = ['Без обладнання', 'Гантелі', 'Штанга', 'Тренажер', 'Турнік'];
+
+const MUSCLE_GROUP_SELECT_OPTIONS = [
+  { value: '', label: 'Усі' },
+  ...MUSCLE_GROUPS.map((g) => ({ value: g, label: g })),
+];
+const LEVEL_SELECT_OPTIONS = [
+  { value: '', label: 'Усі' },
+  ...LEVELS.map((l) => ({ value: l, label: l })),
+];
+const EQUIPMENT_SELECT_OPTIONS = [
+  { value: '', label: 'Усі' },
+  ...EQUIPMENT.map((eq) => ({ value: eq, label: eq })),
+];
 
 const FILTER_KEYS = ['search', 'muscleGroup', 'level', 'equipment'];
 
@@ -194,61 +208,44 @@ function Exercises() {
             </button>
           </form>
 
-          <div className="ex-filters__group">
+          <div className="ex-filters__group ex-filters__group--muscle-select">
             <label htmlFor="filter-muscleGroup" className="ex-filters__label">
               {"М'язова група"}
             </label>
-            <select
+            <MsportFitSelect
               id="filter-muscleGroup"
+              variant="filter"
               value={currentMuscleGroup}
-              onChange={(e) => updateFilter('muscleGroup', e.target.value)}
-              className="ex-filters__select"
-            >
-              <option value="">Усі</option>
-              {MUSCLE_GROUPS.map((g) => (
-                <option key={g} value={g}>
-                  {g}
-                </option>
-              ))}
-            </select>
+              options={MUSCLE_GROUP_SELECT_OPTIONS}
+              maxMenuHeight={420}
+              onChange={(v) => updateFilter('muscleGroup', v)}
+            />
           </div>
 
           <div className="ex-filters__group">
             <label htmlFor="filter-level" className="ex-filters__label">
               Рівень
             </label>
-            <select
+            <MsportFitSelect
               id="filter-level"
+              variant="filter"
               value={currentLevel}
-              onChange={(e) => updateFilter('level', e.target.value)}
-              className="ex-filters__select"
-            >
-              <option value="">Усі</option>
-              {LEVELS.map((l) => (
-                <option key={l} value={l}>
-                  {l}
-                </option>
-              ))}
-            </select>
+              options={LEVEL_SELECT_OPTIONS}
+              onChange={(v) => updateFilter('level', v)}
+            />
           </div>
 
           <div className="ex-filters__group">
             <label htmlFor="filter-equipment" className="ex-filters__label">
               Обладнання
             </label>
-            <select
+            <MsportFitSelect
               id="filter-equipment"
+              variant="filter"
               value={currentEquipment}
-              onChange={(e) => updateFilter('equipment', e.target.value)}
-              className="ex-filters__select"
-            >
-              <option value="">Усі</option>
-              {EQUIPMENT.map((eq) => (
-                <option key={eq} value={eq}>
-                  {eq}
-                </option>
-              ))}
-            </select>
+              options={EQUIPMENT_SELECT_OPTIONS}
+              onChange={(v) => updateFilter('equipment', v)}
+            />
           </div>
 
           {hasActiveFilters && (
