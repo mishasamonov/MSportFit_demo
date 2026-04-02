@@ -175,6 +175,15 @@
   transform: translateY(-1px);
 }
 
+.fav-error__retry:focus-visible {
+  outline: none;
+  box-shadow: var(--msf-focus-ring);
+}
+
+.fav-error__retry:active {
+  transform: translateY(0);
+}
+
 /* ── Tabs (Calculators-style) ── */
 
 .fav-tabs {
@@ -200,12 +209,23 @@
     background 0.22s ease,
     box-shadow 0.22s ease;
   position: relative;
+  z-index: 0;
   font-family: inherit;
 }
 
 .fav-tabs__btn:hover {
   color: var(--color-text);
   background: rgba(255, 255, 255, 0.04);
+}
+
+.fav-tabs__btn:focus-visible {
+  outline: none;
+  z-index: 1;
+  box-shadow: var(--msf-focus-ring);
+}
+
+.fav-tabs__btn:active {
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .fav-tabs__btn--active {
@@ -237,7 +257,7 @@
   margin: 0;
   font-size: 0.9rem;
   color: var(--color-text-secondary);
-  line-height: 1.55;
+  line-height: 1.62;
   text-align: center;
 }
 
@@ -302,6 +322,29 @@
   background: var(--color-accent-hover);
   border-color: var(--color-accent-hover);
   transform: translateY(-1px);
+}
+
+.fav-empty__btn:focus-visible {
+  outline: none;
+  box-shadow: var(--msf-focus-ring);
+}
+
+.fav-empty__btn:active {
+  transform: translateY(0);
+}
+
+@media (min-width: 1025px) {
+  .fav-hero {
+    padding-bottom: 2.15rem;
+  }
+
+  .fav-tabs {
+    margin-bottom: 1.85rem;
+  }
+
+  .fav-content {
+    padding-bottom: 5.25rem;
+  }
 }
 
 /* ── Responsive ── */

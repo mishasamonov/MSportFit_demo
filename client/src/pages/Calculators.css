@@ -59,7 +59,7 @@
 .calc-hero__subtitle {
   font-size: 1.05rem;
   color: var(--color-text-secondary);
-  line-height: 1.65;
+  line-height: 1.68;
   margin: 0.35rem 0 0;
   max-width: 560px;
 }
@@ -94,6 +94,25 @@
   padding: 0 1.5rem 4rem;
 }
 
+@media (min-width: 1025px) {
+  .calc-hero {
+    padding-bottom: 2.65rem;
+  }
+
+  .calc-tabs {
+    margin-bottom: 1.85rem;
+  }
+
+  .calc-body {
+    padding-bottom: 5rem;
+  }
+
+  .calc-panel__desc {
+    line-height: 1.6;
+    margin-bottom: 1.85rem;
+  }
+}
+
 /* ===== TABS ===== */
 
 .calc-tabs {
@@ -119,12 +138,23 @@
     background 0.22s ease,
     box-shadow 0.22s ease;
   position: relative;
+  z-index: 0;
   font-family: inherit;
 }
 
 .calc-tabs__btn:hover {
   color: var(--color-text);
   background: rgba(255, 255, 255, 0.04);
+}
+
+.calc-tabs__btn:focus-visible {
+  outline: none;
+  z-index: 1;
+  box-shadow: var(--msf-focus-ring);
+}
+
+.calc-tabs__btn:active {
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .calc-tabs__btn--active {
@@ -232,7 +262,8 @@
   font-family: inherit;
 }
 
-.calc-panel__input:focus {
+.calc-panel__input:focus,
+.calc-panel__input:focus-visible {
   border-color: rgba(232, 99, 10, 0.4);
   box-shadow: 0 0 0 2px rgba(232, 99, 10, 0.1);
 }
@@ -291,6 +322,17 @@
   border-right-color: var(--color-accent);
 }
 
+.calc-panel__toggle:focus-visible {
+  outline: none;
+  box-shadow: var(--msf-focus-ring);
+  position: relative;
+  z-index: 1;
+}
+
+.calc-panel__toggle:active:not(.calc-panel__toggle--active) {
+  background: rgba(255, 255, 255, 0.06);
+}
+
 /* ===== ERROR ===== */
 
 .calc-panel__error {
@@ -333,6 +375,15 @@
   box-shadow: 0 4px 14px rgba(232, 99, 10, 0.3);
 }
 
+.calc-panel__btn--primary:focus-visible {
+  outline: none;
+  box-shadow: var(--msf-focus-ring), 0 4px 14px rgba(232, 99, 10, 0.3);
+}
+
+.calc-panel__btn--primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
 .calc-panel__btn--primary:disabled {
   opacity: 0.45;
   cursor: not-allowed;
@@ -356,6 +407,15 @@
   color: var(--color-accent);
   border-color: rgba(232, 99, 10, 0.3);
   background: rgba(232, 99, 10, 0.06);
+}
+
+.calc-panel__btn--secondary:focus-visible {
+  outline: none;
+  box-shadow: var(--msf-focus-ring);
+}
+
+.calc-panel__btn--secondary:active {
+  transform: translateY(0);
 }
 
 /* ===== RESULT SECTION (COMMON) ===== */

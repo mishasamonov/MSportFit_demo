@@ -24,6 +24,16 @@ function formatMacro(v) {
   return Number.isFinite(n) ? n.toFixed(1) : String(v);
 }
 
+function buildProductFilterContext(search, category) {
+  const parts = [];
+  const q = typeof search === 'string' ? search.trim() : '';
+  if (q) {
+    parts.push(q.length > 56 ? `Пошук: «${q.slice(0, 56)}…»` : `Пошук: «${q}»`);
+  }
+  if (category) parts.push(`Категорія: ${category}`);
+  return parts.join(' · ');
+}
+
 function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState([]);
@@ -37,6 +47,9 @@ function Products() {
   const currentCategory = searchParams.get('category') || '';
 
   const hasActiveFilters = FILTER_KEYS.some((k) => searchParams.get(k));
+  const productFilterContext = hasActiveFilters
+    ? buildProductFilterContext(currentSearch, currentCategory)
+    : null;
 
   useEffect(() => {
     let isMounted = true;
@@ -318,16 +331,36 @@ function Products() {
         )}
 
         {!loading && !error && !products.length && (
-          <div className="prod-empty">
-            <div className="prod-empty__icon">🔍</div>
-            <h3 className="prod-empty__title">
-              {hasActiveFilters ? 'Нічого не знайдено' : 'Поки що немає продуктів'}
-            </h3>
-            <p className="prod-empty__text">
-              {hasActiveFilters
-                ? 'Спробуйте змінити фільтри або скинути їх для перегляду всього каталогу.'
-                : "Каталог продуктів поки порожній. Продукти з'являться найближчим часом."}
-            </p>
+          <div className="prod-empty prod-empty--catalog" role="status">
+            <div className="prod-empty__row">
+              <div className="prod-empty__icon" aria-hidden="true">
+                🔍
+              </div>
+              <div className="prod-empty__body">
+                <h3 className="prod-empty__title">
+                  {hasActiveFilters ? 'Нічого не знайдено' : 'Поки що немає продуктів'}
+                </h3>
+                {productFilterContext ? (
+                  <p className="prod-empty__context">{productFilterContext}</p>
+                ) : null}
+                <p className="prod-empty__text">
+                  {hasActiveFilters
+                    ? 'Змініть умови пошуку або скиньте фільтри, щоб побачити весь каталог.'
+                    : "Каталог продуктів поки порожній. Продукти з'являться найближчим часом."}
+                </p>
+                {hasActiveFilters ? (
+                  <div className="prod-empty__actions">
+                    <button
+                      type="button"
+                      onClick={handleReset}
+                      className="prod-filters__btn prod-filters__btn--reset prod-empty__reset"
+                    >
+                      Скинути фільтри
+                    </button>
+                  </div>
+                ) : null}
+              </div>
+            </div>
           </div>
         )}
       </div>

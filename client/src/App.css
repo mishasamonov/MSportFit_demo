@@ -71,6 +71,12 @@
   color: #fff;
 }
 
+.header__nav-link:focus-visible {
+  outline: none;
+  border-radius: 4px;
+  box-shadow: var(--msf-focus-ring);
+}
+
 .header__nav-link.active {
   color: #e8630a;
 }
@@ -97,6 +103,12 @@
   color: #fff;
 }
 
+.header__auth-link:focus-visible {
+  outline: none;
+  border-radius: 4px;
+  box-shadow: var(--msf-focus-ring);
+}
+
 .header__btn {
   border: none;
   cursor: pointer;
@@ -121,6 +133,11 @@
   background: #d25a09;
 }
 
+.header__btn--register:focus-visible {
+  outline: none;
+  box-shadow: var(--msf-focus-ring);
+}
+
 .header__btn--logout {
   padding: 0.4rem 1rem;
   background: transparent;
@@ -131,6 +148,11 @@
 .header__btn--logout:hover {
   color: #fff;
   border-color: rgba(255, 255, 255, 0.35);
+}
+
+.header__btn--logout:focus-visible {
+  outline: none;
+  box-shadow: var(--msf-focus-ring);
 }
 
 /* ── Layout main ── */

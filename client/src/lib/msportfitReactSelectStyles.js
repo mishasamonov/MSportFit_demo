@@ -29,7 +29,7 @@ export function getMsportfitSelectStyles(variant = 'filter') {
       cursor: 'pointer',
       transition: 'border-color 0.2s, box-shadow 0.2s',
       '&:hover': {
-        borderColor: state.isFocused ? accentBorder : 'var(--color-border)',
+        borderColor: state.isFocused ? accentBorder : 'rgba(255, 255, 255, 0.1)',
       },
     }),
     valueContainer: (base) => ({

@@ -28,19 +28,38 @@
   align-items: center;
   gap: 0.35rem;
   font-size: 0.88rem;
+  font-weight: 500;
   color: var(--color-text-secondary);
   text-decoration: none;
   margin-bottom: 1.25rem;
-  transition: color 0.2s;
+  padding: 0.4rem 0.65rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
   cursor: pointer;
   background: none;
-  border: none;
   font-family: inherit;
-  padding: 0;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .ed-hero__back:hover {
   color: var(--color-accent);
+  background: rgba(232, 99, 10, 0.07);
+  border-color: rgba(232, 99, 10, 0.18);
+}
+
+.ed-hero__back:focus-visible {
+  outline: none;
+  box-shadow: var(--msf-focus-ring);
+  border-color: rgba(232, 99, 10, 0.25);
+  color: var(--color-accent);
+}
+
+.ed-hero__back:active {
+  transform: translateY(0.5px);
 }
 
 .ed-hero__tags {
@@ -137,6 +156,15 @@
   transform: translateY(-1px);
 }
 
+.ed-hero__video-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--msf-focus-ring);
+}
+
+.ed-hero__video-btn:active {
+  transform: translateY(0);
+}
+
 .ed-hero__fav-btn {
   display: inline-flex;
   align-items: center;
@@ -186,6 +214,15 @@
 .ed-hero__fav-btn--active:hover:not(:disabled) {
   background: rgba(232, 99, 10, 0.16);
   border-color: rgba(232, 99, 10, 0.5);
+}
+
+.ed-hero__fav-btn:focus-visible:not(:disabled) {
+  outline: none;
+  box-shadow: var(--msf-focus-ring);
+}
+
+.ed-hero__fav-btn:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .ed-hero__fav-btn:disabled {
@@ -244,6 +281,11 @@
 }
 
 .ed-card:hover {
+  border-color: rgba(232, 99, 10, 0.12);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.ed-card:focus-within {
   border-color: rgba(232, 99, 10, 0.12);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
@@ -554,7 +596,30 @@
   transform: translateY(-1px);
 }
 
+.ed-not-found__link:focus-visible {
+  outline: none;
+  box-shadow: var(--msf-focus-ring);
+}
+
+.ed-not-found__link:active {
+  transform: translateY(0);
+}
+
 /* ── Responsive ── */
+
+@media (min-width: 1025px) {
+  .ed-hero {
+    padding-bottom: 2.65rem;
+  }
+
+  .ed-content {
+    padding-bottom: 5.25rem;
+  }
+
+  .ed-grid {
+    gap: 1.35rem;
+  }
+}
 
 @media (max-width: 900px) {
   .ed-grid {

@@ -62,6 +62,13 @@
   border-color: rgba(232, 99, 10, 0.3);
 }
 
+.home-section-link:focus-visible {
+  outline: none;
+  box-shadow: var(--msf-focus-ring);
+  color: var(--color-accent);
+  border-color: rgba(232, 99, 10, 0.35);
+}
+
 /* Arrow hover nudge for all interactive links/buttons */
 
 .home-section-link span,
@@ -164,6 +171,15 @@
   background: var(--color-accent-hover);
   border-color: var(--color-accent-hover);
   transform: translateY(-1px);
+}
+
+.home-hero__btn:focus-visible {
+  outline: none;
+  box-shadow: var(--msf-focus-ring);
+}
+
+.home-hero__btn:active {
+  transform: translateY(0);
 }
 
 .home-hero__btn--secondary {
@@ -302,6 +318,15 @@
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
 }
 
+.home-programs__card:focus-visible {
+  outline: none;
+  border-color: rgba(232, 99, 10, 0.2);
+  transform: translateY(-3px);
+  box-shadow:
+    var(--msf-focus-ring),
+    0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
 .home-programs__media {
   position: relative;
   width: 100%;
@@ -423,7 +448,7 @@
   color: var(--color-accent);
   background: rgba(232, 99, 10, 0.12);
   border-color: rgba(232, 99, 10, 0.5);
-  box-shadow: 0 0 0 3px rgba(232, 99, 10, 0.22);
+  box-shadow: 0 0 0 1px rgba(232, 99, 10, 0.15);
 }
 
 .home-programs__card-cta span {
@@ -515,6 +540,15 @@
   background: var(--color-accent-hover);
   border-color: var(--color-accent-hover);
   transform: translateY(-1px);
+}
+
+.home-exercises__cta:focus-visible {
+  outline: none;
+  box-shadow: var(--msf-focus-ring);
+}
+
+.home-exercises__cta:active {
+  transform: translateY(0);
 }
 
 .home-exercises__cta span {
@@ -727,6 +761,15 @@
   box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35);
 }
 
+.home-calcs__card:focus-visible {
+  outline: none;
+  border-color: rgba(232, 99, 10, 0.45);
+  transform: translateY(-3px);
+  box-shadow:
+    var(--msf-focus-ring),
+    0 10px 32px rgba(0, 0, 0, 0.35);
+}
+
 .home-calcs__badge {
   display: flex;
   align-items: center;
@@ -836,6 +879,15 @@
   background: var(--color-accent-hover);
   border-color: var(--color-accent-hover);
   transform: translateY(-1px);
+}
+
+.home-cta__btn:focus-visible {
+  outline: none;
+  box-shadow: var(--msf-focus-ring);
+}
+
+.home-cta__btn:active {
+  transform: translateY(0);
 }
 
 .home-cta__btn--secondary {

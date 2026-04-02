@@ -92,17 +92,21 @@
 a.program-card--link {
   text-decoration: none;
   color: inherit;
-  outline-offset: 3px;
-}
-
-a.program-card--link:focus-visible {
-  outline: 2px solid var(--color-accent);
 }
 
 .program-card:hover {
   border-color: rgba(232, 99, 10, 0.2);
   transform: translateY(-4px);
   box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+}
+
+a.program-card--link:focus-visible {
+  outline: none;
+  border-color: rgba(232, 99, 10, 0.2);
+  transform: translateY(-4px);
+  box-shadow:
+    var(--msf-focus-ring),
+    0 14px 36px rgba(0, 0, 0, 0.35);
 }
 
 /* ── Card media / gradient header ── */
@@ -269,6 +273,16 @@ a.program-card--link:focus-visible {
 
 .program-card--link:hover .program-card__cta span {
   transform: translateX(3px);
+}
+
+@media (min-width: 1025px) {
+  .programs-hero {
+    padding-bottom: 3.25rem;
+  }
+
+  .programs-grid {
+    gap: 1.85rem;
+  }
 }
 
 /* ── Responsive ── */

@@ -23,24 +23,45 @@
 }
 
 .pd-hero__back {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   font-size: 0.88rem;
+  font-weight: 500;
   color: var(--color-text-secondary);
   text-decoration: none;
   margin-bottom: 1.25rem;
-  transition: color 0.2s;
+  padding: 0.4rem 0.65rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .pd-hero__back:hover {
   color: var(--color-accent);
+  background: rgba(232, 99, 10, 0.07);
+  border-color: rgba(232, 99, 10, 0.18);
+}
+
+.pd-hero__back:focus-visible {
+  outline: none;
+  box-shadow: var(--msf-focus-ring);
+  border-color: rgba(232, 99, 10, 0.25);
+  color: var(--color-accent);
+}
+
+.pd-hero__back:active {
+  transform: translateY(0.5px);
 }
 
 button.pd-hero__back {
   font: inherit;
   text-align: inherit;
   cursor: pointer;
-  border: none;
-  padding: 0;
   background: none;
 }
 
@@ -86,6 +107,15 @@ button.pd-hero__back {
   border-color: var(--color-accent);
   box-shadow: 0 4px 16px rgba(232, 99, 10, 0.12);
   transform: translateY(-1px);
+}
+
+.pd-hero__jump:focus-visible {
+  outline: none;
+  box-shadow: var(--msf-focus-ring), 0 4px 16px rgba(232, 99, 10, 0.12);
+}
+
+.pd-hero__jump:active {
+  transform: translateY(0);
 }
 
 .pd-hero__glow {

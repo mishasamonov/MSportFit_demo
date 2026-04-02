@@ -39,6 +39,18 @@ function truncate(text, max = 100) {
   return text.slice(0, max).trimEnd() + '…';
 }
 
+function buildExerciseFilterContext(search, muscleGroup, level, equipment) {
+  const parts = [];
+  const q = typeof search === 'string' ? search.trim() : '';
+  if (q) {
+    parts.push(q.length > 56 ? `Пошук: «${q.slice(0, 56)}…»` : `Пошук: «${q}»`);
+  }
+  if (muscleGroup) parts.push(`Група: ${muscleGroup}`);
+  if (level) parts.push(`Рівень: ${level}`);
+  if (equipment) parts.push(`Обладнання: ${equipment}`);
+  return parts.join(' · ');
+}
+
 function Exercises() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [exercises, setExercises] = useState([]);
@@ -54,6 +66,9 @@ function Exercises() {
   const currentEquipment = searchParams.get('equipment') || '';
 
   const hasActiveFilters = FILTER_KEYS.some((k) => searchParams.get(k));
+  const exerciseFilterContext = hasActiveFilters
+    ? buildExerciseFilterContext(currentSearch, currentMuscleGroup, currentLevel, currentEquipment)
+    : null;
 
   useEffect(() => {
     let isMounted = true;
@@ -349,16 +364,36 @@ function Exercises() {
         )}
 
         {!loading && !error && !exercises.length && (
-          <div className="ex-empty">
-            <div className="ex-empty__icon">🔍</div>
-            <h3 className="ex-empty__title">
-              {hasActiveFilters ? 'Нічого не знайдено' : 'Поки що немає вправ'}
-            </h3>
-            <p className="ex-empty__text">
-              {hasActiveFilters
-                ? 'Спробуйте змінити фільтри або скинути їх для перегляду всього каталогу.'
-                : "Каталог вправ поки порожній. Вправи з'являться найближчим часом."}
-            </p>
+          <div className="ex-empty ex-empty--catalog" role="status">
+            <div className="ex-empty__row">
+              <div className="ex-empty__icon" aria-hidden="true">
+                🔍
+              </div>
+              <div className="ex-empty__body">
+                <h3 className="ex-empty__title">
+                  {hasActiveFilters ? 'Нічого не знайдено' : 'Поки що немає вправ'}
+                </h3>
+                {exerciseFilterContext ? (
+                  <p className="ex-empty__context">{exerciseFilterContext}</p>
+                ) : null}
+                <p className="ex-empty__text">
+                  {hasActiveFilters
+                    ? 'Змініть умови пошуку або скиньте фільтри, щоб побачити весь каталог.'
+                    : "Каталог вправ поки порожній. Вправи з'являться найближчим часом."}
+                </p>
+                {hasActiveFilters ? (
+                  <div className="ex-empty__actions">
+                    <button
+                      type="button"
+                      onClick={handleReset}
+                      className="ex-filters__btn ex-filters__btn--reset ex-empty__reset"
+                    >
+                      Скинути фільтри
+                    </button>
+                  </div>
+                ) : null}
+              </div>
+            </div>
           </div>
         )}
       </div>
