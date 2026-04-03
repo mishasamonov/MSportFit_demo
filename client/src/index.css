@@ -2,10 +2,54 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+
+  --color-bg: #111114;
+  --color-surface: #1a1a1e;
+  --color-surface-elevated: #222226;
+  --color-border: rgba(255, 255, 255, 0.07);
+  --color-accent: #e8630a;
+  --color-accent-hover: #d25a09;
+  --color-text: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.55);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --max-width: 1200px;
+  /* Двошарове кільце фокусу: читабельно на темному фоні */
+  --msf-focus-ring: 0 0 0 2px var(--color-bg), 0 0 0 4px rgba(232, 99, 10, 0.38);
+}
+
+html {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+@keyframes msf-page-main-enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+}
+
+/* Уникаємо горизонтального «випирання» через негативні відступи сторінок */
+#root {
+  overflow-x: clip;
+  min-width: 0;
 }

@@ -1,0 +1,834 @@
+/* ── Product details page (stage-h) ── */
+
+.pd-page {
+  margin: -1.5rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+  overflow: hidden;
+  min-height: calc(100vh + 3rem);
+}
+
+@media (max-width: 768px) {
+  .pd-page {
+    margin: -1.15rem -1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pd-page {
+    margin: -1rem -0.85rem;
+  }
+}
+
+.pd-state {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.pd-state--center {
+  text-align: center;
+}
+
+/* ── Hero ── */
+
+.pd-hero {
+  position: relative;
+  padding: 3.5rem 1.5rem 2.25rem;
+  overflow: hidden;
+}
+
+.pd-hero__glow {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(720px, 100vw);
+  height: 360px;
+  background: radial-gradient(
+    ellipse,
+    rgba(232, 99, 10, 0.08) 0%,
+    rgba(232, 99, 10, 0.02) 45%,
+    transparent 72%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pd-hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.pd-hero__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  margin-bottom: 1.25rem;
+  padding: 0.4rem 0.65rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.pd-hero__back:hover {
+  color: var(--color-accent);
+  background: rgba(232, 99, 10, 0.07);
+  border-color: rgba(232, 99, 10, 0.18);
+}
+
+.pd-hero__back:focus-visible {
+  outline: none;
+  box-shadow: var(--msf-focus-ring);
+  border-color: rgba(232, 99, 10, 0.25);
+  color: var(--color-accent);
+}
+
+.pd-hero__back:active {
+  transform: translateY(0.5px);
+}
+
+button.pd-hero__back {
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+  background: none;
+}
+
+.pd-hero__back--spaced {
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.pd-hero__head {
+  display: block;
+}
+
+.pd-hero__head-main {
+  min-width: 0;
+}
+
+.pd-hero__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 0.85rem;
+}
+
+.pd-hero__tag {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 100px;
+  background: var(--color-surface-elevated);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  font-weight: 500;
+}
+
+.pd-hero__tag--accent {
+  background: rgba(232, 99, 10, 0.12);
+  color: var(--color-accent);
+  border-color: rgba(232, 99, 10, 0.22);
+  font-weight: 600;
+}
+
+.pd-hero__title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.65rem;
+}
+
+.pd-hero__lead {
+  font-size: 1.02rem;
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+  margin: 0 0 1.15rem;
+  max-width: 640px;
+}
+
+.pd-hero__lead strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.pd-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0.75rem 1rem;
+  margin-top: 0.15rem;
+}
+
+.pd-hero__nutrition--compact {
+  flex: 1 1 200px;
+  min-width: min(100%, 240px);
+  max-width: 340px;
+  margin-top: 0;
+}
+
+.pd-hero__nutrition {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.pd-hero__kcal-block {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  background: linear-gradient(
+    135deg,
+    rgba(232, 99, 10, 0.09) 0%,
+    rgba(232, 99, 10, 0.03) 55%,
+    var(--color-surface-elevated) 100%
+  );
+  border: 1px solid rgba(232, 99, 10, 0.16);
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.18);
+}
+
+.pd-hero__kcal-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: var(--radius-sm);
+  background: rgba(232, 99, 10, 0.12);
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.pd-hero__kcal-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.pd-hero__kcal-text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.65rem;
+  min-width: 0;
+}
+
+.pd-hero__kcal-value {
+  font-size: clamp(1.3rem, 3vw, 1.65rem);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-accent);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.pd-hero__kcal-unit {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.pd-hero__kcal-per {
+  font-weight: 500;
+  opacity: 0.88;
+}
+
+.pd-hero__fav-btn {
+  flex: 0 1 auto;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--color-text-secondary);
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    background 0.2s,
+    box-shadow 0.2s,
+    transform 0.15s;
+  white-space: nowrap;
+}
+
+.pd-hero__fav-btn .pd-hero__fav-heart {
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.pd-hero__fav-btn:hover:not(:disabled) {
+  color: var(--color-accent);
+  border-color: rgba(232, 99, 10, 0.35);
+  box-shadow: 0 2px 12px rgba(232, 99, 10, 0.12);
+  transform: translateY(-1px);
+}
+
+.pd-hero__fav-btn:hover:not(:disabled) .pd-hero__fav-heart {
+  transform: scale(1.06);
+}
+
+.pd-hero__fav-btn--active {
+  color: var(--color-accent);
+  border-color: rgba(232, 99, 10, 0.45);
+  background: rgba(232, 99, 10, 0.12);
+  box-shadow:
+    0 0 0 1px rgba(232, 99, 10, 0.12),
+    0 4px 18px rgba(232, 99, 10, 0.15);
+}
+
+.pd-hero__fav-btn--active:hover:not(:disabled) {
+  background: rgba(232, 99, 10, 0.16);
+  border-color: rgba(232, 99, 10, 0.5);
+}
+
+.pd-hero__fav-btn:focus-visible:not(:disabled) {
+  outline: none;
+  box-shadow: var(--msf-focus-ring);
+}
+
+.pd-hero__fav-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.pd-hero__fav-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ── Main grid ── */
+
+.pd-content {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1.85rem 1.5rem 3.25rem;
+}
+
+.pd-main-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.25rem 1.35rem;
+  align-items: start;
+}
+
+.pd-right-stack {
+  min-width: 0;
+}
+
+.pd-macros-card {
+  padding: 1.25rem 1.35rem 1.3rem;
+}
+
+.pd-quick-card {
+  padding: 1.2rem 1.3rem 1.25rem;
+}
+
+/* ── Cards ── */
+
+.pd-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.35rem 1.45rem 1.4rem;
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s;
+}
+
+.pd-card:hover {
+  border-color: rgba(232, 99, 10, 0.12);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.pd-card:focus-within {
+  border-color: rgba(232, 99, 10, 0.12);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.pd-card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--color-border);
+  flex-wrap: wrap;
+}
+
+.pd-card__icon {
+  font-size: 1.1rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.pd-card__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--color-text);
+  flex: 1;
+  min-width: 0;
+}
+
+.pd-macros-card__per {
+  margin-left: auto;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-secondary);
+  opacity: 0.9;
+}
+
+.pd-card__body {
+  padding: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Macro rows ── */
+
+.pd-macro-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.pd-macro-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.pd-macro-row__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.pd-macro-row__label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.pd-macro-row__value {
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+}
+
+.pd-macro-row__track {
+  position: relative;
+  height: 11px;
+  border-radius: 100px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+.pd-macro-row__fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  transition: width 0.35s ease;
+}
+
+/* Макет: білки — синій, жири — золотистий, вуглеводи — зелений */
+.pd-macro-row--protein .pd-macro-row__fill {
+  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+  box-shadow: 0 0 14px rgba(59, 130, 246, 0.45);
+}
+
+.pd-macro-row--fat .pd-macro-row__fill {
+  background: linear-gradient(90deg, #eab308 0%, #ca8a04 100%);
+  box-shadow: 0 0 12px rgba(234, 179, 8, 0.35);
+}
+
+.pd-macro-row--carbs .pd-macro-row__fill {
+  background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.35);
+}
+
+.pd-macro-row__pct {
+  font-size: 0.72rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.01em;
+}
+
+/* ── Quick info ── */
+
+.pd-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.pd-quick-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.85rem 0.85rem;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  min-width: 0;
+  min-height: 4.85rem;
+}
+
+/* Тоновані плитки як у макеті: ккал — теплий, білок — синій, жири — золотистий, вуглеводи — зелений */
+.pd-quick-tile--kcal {
+  border-color: rgba(180, 80, 50, 0.35);
+  background: linear-gradient(
+    155deg,
+    rgba(90, 35, 28, 0.85) 0%,
+    rgba(35, 22, 20, 0.92) 100%
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.pd-quick-tile--p {
+  border-color: rgba(59, 130, 246, 0.35);
+  background: linear-gradient(
+    155deg,
+    rgba(30, 58, 95, 0.92) 0%,
+    rgba(15, 30, 52, 0.96) 100%
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.pd-quick-tile--f {
+  border-color: rgba(202, 138, 4, 0.35);
+  background: linear-gradient(
+    155deg,
+    rgba(75, 55, 22, 0.88) 0%,
+    rgba(28, 22, 12, 0.94) 100%
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.pd-quick-tile--c {
+  border-color: rgba(34, 197, 94, 0.35);
+  background: linear-gradient(
+    155deg,
+    rgba(22, 65, 42, 0.9) 0%,
+    rgba(12, 28, 20, 0.95) 100%
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.pd-quick-tile__label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: lowercase;
+  letter-spacing: 0.03em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.pd-quick-tile__value {
+  font-size: clamp(1.2rem, 2.8vw, 1.45rem);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.pd-quick-tile--kcal .pd-quick-tile__value {
+  color: var(--color-accent);
+}
+
+.pd-quick-tile--p .pd-quick-tile__value {
+  color: #93c5fd;
+}
+
+.pd-quick-tile--f .pd-quick-tile__value {
+  color: #facc15;
+}
+
+.pd-quick-tile--c .pd-quick-tile__value {
+  color: #4ade80;
+}
+
+/* ── Note card ── */
+
+.pd-bottom-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.25rem 1.35rem;
+  align-items: stretch;
+  margin-top: 1.25rem;
+}
+
+.pd-bottom-row .pd-note-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+}
+
+.pd-note-card {
+  padding: 1.1rem 1.25rem;
+  border-style: dashed;
+  border-color: rgba(232, 99, 10, 0.2);
+  background: linear-gradient(
+    165deg,
+    rgba(232, 99, 10, 0.04) 0%,
+    var(--color-surface) 55%
+  );
+}
+
+.pd-note-card:hover {
+  border-color: rgba(232, 99, 10, 0.28);
+}
+
+.pd-note-card__inner {
+  margin: 0;
+}
+
+.pd-note-card__title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0 0 0.45rem;
+}
+
+.pd-note-card__text {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+}
+
+.pd-note-card__text strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+/* ── Favorites strip ── */
+
+.pd-bottom-row .pd-fav-strip {
+  margin-top: 0;
+  height: 100%;
+  min-height: 0;
+}
+
+.pd-fav-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  margin-top: 1.35rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.pd-fav-strip:hover {
+  border-color: rgba(232, 99, 10, 0.15);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+}
+
+.pd-fav-strip--guest {
+  border-color: rgba(232, 99, 10, 0.18);
+  background: linear-gradient(
+    165deg,
+    rgba(232, 99, 10, 0.05) 0%,
+    var(--color-surface) 50%
+  );
+}
+
+.pd-fav-strip__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-sm);
+  background: rgba(232, 99, 10, 0.1);
+  color: var(--color-accent);
+}
+
+.pd-fav-strip--guest .pd-fav-strip__icon {
+  background: var(--color-surface-elevated);
+  color: var(--color-text-secondary);
+}
+
+.pd-fav-strip__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.pd-fav-strip__title {
+  margin: 0 0 0.15rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.pd-fav-strip__text {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.42;
+  color: var(--color-text-secondary);
+}
+
+.pd-fav-strip__link {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.45rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--color-accent);
+  text-decoration: none;
+  border: 1px solid rgba(232, 99, 10, 0.35);
+  border-radius: var(--radius-sm);
+  background: rgba(232, 99, 10, 0.06);
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    transform 0.15s;
+}
+
+.pd-fav-strip__link:hover {
+  background: rgba(232, 99, 10, 0.12);
+  border-color: var(--color-accent);
+  transform: translateY(-1px);
+}
+
+.pd-fav-strip__link:focus-visible {
+  outline: none;
+  box-shadow: var(--msf-focus-ring);
+}
+
+.pd-fav-strip__link:active {
+  transform: translateY(0);
+}
+
+.pd-fav-strip__arrow {
+  font-size: 1rem;
+  line-height: 1;
+  opacity: 0.9;
+}
+
+.pd-inline-link {
+  color: var(--color-accent);
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 2px;
+}
+
+.pd-inline-link:hover {
+  text-decoration: underline;
+}
+
+.pd-inline-link:focus-visible {
+  outline: none;
+  box-shadow: var(--msf-focus-ring);
+  text-decoration: none;
+}
+
+@media (min-width: 1025px) {
+  .pd-hero {
+    padding-bottom: 2.5rem;
+  }
+
+  .pd-content {
+    padding: 2rem 1.5rem 3.5rem;
+  }
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 960px) {
+  .pd-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pd-bottom-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .pd-hero__meta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .pd-hero__nutrition--compact {
+    max-width: none;
+  }
+
+  .pd-hero__fav-btn {
+    width: 100%;
+    max-width: 22rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .pd-hero {
+    padding: 2.5rem 1rem 1.85rem;
+  }
+
+  .pd-content {
+    padding: 0 1rem 3.5rem;
+  }
+
+  .pd-fav-strip {
+    flex-wrap: wrap;
+  }
+
+  .pd-fav-strip__link {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .pd-quick-grid {
+    grid-template-columns: 1fr;
+  }
+}

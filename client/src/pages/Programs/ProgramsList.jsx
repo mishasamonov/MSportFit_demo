@@ -1,86 +1,108 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { apiFetch } from '../../lib/api'
-import { mapGoal, mapLevel } from './programsHelpers'
+import { Link } from 'react-router-dom';
+import { PROGRAM_CARD_COVER_BY_SLUG } from '../../data/programCardCovers.js';
+import './ProgramsList.css';
 
-const metaBadgeStyle = {
-  color: '#888',
-  fontSize: '0.9em',
-}
+const PROGRAMS = [
+  {
+    slug: 'mass-gain',
+    title: 'Набір м\u2019язової маси',
+    description:
+      'Гібридний Upper/Lower спліт з акцентом на верхню частину тіла. Прогресивне навантаження для гіпертрофії та планомірного зростання сили.',
+    benefits: [
+      'Гібридний Upper/Lower спліт з акцентом на верх тіла',
+      'Прогресивне навантаження для гіпертрофії',
+      'Гнучкий графік: 2, 3 або 4 дні на тиждень',
+    ],
+    daysPerWeek: [2, 3, 4],
+    duration: '8 тижнів',
+    level: 'Середній',
+  },
+  {
+    slug: 'weight-loss',
+    title: 'Схуднення',
+    description:
+      'Силові тренування на основі гібридного Upper/Lower спліту з додаванням кардіо. Зниження жиру зі збереженням м\u2019язової маси.',
+    benefits: [
+      'Силова база + кардіо для ефективного жироспалювання',
+      'Збереження м\u2019язів під час дефіциту калорій',
+      'Ціль активності: 10 000–12 000 кроків на день',
+    ],
+    daysPerWeek: [2, 3, 4],
+    duration: '10 тижнів',
+    level: 'Початковий',
+  },
+];
 
 function ProgramsList() {
-  const [programs, setPrograms] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-
-  useEffect(() => {
-    let isMounted = true
-
-    async function loadPrograms() {
-      try {
-        setLoading(true)
-        setError(null)
-
-        const res = await apiFetch('/api/programs')
-
-        if (!res.ok) {
-          throw new Error('Не вдалося завантажити програми')
-        }
-
-        const data = await res.json()
-
-        if (!isMounted) return
-
-        setPrograms(Array.isArray(data) ? data : [])
-      } catch (err) {
-        console.error('ProgramsList fetch error', err)
-        if (isMounted) {
-          setError(err.message || 'Не вдалося завантажити програми')
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false)
-        }
-      }
-    }
-
-    loadPrograms()
-
-    return () => {
-      isMounted = false
-    }
-  }, [])
-
-  if (loading) {
-    return <p>Завантаження програм...</p>
-  }
-
-  if (error) {
-    return <p style={{ color: 'red' }}>Помилка: {error}</p>
-  }
-
   return (
-    <div>
-      <h1>Програми тренувань</h1>
+    <div className="programs-page">
+      <section className="programs-hero">
+        <div className="programs-hero__inner">
+          <h1 className="programs-hero__title">Програми тренувань</h1>
+          <p className="programs-hero__subtitle">
+            Оберіть програму відповідно до вашої мети &mdash; набір маси або схуднення. Кожна
+            програма адаптується під ваш графік від 2 до 4 тренувань на тиждень.
+          </p>
+        </div>
+        <div className="programs-hero__glow" aria-hidden="true" />
+      </section>
 
-      {programs.length === 0 ? (
-        <p>Програми не знайдено.</p>
-      ) : (
-        <ul>
-          {programs.map((program) => (
-            <li key={program.id}>
-              <h2>{program.title}</h2>
-              <p>{program.description}</p>
-              <p style={metaBadgeStyle}>
-                {mapGoal(program.goal)} &bull; {mapLevel(program.level)} &bull; {program.weeks} тижн.
-              </p>
-              <Link to={`/programs/${program.slug}`}>Детальніше</Link>
-            </li>
-          ))}
-        </ul>
-      )}
+      <section className="programs-list">
+        <div className="programs-container">
+          <div className="programs-grid">
+            {PROGRAMS.map((program) => {
+              const titleId = `program-title-${program.slug}`;
+              return (
+                <Link
+                  key={program.slug}
+                  to={`/programs/${program.slug}`}
+                  className="program-card program-card--link"
+                  aria-labelledby={titleId}
+                >
+                  <div className="program-card__media">
+                    <img
+                      className="program-card__media-img"
+                      src={PROGRAM_CARD_COVER_BY_SLUG[program.slug]}
+                      alt=""
+                    />
+                    <span className="program-card__chip">{program.duration}</span>
+                  </div>
+
+                  <div className="program-card__body">
+                    <h2 className="program-card__title" id={titleId}>
+                      {program.title}
+                    </h2>
+                    <p className="program-card__desc">{program.description}</p>
+
+                    <ul className="program-card__benefits">
+                      {program.benefits.map((b) => (
+                        <li key={b} className="program-card__benefit">
+                          {b}
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="program-card__meta">
+                      <span className="program-card__tag">{program.level}</span>
+                      {program.daysPerWeek.map((d) => (
+                        <span key={d} className="program-card__tag program-card__tag--days">
+                          {d} дн/тижд
+                        </span>
+                      ))}
+                    </div>
+
+                    <span className="program-card__cta">
+                      Переглянути програму <span aria-hidden="true">&rarr;</span>
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
     </div>
-  )
+  );
 }
 
-export default ProgramsList
+export default ProgramsList;

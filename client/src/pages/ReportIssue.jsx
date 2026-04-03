@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useBackOrNavigate } from '../hooks/useBackOrNavigate.js';
 import { apiFetch } from '../lib/api';
 
 function buildPayload(fields) {
@@ -17,6 +18,7 @@ function buildPayload(fields) {
 
 function ReportIssue() {
   const navigate = useNavigate();
+  const cancelNavigate = useBackOrNavigate('/');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [steps, setSteps] = useState('');
@@ -139,7 +141,7 @@ function ReportIssue() {
           <button
             type="button"
             className="report__btn report__btn--secondary"
-            onClick={() => navigate(-1)}
+            onClick={cancelNavigate}
             disabled={status === 'loading'}
           >
             Скасувати
