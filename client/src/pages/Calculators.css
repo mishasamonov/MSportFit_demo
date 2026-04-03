@@ -8,6 +8,18 @@
   overflow: hidden;
 }
 
+@media (max-width: 768px) {
+  .calc-page {
+    margin: -1.15rem -1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .calc-page {
+    margin: -1rem -0.85rem;
+  }
+}
+
 /* ===== HERO ===== */
 
 .calc-hero {
@@ -92,6 +104,13 @@
   max-width: 750px;
   margin: 0 auto;
   padding: 0 1.5rem 4rem;
+}
+
+/* ~1024px: трохи ширший контейнер — зручніше для табів, форми та трійки TDEE-карток */
+@media (min-width: 901px) and (max-width: 1200px) {
+  .calc-body {
+    max-width: min(920px, 100%);
+  }
 }
 
 @media (min-width: 1025px) {
@@ -874,10 +893,16 @@
 
   .calc-tabs {
     border-radius: var(--radius-sm);
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
   }
 
   .calc-tabs__btn {
-    padding: 0.65rem 0.5rem;
+    flex: 1 0 auto;
+    min-width: 5.5rem;
+    padding: 0.65rem 0.65rem;
     font-size: 0.8rem;
   }
 

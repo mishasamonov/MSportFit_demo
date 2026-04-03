@@ -10,7 +10,8 @@
 .ft__inner {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 1rem 1.5rem 0.95rem;
+  padding: 1rem max(1.5rem, env(safe-area-inset-left, 0px)) 0.95rem
+    max(1.5rem, env(safe-area-inset-right, 0px));
   box-sizing: border-box;
 }
 
@@ -228,7 +229,21 @@
   .ft__col--social {
     justify-self: stretch;
   }
+}
 
+@media (max-width: 720px) {
+  .ft__top {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.05rem 1.15rem;
+  }
+
+  .ft__brand {
+    grid-column: 1 / -1;
+  }
+
+  .ft__col--social {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (max-width: 560px) {

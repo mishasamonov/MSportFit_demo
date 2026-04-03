@@ -7,6 +7,18 @@
   overflow: hidden;
 }
 
+@media (max-width: 768px) {
+  .pd-page {
+    margin: -1.15rem -1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pd-page {
+    margin: -1rem -0.85rem;
+  }
+}
+
 /* ── Hero ── */
 
 .pd-hero {
@@ -978,5 +990,61 @@ button.pd-hero__back {
     gap: 0.75rem;
     margin-top: 0.5rem;
     padding-left: calc(28px + 0.85rem);
+    flex-wrap: wrap;
+  }
+
+  .pd-exercise__param,
+  .pd-exercise__rest {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 520px) {
+  .pd-days-toggle {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 0.4rem;
+    padding-bottom: 0.35rem;
+    margin-inline: -0.15rem;
+    padding-inline: 0.15rem;
+    scrollbar-width: thin;
+  }
+
+  .pd-days-toggle__btn {
+    flex: 0 0 auto;
+    min-height: 44px;
+    padding: 0.5rem 1rem;
+  }
+
+  .pd-week-toggle {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .pd-week-toggle__btn {
+    flex: 0 0 auto;
+    min-height: 40px;
+  }
+
+  .pd-meta__tag {
+    white-space: normal;
+    max-width: 100%;
+  }
+
+  .pd-hero__title {
+    font-size: clamp(1.55rem, 6.5vw, 2rem);
+  }
+
+  .pd-btn {
+    min-height: 48px;
+    justify-content: center;
+  }
+
+  .pd-cta {
+    flex-direction: column;
+    align-items: stretch;
   }
 }

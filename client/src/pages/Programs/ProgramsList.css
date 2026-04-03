@@ -7,6 +7,18 @@
   overflow: hidden;
 }
 
+@media (max-width: 768px) {
+  .programs-page {
+    margin: -1.15rem -1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .programs-page {
+    margin: -1rem -0.85rem;
+  }
+}
+
 /* ── Hero ── */
 
 .programs-hero {
@@ -287,6 +299,44 @@ a.program-card--link:focus-visible {
 
 /* ── Responsive ── */
 
+@media (max-width: 900px) {
+  .programs-grid {
+    gap: 1.35rem;
+  }
+
+  .program-card__media {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+/* ~1024px: картки менш «важкі» — трохи нижче медіа та щільніший корпус */
+@media (max-width: 1100px) and (min-width: 901px) {
+  .program-card__media {
+    aspect-ratio: 8 / 5;
+  }
+
+  .program-card__body {
+    padding: 1.45rem 1.5rem;
+  }
+
+  .program-card__title {
+    margin-bottom: 0.45rem;
+  }
+
+  .program-card__desc {
+    margin-bottom: 1rem;
+  }
+
+  .program-card__benefits {
+    margin-bottom: 1.15rem;
+    gap: 0.45rem;
+  }
+
+  .program-card__meta {
+    margin-bottom: 1.15rem;
+  }
+}
+
 @media (max-width: 768px) {
   .programs-hero {
     padding: 3rem 1rem 2.5rem;
@@ -302,6 +352,30 @@ a.program-card--link:focus-visible {
 
   .programs-grid {
     grid-template-columns: 1fr;
+  }
+
+  .programs-container {
+    padding: 0 1rem;
+  }
+
+  .program-card__body {
+    padding: 1.35rem 1.25rem;
+  }
+
+  .program-card__cta {
+    min-height: 48px;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .programs-hero__title {
+    font-size: clamp(1.55rem, 7vw, 2rem);
+  }
+
+  .program-card__tag {
+    white-space: normal;
+    text-align: center;
   }
 }
 

@@ -8,6 +8,18 @@
   overflow: hidden;
 }
 
+@media (max-width: 768px) {
+  .login-page {
+    margin: -1.15rem -1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-page {
+    margin: -1rem -0.85rem;
+  }
+}
+
 /* ── Hero ── */
 
 .login-hero {
@@ -347,5 +359,16 @@
 
   .login-card {
     padding: 1.5rem 1.25rem 1.35rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .login-body {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .login-hero__content {
+    padding: 0 0.25rem;
   }
 }

@@ -159,17 +159,48 @@ function AlternativesSection({ alternatives }) {
   );
 }
 
-function EquipmentSection({ equipment }) {
+function splitEquipmentLabels(equipment) {
+  if (!equipment || typeof equipment !== 'string') return [];
+  return equipment
+    .split(/[,;/]/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+function ExerciseFavoritesStrip({ isAuthed }) {
   return (
-    <SectionCard title="Інвентар" icon="🏋️">
-      {equipment ? (
-        <div className="ed-equipment">
-          <span className="ed-equipment__badge">{equipment}</span>
-        </div>
-      ) : (
-        <Placeholder text="Інформація буде додана" />
-      )}
-    </SectionCard>
+    <section
+      className={`ed-fav-strip${!isAuthed ? ' ed-fav-strip--guest' : ''}`}
+      aria-labelledby="ed-fav-title"
+    >
+      <div className="ed-fav-strip__icon" aria-hidden="true">
+        <IconHeart filled={isAuthed} />
+      </div>
+      <div className="ed-fav-strip__body">
+        <h2 id="ed-fav-title" className="ed-fav-strip__title">
+          Обране
+        </h2>
+        <p className="ed-fav-strip__text">
+          {isAuthed
+            ? 'Зберігайте вправи в обраному та повертайтеся до них з будь-якої сторінки.'
+            : 'Увійдіть, щоб додавати вправи в обране одним кліком.'}
+          {!isAuthed && (
+            <>
+              {' '}
+              <Link to="/login" className="ed-fav-strip__inline-link">
+                Увійти
+              </Link>
+            </>
+          )}
+        </p>
+      </div>
+      <Link to="/favorites?tab=exercises" className="ed-fav-strip__link">
+        {isAuthed ? 'Моє обране' : 'До розділу'}
+        <span className="ed-fav-strip__arrow" aria-hidden="true">
+          →
+        </span>
+      </Link>
+    </section>
   );
 }
 
@@ -316,9 +347,9 @@ function ExerciseDetails() {
         <div className="ed-not-found">
           <h1 className="ed-not-found__title">Вправу не знайдено</h1>
           <p className="ed-not-found__text">Такої вправи не існує або вона була видалена.</p>
-          <Link to="/exercises" className="ed-not-found__link">
+          <button type="button" className="ed-not-found__link" onClick={goBackOrExercises}>
             &larr; Повернутись до вправ
-          </Link>
+          </button>
         </div>
       </div>
     );
@@ -328,6 +359,7 @@ function ExerciseDetails() {
     exercise.category,
     exercise.level,
     typeof exercise.calories === 'number' ? `~${exercise.calories} ккал` : null,
+    ...splitEquipmentLabels(exercise.equipment),
   ].filter(Boolean);
 
   return (
@@ -402,7 +434,7 @@ function ExerciseDetails() {
           <TipsSection tips={exercise.tips} />
           <MistakesSection mistakes={exercise.mistakes} />
           <AlternativesSection alternatives={exercise.alternatives} />
-          <EquipmentSection equipment={exercise.equipment} />
+          <ExerciseFavoritesStrip isAuthed={isAuthed} />
         </div>
       </div>
     </div>

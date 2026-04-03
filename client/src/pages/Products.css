@@ -8,6 +8,18 @@
   min-height: calc(100vh + 3rem);
 }
 
+@media (max-width: 768px) {
+  .prod-page {
+    margin: -1.15rem -1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .prod-page {
+    margin: -1rem -0.85rem;
+  }
+}
+
 /* ── Hero ── */
 
 .prod-hero {
@@ -305,6 +317,7 @@
   padding-right: 2rem;
   line-height: 1.38;
   letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
 }
 
 .prod-card__title-link {
@@ -330,7 +343,9 @@
      може розтягуватись по ширині (align-items: stretch за замовчуванням). */
   align-self: flex-start;
   width: fit-content;
-  white-space: nowrap;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  white-space: normal;
   font-size: 0.7rem;
   padding: 0.15rem 0.55rem;
   border-radius: 100px;
@@ -462,7 +477,9 @@
 .prod-empty {
   text-align: center;
   padding: 2.75rem 1.75rem 2.5rem;
-  max-width: 26rem;
+  max-width: min(26rem, 100%);
+  width: 100%;
+  box-sizing: border-box;
   margin-left: auto;
   margin-right: auto;
   background: var(--color-surface);

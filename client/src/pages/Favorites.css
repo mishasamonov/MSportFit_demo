@@ -8,6 +8,18 @@
   overflow: hidden;
 }
 
+@media (max-width: 768px) {
+  .fav-page {
+    margin: -1.15rem -1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .fav-page {
+    margin: -1rem -0.85rem;
+  }
+}
+
 /* ── Hero (FAQ-style + glow) ── */
 
 .fav-hero {
@@ -391,5 +403,28 @@
 
   .fav-hero__title {
     font-size: 1.6rem;
+  }
+
+  .fav-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .fav-tabs__btn {
+    flex: 1 0 auto;
+    min-width: 8.5rem;
+    min-height: 48px;
+  }
+
+  .fav-empty__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .fav-empty__btn {
+    width: 100%;
+    box-sizing: border-box;
   }
 }

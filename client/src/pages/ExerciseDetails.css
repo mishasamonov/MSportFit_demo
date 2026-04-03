@@ -8,6 +8,18 @@
   min-height: calc(100vh + 3rem);
 }
 
+@media (max-width: 768px) {
+  .ed-page {
+    margin: -1.15rem -1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ed-page {
+    margin: -1rem -0.85rem;
+  }
+}
+
 /* ── Hero section ── */
 
 .ed-hero {
@@ -93,6 +105,7 @@
   line-height: 1.15;
   letter-spacing: -0.02em;
   margin: 0 0 0.85rem;
+  overflow-wrap: anywhere;
 }
 
 .ed-hero__description {
@@ -507,26 +520,130 @@
   transform: translateX(2px);
 }
 
-/* ── Equipment badge row ── */
+/* ── Favorites CTA (як на сторінці продукту) ── */
 
-.ed-equipment {
+.ed-fav-strip {
+  grid-column: 1 / -1;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  margin-top: 0;
+  padding: 0.9rem 1.05rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 
-.ed-equipment__badge {
+.ed-fav-strip:hover {
+  border-color: rgba(232, 99, 10, 0.15);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+}
+
+.ed-fav-strip--guest {
+  border-color: rgba(232, 99, 10, 0.18);
+  background: linear-gradient(
+    165deg,
+    rgba(232, 99, 10, 0.05) 0%,
+    var(--color-surface) 50%
+  );
+}
+
+.ed-fav-strip__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-sm);
+  background: rgba(232, 99, 10, 0.1);
+  color: var(--color-accent);
+}
+
+.ed-fav-strip--guest .ed-fav-strip__icon {
+  background: var(--color-surface-elevated);
+  color: var(--color-text-secondary);
+}
+
+.ed-fav-strip__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ed-fav-strip__title {
+  margin: 0 0 0.15rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.ed-fav-strip__text {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--color-text-secondary);
+}
+
+.ed-fav-strip__link {
+  flex-shrink: 0;
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  padding: 0.35rem 0.75rem;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  background: var(--color-surface-elevated);
-  border: 1px solid var(--color-border);
+  padding: 0.45rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--color-accent);
+  text-decoration: none;
+  border: 1px solid rgba(232, 99, 10, 0.35);
   border-radius: var(--radius-sm);
+  background: rgba(232, 99, 10, 0.06);
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    transform 0.15s;
+}
+
+.ed-fav-strip__link:hover {
+  background: rgba(232, 99, 10, 0.12);
+  border-color: var(--color-accent);
+  transform: translateY(-1px);
+}
+
+.ed-fav-strip__link:focus-visible {
+  outline: none;
+  box-shadow: var(--msf-focus-ring);
+}
+
+.ed-fav-strip__link:active {
+  transform: translateY(0);
+}
+
+.ed-fav-strip__arrow {
+  font-size: 1rem;
+  line-height: 1;
+  opacity: 0.9;
+}
+
+.ed-fav-strip__inline-link {
+  color: var(--color-accent);
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 2px;
+}
+
+.ed-fav-strip__inline-link:hover {
+  text-decoration: underline;
+}
+
+.ed-fav-strip__inline-link:focus-visible {
+  outline: none;
+  box-shadow: var(--msf-focus-ring);
+  text-decoration: none;
 }
 
 /* ── Placeholder for missing content ── */
@@ -605,6 +722,10 @@
   transform: translateY(0);
 }
 
+button.ed-not-found__link {
+  appearance: none;
+}
+
 /* ── Responsive ── */
 
 @media (min-width: 1025px) {
@@ -664,5 +785,39 @@
   .ed-hero__actions {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .ed-fav-strip {
+    flex-wrap: wrap;
+  }
+
+  .ed-fav-strip__link {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .ed-alt-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    min-height: 0;
+  }
+
+  .ed-alt-item__meta {
+    align-self: stretch;
+    justify-content: flex-end;
+  }
+
+  .ed-alt-item__hint {
+    opacity: 0.75;
+  }
+
+  .ed-hero__video-btn,
+  .ed-hero__fav-btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 48px;
   }
 }

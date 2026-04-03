@@ -8,6 +8,18 @@
   min-height: calc(100vh + 3rem);
 }
 
+@media (max-width: 768px) {
+  .ex-page {
+    margin: -1.15rem -1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ex-page {
+    margin: -1rem -0.85rem;
+  }
+}
+
 /* ── Hero ── */
 
 .ex-hero {
@@ -329,6 +341,7 @@
   margin: 0 0 0.5rem;
   line-height: 1.38;
   letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
 }
 
 .ex-card__title-link {
@@ -442,7 +455,9 @@
 .ex-empty {
   text-align: center;
   padding: 2.75rem 1.75rem 2.5rem;
-  max-width: 26rem;
+  max-width: min(26rem, 100%);
+  width: 100%;
+  box-sizing: border-box;
   margin-left: auto;
   margin-right: auto;
   background: var(--color-surface);
@@ -674,6 +689,12 @@
 
   .ex-card {
     padding: 1.1rem 1.15rem 1rem;
+  }
+
+  .ex-card__tag {
+    white-space: normal;
+    max-width: 100%;
+    overflow-wrap: anywhere;
   }
 }
 
