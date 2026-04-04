@@ -1022,6 +1022,83 @@
   }
 }
 
+/* 901–1023px: тизер вправ — дві колонки: текст зліва (домінантна), прев’ю справа, збалансована ширина */
+@media (max-width: 1023px) and (min-width: 901px) {
+  .home-exercises {
+    padding-top: 3.2rem;
+    padding-bottom: 3.2rem;
+  }
+
+  .home-exercises__layout {
+    grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
+    gap: clamp(1.35rem, 3.2vw, 2.1rem);
+    align-items: center;
+    justify-items: stretch;
+  }
+
+  .home-exercises__content {
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0;
+    max-width: none;
+    min-width: 0;
+  }
+
+  .home-exercises__title {
+    font-size: clamp(1.55rem, 2.1vw, 1.82rem);
+    margin-bottom: 0.62rem;
+  }
+
+  .home-exercises__lead {
+    font-size: 0.96rem;
+    line-height: 1.62;
+    margin-bottom: 1.2rem;
+  }
+
+  .home-exercises__chips {
+    justify-content: flex-start;
+    margin-bottom: 1.25rem;
+    gap: 0.4rem;
+  }
+
+  .home-exercises__chip {
+    font-size: 0.76rem;
+    padding: 0.32rem 0.65rem;
+  }
+
+  .home-exercises__cta {
+    padding: 0.62rem 1.28rem;
+    font-size: 0.9rem;
+  }
+
+  .home-exercises__preview {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    min-width: 0;
+    justify-self: stretch;
+  }
+
+  .home-exercises__preview-link:hover {
+    transform: translateY(-3px);
+  }
+
+  .home-exercises__preview-frame {
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.06) inset,
+      0 4px 6px rgba(0, 0, 0, 0.12),
+      0 18px 40px rgba(0, 0, 0, 0.38);
+  }
+
+  .home-exercises__preview-img {
+    width: 100%;
+    height: auto;
+    max-height: clamp(176px, 30vw, 252px);
+    object-fit: cover;
+    object-position: top center;
+  }
+}
+
 @media (max-width: 768px) {
   .home-calcs__grid {
     grid-template-columns: 1fr;

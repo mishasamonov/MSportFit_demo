@@ -920,6 +920,47 @@ button.pd-hero__back {
 
 /* ── Responsive ── */
 
+/* 901–1023px: щільніший верх hero; селектор з program-details-page — без перетину з ProductDetails */
+@media (max-width: 1023px) and (min-width: 901px) {
+  .program-details-page .pd-hero {
+    padding: 1.45rem clamp(1rem, 2.5vw, 1.35rem) 1.85rem;
+  }
+
+  .program-details-page .pd-hero__back {
+    margin-bottom: 0.6rem;
+    padding: 0.3rem 0.52rem;
+  }
+
+  .program-details-page .pd-hero__title {
+    font-size: clamp(1.75rem, 3.2vw, 2.35rem);
+    margin-bottom: 0.5rem;
+  }
+
+  .program-details-page .pd-hero__desc {
+    font-size: 0.95rem;
+    line-height: 1.58;
+    margin-bottom: 0.95rem;
+  }
+
+  .program-details-page .pd-hero__jump {
+    margin-top: 0.85rem;
+    padding: 0.5rem 1.05rem;
+    font-size: 0.84rem;
+  }
+
+  .program-details-page .pd-hero__glow {
+    width: min(480px, 90vw);
+    height: 240px;
+    top: 4%;
+    opacity: 0.88;
+  }
+
+  .program-details-page .pd-content {
+    padding-left: clamp(1rem, 2.5vw, 1.35rem);
+    padding-right: clamp(1rem, 2.5vw, 1.35rem);
+  }
+}
+
 @media (max-width: 900px) {
   .pd-info-grid {
     grid-template-columns: 1fr;

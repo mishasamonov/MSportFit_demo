@@ -614,6 +614,36 @@
   }
 }
 
+/* 901–1023px: компактніший hero, менше «важкий» glow */
+@media (max-width: 1023px) and (min-width: 901px) {
+  .ex-hero {
+    padding: 2.15rem clamp(1rem, 2.5vw, 1.35rem) 1.35rem;
+  }
+
+  .ex-hero__title {
+    font-size: clamp(1.65rem, 3.2vw, 2.05rem);
+    margin-bottom: 0.55rem;
+  }
+
+  .ex-hero__desc {
+    font-size: 0.94rem;
+    line-height: 1.58;
+    max-width: 34rem;
+  }
+
+  .ex-hero__glow {
+    width: min(420px, 88vw);
+    height: 220px;
+    top: 8%;
+    opacity: 0.85;
+  }
+
+  .ex-content {
+    padding-left: clamp(1rem, 2.5vw, 1.35rem);
+    padding-right: clamp(1rem, 2.5vw, 1.35rem);
+  }
+}
+
 @media (max-width: 768px) {
   .ex-hero {
     padding: 2.5rem 1rem 2rem;

@@ -231,6 +231,102 @@
   }
 }
 
+/* 961–1023px: трійкова сітка як при ≤960px — без стиснених чотирьох колонок; ≤960 залишається попередній блок */
+@media (max-width: 1023px) and (min-width: 961px) {
+  .ft__inner {
+    padding: 1.05rem clamp(1rem, 2.6vw, 1.35rem) 0.9rem;
+    box-sizing: border-box;
+  }
+
+  .ft__top {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.05rem 1.15rem;
+  }
+
+  .ft__brand {
+    grid-column: 1 / -1;
+  }
+
+  .ft__col--nav,
+  .ft__col--extra,
+  .ft__col--social {
+    justify-self: stretch;
+  }
+}
+
+/* 901–1023px: зібраний центрований футер, рівні три колонки, акуратний нижній ряд */
+@media (max-width: 1023px) and (min-width: 901px) {
+  .ft__inner {
+    padding: 1.1rem clamp(1rem, 2.4vw, 1.3rem) 0.95rem;
+    max-width: min(var(--max-width), 100%);
+  }
+
+  .ft__top {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: clamp(1rem, 3vw, 1.75rem);
+    row-gap: 1.15rem;
+    align-items: start;
+  }
+
+  .ft__brand {
+    grid-column: 1 / -1;
+    align-items: center;
+    text-align: center;
+    padding-right: 0;
+  }
+
+  .ft__brand-head {
+    justify-content: center;
+  }
+
+  .ft__brand-logo {
+    object-position: center top;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 96px;
+    max-width: min(280px, 72vw);
+  }
+
+  .ft__brand-desc {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 34rem;
+  }
+
+  .ft__col--nav,
+  .ft__col--extra,
+  .ft__col--social {
+    justify-self: center;
+    text-align: center;
+    width: 100%;
+    max-width: 14rem;
+  }
+
+  .ft__col-title {
+    margin-bottom: 0.65rem;
+  }
+
+  .ft__col--nav .ft__link-list,
+  .ft__col--extra .ft__link-list {
+    align-items: center;
+  }
+
+  .ft__col--social .ft__social-list {
+    justify-content: center;
+  }
+
+  .ft__bottom {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.35rem 0.75rem;
+    margin-top: 1.05rem;
+    padding-top: 0.7rem;
+  }
+}
+
 @media (max-width: 720px) {
   .ft__top {
     grid-template-columns: repeat(2, minmax(0, 1fr));

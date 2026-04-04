@@ -9,6 +9,8 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
+  min-width: 0;
+  overflow-x: clip;
   background-color: var(--color-bg);
   color: var(--color-text);
 }
@@ -32,6 +34,8 @@
   padding: 0 1.5rem;
   height: 54px;
   gap: 2rem;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 /* Brand lockup */
@@ -423,6 +427,67 @@
   .header__btn--logout {
     padding: 0.38rem 0.75rem;
     font-size: 0.8125rem;
+  }
+}
+
+/* Вузька смуга планшета: 901–1023px — стабільний хедер і відступи main без змін для ≤900px */
+@media (max-width: 1023px) and (min-width: 901px) {
+  .header {
+    overflow-x: clip;
+  }
+
+  .header__inner {
+    max-width: 100%;
+    padding-inline: clamp(0.7rem, 1.8vw, 1rem);
+    gap: clamp(0.4rem, 1.2vw, 0.65rem);
+  }
+
+  .header__brand {
+    min-width: 0;
+  }
+
+  .header__brand-logo {
+    max-height: 34px;
+    max-width: min(200px, 42vw);
+  }
+
+  .header__auth {
+    gap: 0.4rem;
+  }
+
+  .header__auth-link {
+    padding: 0.32rem 0.42rem;
+  }
+
+  .header__btn--register,
+  .header__btn--logout {
+    padding: 0.34rem 0.62rem;
+    font-size: 0.8rem;
+  }
+
+  .header__menu-btn {
+    width: 42px;
+    height: 42px;
+  }
+
+  /* Авторизовані: «Вийти» лише в панелі меню, не в смузі поруч із бургером */
+  .header--authed .header__auth {
+    display: none;
+  }
+
+  .header--authed .header__menu-btn {
+    margin-left: auto;
+  }
+
+  .layout__main {
+    padding: 1.5rem clamp(1rem, 2.5vw, 1.35rem);
+  }
+}
+
+/* ≤900px: верхня «Вийти» лишається в смузі; дубль у відкритому аркуші не показуємо */
+@media (max-width: 900px) {
+  .header__sheet-foot .header__btn--logout {
+    display: none;
   }
 }
 
