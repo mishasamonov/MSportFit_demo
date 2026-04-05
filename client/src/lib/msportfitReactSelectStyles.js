@@ -80,6 +80,9 @@ export function getMsportfitSelectStyles(variant = 'filter') {
       /* Не вужче за контрол, але може розширитись під довгі підписи */
       minWidth: '100%',
       width: 'max-content',
+      /* fixed + portal: обмежуємо ширину, щоб меню не «липло» до краю в’юпорту */
+      maxWidth: 'calc(100vw - 2rem)',
+      boxSizing: 'border-box',
     }),
     menuList: (base) => ({
       ...base,
