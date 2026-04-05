@@ -1099,6 +1099,84 @@
   }
 }
 
+/* 769–899px: менш «десктопний» герой; програми лишаються в одній колонці (окремий крок); переваги / продукти / калькулятори — 2 колонки, щільніше */
+@media (max-width: 899px) and (min-width: 769px) {
+  .home-hero {
+    padding-top: 5rem;
+    padding-bottom: 4.25rem;
+  }
+
+  .home-hero__title {
+    font-size: clamp(2rem, 5.5vw, 2.65rem);
+  }
+
+  .home-programs__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-advantages__grid,
+  .home-products__grid,
+  .home-calcs__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.05rem;
+  }
+
+  .home-advantages__grid {
+    align-items: start;
+  }
+
+  .home-advantages__card {
+    padding: 1.35rem 1.3rem;
+  }
+
+  .home-advantages__icon {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 0.95rem;
+  }
+
+  .home-advantages__card-desc {
+    flex: 0 1 auto;
+  }
+
+  .home-products__card {
+    padding: 1.1rem 1.05rem;
+  }
+
+  .home-calcs__grid {
+    align-items: start;
+  }
+
+  .home-calcs__card {
+    padding: 1.35rem 1.25rem;
+  }
+
+  .home-calcs__badge {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 0.95rem;
+  }
+
+  .home-calcs__card-desc {
+    flex: 0 1 auto;
+    margin-bottom: 0.85rem;
+  }
+
+  .home-advantages,
+  .home-programs,
+  .home-exercises,
+  .home-products,
+  .home-calcs {
+    padding-top: 3.35rem;
+    padding-bottom: 3.35rem;
+  }
+
+  .home-cta {
+    padding-top: 3.35rem;
+    padding-bottom: 4.5rem;
+  }
+}
+
 @media (max-width: 768px) {
   .home-calcs__grid {
     grid-template-columns: 1fr;

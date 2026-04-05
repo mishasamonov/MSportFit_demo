@@ -484,10 +484,21 @@
   }
 }
 
-/* ≤900px: верхня «Вийти» лишається в смузі; дубль у відкритому аркуші не показуємо */
-@media (max-width: 900px) {
+/* ≤767px: верхня «Вийти» в смузі; дубль у аркуші не показуємо (768–899 — лише в аркуші, див. блок нижче) */
+@media (max-width: 767px) {
   .header__sheet-foot .header__btn--logout {
     display: none;
+  }
+}
+
+/* 768–899px, авторизовано: як 901–1023 — без «Вийти» в смузі, кнопка в бургер-панелі */
+@media (max-width: 899px) and (min-width: 768px) {
+  .header--authed .header__auth {
+    display: none;
+  }
+
+  .header--authed .header__menu-btn {
+    margin-left: auto;
   }
 }
 
@@ -534,6 +545,13 @@
   box-sizing: border-box;
   background-color: var(--color-bg);
   color: var(--color-text);
+}
+
+/* 769–899px: плавні бокові поля main (≥900px без змін; <768 — окремий блок) */
+@media (max-width: 899px) and (min-width: 769px) {
+  .layout__main {
+    padding: 1.5rem clamp(0.85rem, 2.2vw, 1.2rem);
+  }
 }
 
 @media (max-width: 768px) {

@@ -844,6 +844,25 @@ button.pd-hero__back {
   }
 }
 
+@media (max-width: 899px) and (min-width: 769px) {
+  .product-detail-page .pd-hero {
+    padding: 1.75rem clamp(0.85rem, 2.2vw, 1.15rem) 1.35rem;
+  }
+
+  .product-detail-page .pd-hero__title {
+    font-size: clamp(1.55rem, 4vw, 1.95rem);
+  }
+
+  .product-detail-page .pd-hero__lead {
+    font-size: 0.94rem;
+    line-height: 1.58;
+  }
+
+  .product-detail-page .pd-content {
+    padding: 0 clamp(0.85rem, 2.2vw, 1.15rem) 3.25rem;
+  }
+}
+
 @media (max-width: 960px) {
   .pd-main-grid {
     grid-template-columns: 1fr;
@@ -868,6 +887,31 @@ button.pd-hero__back {
   .pd-hero__fav-btn {
     width: 100%;
     max-width: 22rem;
+  }
+}
+
+/*
+ * 768–899px: глобальний блок max-width:900px ставить .pd-hero__meta у колонку й розтягує кнопку —
+ * на ProductDetails це ламає ряд «ккал + обране». Сторінковий маркер .product-detail-page
+ * відновлює горизонтальний ряд і обмеження ширини блоку калорій.
+ */
+@media (max-width: 899px) and (min-width: 768px) {
+  .product-detail-page .pd-hero__meta {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 0.65rem 0.85rem;
+  }
+
+  .product-detail-page .pd-hero__nutrition--compact {
+    max-width: 340px;
+    flex: 0 1 auto;
+  }
+
+  .product-detail-page .pd-hero__fav-btn {
+    width: auto;
+    max-width: none;
+    flex: 0 0 auto;
   }
 }
 
