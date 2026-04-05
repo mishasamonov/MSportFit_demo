@@ -327,8 +327,8 @@
   }
 }
 
-/* 769–899px: той самий центрований ритм, що й 901–1023px (межа 900px для сторінок не змінюється) */
-@media (max-width: 899px) and (min-width: 769px) {
+/* 640–899px: центрований ритм як на планшеті (767–640 входять сюди; <640 — окремий крок) */
+@media (max-width: 899px) and (min-width: 640px) {
   .ft__inner {
     padding: 1.1rem clamp(0.85rem, 2.2vw, 1.2rem) 0.95rem;
     max-width: min(var(--max-width), 100%);

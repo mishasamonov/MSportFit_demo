@@ -628,13 +628,20 @@
 
 /* ── Responsive ── */
 
-@media (max-width: 1024px) {
+@media (max-width: 1024px) and (min-width: 768px) {
+  .prod-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.12rem;
+  }
+}
+
+@media (max-width: 767px) {
   .prod-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 899px) and (min-width: 769px) {
+@media (max-width: 899px) and (min-width: 768px) {
   .prod-hero {
     padding: 2.85rem clamp(0.85rem, 2.2vw, 1.15rem) 2.15rem;
   }
@@ -644,7 +651,6 @@
   }
 
   .prod-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.05rem;
   }
 }
@@ -669,7 +675,9 @@
   .prod-filters {
     padding: 1rem 1.1rem;
   }
+}
 
+@media (max-width: 639px) {
   .prod-filters__search-form {
     width: 100%;
   }

@@ -361,13 +361,20 @@
 
 /* ── Responsive ── */
 
-@media (max-width: 1024px) {
+@media (max-width: 1024px) and (min-width: 768px) {
+  .fav-loading__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.12rem;
+  }
+}
+
+@media (max-width: 767px) {
   .fav-loading__grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 899px) and (min-width: 769px) {
+@media (max-width: 899px) and (min-width: 768px) {
   .fav-hero {
     padding: 2.35rem clamp(0.85rem, 2.2vw, 1.15rem) 1.75rem;
   }
@@ -377,7 +384,6 @@
   }
 
   .fav-loading__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.05rem;
   }
 }
@@ -403,7 +409,9 @@
     padding: 0.75rem 0.65rem;
     font-size: 0.85rem;
   }
+}
 
+@media (max-width: 639px) {
   .fav-loading__grid {
     grid-template-columns: 1fr;
   }

@@ -644,7 +644,7 @@
   }
 }
 
-@media (max-width: 899px) and (min-width: 769px) {
+@media (max-width: 899px) and (min-width: 768px) {
   .ex-hero {
     padding: 1.85rem clamp(0.85rem, 2.2vw, 1.15rem) 1.25rem;
   }
@@ -656,10 +656,6 @@
   .ex-content {
     padding-left: clamp(0.85rem, 2.2vw, 1.15rem);
     padding-right: clamp(0.85rem, 2.2vw, 1.15rem);
-  }
-
-  .ex-grid {
-    grid-template-columns: 1fr;
   }
 }
 
@@ -683,7 +679,9 @@
   .ex-filters {
     padding: 1rem 1.1rem;
   }
+}
 
+@media (max-width: 639px) {
   .ex-filters__search-form {
     width: 100%;
   }

@@ -484,15 +484,15 @@
   }
 }
 
-/* ≤767px: верхня «Вийти» в смузі; дубль у аркуші не показуємо (768–899 — лише в аркуші, див. блок нижче) */
-@media (max-width: 767px) {
+/* ≤639px: «Вийти» в верхній смузі; у аркуші дубль ховаємо. У 640–767 для авторизованих — лише в бургері (див. блок нижче) */
+@media (max-width: 639px) {
   .header__sheet-foot .header__btn--logout {
     display: none;
   }
 }
 
-/* 768–899px, авторизовано: як 901–1023 — без «Вийти» в смузі, кнопка в бургер-панелі */
-@media (max-width: 899px) and (min-width: 768px) {
+/* 640–900px, авторизовано: без «Вийти» в смузі, кнопка в бургер-панелі (узгоджено з 901–1023) */
+@media (max-width: 900px) and (min-width: 640px) {
   .header--authed .header__auth {
     display: none;
   }
@@ -547,8 +547,8 @@
   color: var(--color-text);
 }
 
-/* 769–899px: плавні бокові поля main (≥900px без змін; <768 — окремий блок) */
-@media (max-width: 899px) and (min-width: 769px) {
+/* 768–899px: плавні бокові поля main (≥900px без змін; ≤767 — окремий блок) */
+@media (max-width: 899px) and (min-width: 768px) {
   .layout__main {
     padding: 1.5rem clamp(0.85rem, 2.2vw, 1.2rem);
   }

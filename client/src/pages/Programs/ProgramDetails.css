@@ -961,7 +961,7 @@ button.pd-hero__back {
   }
 }
 
-@media (max-width: 899px) and (min-width: 769px) {
+@media (max-width: 899px) and (min-width: 768px) {
   .program-details-page .pd-hero {
     padding: 1.35rem clamp(0.85rem, 2.2vw, 1.15rem) 1.65rem;
   }
@@ -1016,10 +1016,6 @@ button.pd-hero__back {
     padding: 1.15rem 1.25rem 1.1rem;
   }
 
-  .pd-training-grid {
-    grid-template-columns: 1fr;
-  }
-
   .pd-days-toggle {
     flex-wrap: wrap;
   }
@@ -1057,6 +1053,40 @@ button.pd-hero__back {
   .pd-exercise__param,
   .pd-exercise__rest {
     white-space: normal;
+  }
+}
+
+/* 640–767px: компактний верх і двоколонкові дні (без «плит» на всю ширину) */
+@media (max-width: 767px) and (min-width: 640px) {
+  .program-details-page .pd-hero {
+    padding: 1.35rem 1rem 1.65rem;
+  }
+
+  .program-details-page .pd-hero__back {
+    margin-bottom: 0.55rem;
+    padding: 0.3rem 0.52rem;
+  }
+
+  .program-details-page .pd-hero__jump {
+    margin-top: 0.75rem;
+    padding: 0.46rem 0.95rem;
+    font-size: 0.82rem;
+  }
+
+  .program-details-page .pd-btn {
+    padding: 0.52rem 1.05rem;
+    font-size: 0.82rem;
+  }
+
+  .program-details-page .pd-training-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .pd-training-grid {
+    grid-template-columns: 1fr;
   }
 }
 
