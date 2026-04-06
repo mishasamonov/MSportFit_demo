@@ -495,6 +495,38 @@
   }
 }
 
+@media (max-width: 479px) {
+  .header__sheet-inner {
+    padding: 0.9rem 0.95rem 1.15rem;
+  }
+}
+
+/* ≤430px, гість: логотип + «Увійти» + реєстрація + бургер — без обрізання кнопки меню (381–399px раніше лишались на padding 1rem) */
+@media (max-width: 430px) {
+  .header:not(.header--authed) .header__inner {
+    padding: 0 0.75rem;
+    gap: 0.45rem;
+  }
+
+  .header:not(.header--authed) .header__brand {
+    min-width: 0;
+  }
+
+  .header:not(.header--authed) .header__brand-logo {
+    max-width: min(160px, 38vw);
+  }
+
+  .header:not(.header--authed) .header__auth-link {
+    font-size: 0.8125rem;
+    padding: 0.3rem 0.35rem;
+  }
+
+  .header:not(.header--authed) .header__btn--register {
+    padding: 0.35rem 0.55rem;
+    font-size: 0.75rem;
+  }
+}
+
 @media (max-width: 380px) {
   .header__inner {
     padding: 0 0.75rem;

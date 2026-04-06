@@ -713,6 +713,7 @@ button.pd-hero__back {
 
 .pd-fav-strip__link {
   flex-shrink: 0;
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
@@ -926,10 +927,14 @@ button.pd-hero__back {
 
   .pd-fav-strip {
     flex-wrap: wrap;
+    min-width: 0;
   }
 
   .pd-fav-strip__link {
-    width: 100%;
+    flex: 1 1 100%;
+    width: auto;
+    min-width: 0;
+    max-width: 100%;
     justify-content: center;
   }
 }
@@ -944,7 +949,72 @@ button.pd-hero__back {
   }
 }
 
-@media (max-width: 420px) {
+/*
+ * ≤767px: стабільний вертикальний ряд «ккал → обране» на ProductDetails.
+ * Не залежить від довжини підпису кнопки (на відміну від flex-wrap у 480–899px).
+ */
+@media (max-width: 767px) {
+  .product-detail-page .pd-hero__meta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.65rem;
+    align-items: stretch;
+  }
+
+  .product-detail-page .pd-hero__nutrition--compact {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+  }
+
+  .product-detail-page .pd-hero__kcal-block {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .product-detail-page .pd-hero__fav-btn {
+    width: 100%;
+    max-width: none;
+    justify-self: stretch;
+    box-sizing: border-box;
+    white-space: normal;
+    text-align: center;
+  }
+}
+
+/* <480px: компактний верх + дрібніша кнопка обраного (layout meta — у блоці ≤767px) */
+@media (max-width: 479px) {
+  .product-detail-page .pd-hero {
+    padding: 1.5rem 1rem 1.35rem;
+  }
+
+  .product-detail-page .pd-hero__back {
+    margin-bottom: 0.65rem;
+  }
+
+  .product-detail-page .pd-hero__fav-btn {
+    padding: 0.48rem 0.88rem;
+    font-size: 0.8rem;
+  }
+
+  .product-detail-page .pd-quick-grid {
+    gap: 0.5rem;
+  }
+
+  .product-detail-page .pd-quick-tile {
+    padding: 0.72rem 0.65rem;
+    min-height: 4.35rem;
+  }
+
+  .product-detail-page .pd-quick-tile__value {
+    font-size: clamp(1.05rem, 4.2vw, 1.28rem);
+  }
+}
+
+/* Раніше 1 колонка з 420px — ламало 360–419; залишаємо 2 колонки до <360px */
+@media (max-width: 359px) {
   .pd-quick-grid {
     grid-template-columns: 1fr;
   }

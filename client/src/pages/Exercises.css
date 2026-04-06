@@ -315,6 +315,9 @@
   gap: 0.35rem;
   flex-wrap: wrap;
   margin-bottom: 0.75rem;
+  /* Резерв під абсолютну кнопку обраного (як padding у prod-card__head) */
+  padding-right: 2.75rem;
+  box-sizing: border-box;
 }
 
 .ex-card__tag {
@@ -818,6 +821,54 @@
     white-space: normal;
     max-width: 100%;
     overflow-wrap: anywhere;
+  }
+}
+
+/* ≤479px: стабільна одноколонкова панель фільтрів (рядки без «плаваючого» скидання) */
+@media (max-width: 479px) {
+  .ex-filters {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.45rem;
+    padding: 0.72rem 0.8rem;
+    align-content: start;
+    align-items: stretch;
+  }
+
+  .ex-filters__search-form {
+    grid-column: 1;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .ex-filters__group {
+    grid-column: 1;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .ex-filters__btn.ex-filters__btn--reset {
+    grid-column: 1;
+    justify-self: start;
+    width: auto;
+    max-width: 100%;
+  }
+
+  .ex-filters__input {
+    min-width: 0;
+  }
+
+  .ex-filters .msf-rs__control {
+    min-height: 34px !important;
+    font-size: 0.82rem !important;
+  }
+
+  .ex-filters .msf-rs__value-container {
+    padding: 1px 6px !important;
+  }
+
+  .ex-filters .msf-rs__dropdown-indicator {
+    padding: 0 6px !important;
   }
 }
 

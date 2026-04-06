@@ -456,3 +456,75 @@
     gap: 1.05rem;
   }
 }
+
+/* 360–479px: знову 2 колонки для nav|extra (як ≤720px), бренд і соцмережі на всю ширину — менш «ламаний» стовпчик */
+@media (max-width: 479px) {
+  .ft__inner {
+    padding: 0.95rem 1rem 0.85rem;
+  }
+
+  .ft__top {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 0.75rem;
+    row-gap: 0.9rem;
+  }
+
+  .ft__brand {
+    grid-column: 1 / -1;
+    align-items: center;
+    text-align: center;
+    padding-right: 0;
+  }
+
+  .ft__brand-head {
+    justify-content: center;
+  }
+
+  .ft__brand-logo {
+    margin-left: auto;
+    margin-right: auto;
+    object-position: center top;
+  }
+
+  .ft__brand-desc {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 34rem;
+  }
+
+  .ft__col--nav,
+  .ft__col--extra {
+    justify-self: center;
+    text-align: center;
+    width: 100%;
+    max-width: 14rem;
+  }
+
+  .ft__col--nav .ft__link-list,
+  .ft__col--extra .ft__link-list {
+    align-items: center;
+  }
+
+  .ft__col--social {
+    grid-column: 1 / -1;
+    justify-self: center;
+    text-align: center;
+    width: 100%;
+    max-width: 14rem;
+  }
+
+  .ft__col--social .ft__social-list {
+    justify-content: center;
+  }
+
+  .ft__col-title {
+    margin-bottom: 0.55rem;
+  }
+
+  .ft__bottom {
+    margin-top: 0.9rem;
+    padding-top: 0.6rem;
+    gap: 0.3rem 0.65rem;
+  }
+}

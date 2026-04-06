@@ -1314,8 +1314,8 @@
   }
 }
 
-/* 639–480px: щільніший герой і сітки прев’ю/переваг без «раннього» 1 колонки з max-width:640 */
-@media (max-width: 639px) and (min-width: 480px) {
+/* ≤639px: компактні вертикальні ритми (у т.ч. 361–479px; раніше лишались лише правила з max-width:768px) */
+@media (max-width: 639px) {
   .home-hero__btn {
     padding: 0.52rem 1.05rem;
     font-size: 0.875rem;
@@ -1341,7 +1341,10 @@
   .home-section-header {
     margin-bottom: 1.45rem;
   }
+}
 
+/* 639–480px: двоколонкові прев’ю без «раннього» 1 колонки з max-width:640 */
+@media (max-width: 639px) and (min-width: 480px) {
   /* Переваги: 2 колонки, поки не тісно; нижня частина діапазону — 1 колонка */
   .home-advantages__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1378,7 +1381,8 @@
   }
 }
 
-@media (max-width: 390px) {
+/* Дуже вузькі ширини: повна ширина CTA лише <360px, щоб 360–479 лишались компактними */
+@media (max-width: 359px) {
   .home-hero__pill {
     font-size: 0.75rem;
     padding: 0.3rem 0.85rem;
@@ -1392,5 +1396,55 @@
   .home-hero__btn {
     width: 100%;
     justify-content: center;
+  }
+}
+
+/* 360–479px: легший герой і прев’ю, без регресу для ≥480px */
+@media (max-width: 479px) {
+  .home-hero__actions {
+    gap: 0.75rem;
+    justify-content: center;
+  }
+
+  .home-hero__btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* Прев’ю: 3 картки; 4-ту приховуємо (каталог не змінюється) */
+  .home-products__grid .home-products__card:nth-child(n + 4) {
+    display: none;
+  }
+
+  .home-calcs__grid {
+    width: 100%;
+    justify-items: stretch;
+    grid-template-columns: 1fr;
+  }
+
+  .home-calcs__card {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .home-advantages,
+  .home-programs,
+  .home-exercises,
+  .home-products,
+  .home-calcs {
+    padding-top: 2.35rem;
+    padding-bottom: 2.35rem;
+  }
+
+  .home-cta {
+    padding-top: 2.35rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .home-section-header {
+    margin-bottom: 1.25rem;
   }
 }

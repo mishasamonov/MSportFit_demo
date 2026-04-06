@@ -836,6 +836,56 @@
   }
 }
 
+/* ≤479px: ряд 1 — пошук+кнопка; ряд 2 — категорія; ряд 3 — скидання зліва; без зайвого повітря в панелі */
+@media (max-width: 479px) {
+  .prod-filters {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.45rem;
+    padding: 0.72rem 0.8rem;
+    align-content: start;
+    align-items: stretch;
+  }
+
+  .prod-filters__search-form {
+    grid-column: 1;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .prod-filters__row--secondary {
+    display: contents;
+  }
+
+  .prod-filters__row--secondary > .prod-filters__group {
+    grid-column: 1;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .prod-filters__row--secondary > .prod-filters__btn--reset {
+    grid-column: 1;
+    justify-self: start;
+    width: auto;
+    max-width: 100%;
+    align-self: start;
+  }
+
+  .prod-filters .msf-rs__control {
+    min-height: 34px !important;
+    font-size: 0.82rem !important;
+  }
+
+  .prod-filters .msf-rs__value-container {
+    padding: 1px 6px !important;
+  }
+
+  .prod-filters .msf-rs__dropdown-indicator {
+    padding: 0 6px !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .prod-content {
     animation: none;
