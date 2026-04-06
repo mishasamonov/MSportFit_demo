@@ -411,13 +411,11 @@
   }
 }
 
-@media (max-width: 639px) {
+@media (max-width: 480px) {
   .fav-loading__grid {
     grid-template-columns: 1fr;
   }
-}
 
-@media (max-width: 480px) {
   .fav-hero__content {
     flex-direction: column;
     align-items: flex-start;

@@ -700,14 +700,86 @@
     min-width: min(14.25rem, 100%);
     flex: 1 1 13.5rem;
   }
+}
 
+/* Каталог вправ: одна колонка в смузі 639–481 (2 колонки лишаються для 640–767) */
+@media (max-width: 639px) and (min-width: 481px) {
   .ex-grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 0.95rem;
+  }
+}
+
+/* 639–480: ряд 1 — пошук; ряд 2 — м’язова група | рівень; ряд 3 — обладнання | скидання */
+@media (max-width: 639px) and (min-width: 480px) {
+  .ex-filters {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.48rem 0.55rem;
+    padding: 0.8rem 0.88rem;
+    align-content: start;
+    align-items: end;
+    justify-items: stretch;
+  }
+
+  .ex-filters__input {
+    padding: 0.45rem 0.6rem;
+  }
+
+  .ex-filters__btn {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.84rem;
+  }
+
+  .ex-filters__search-form {
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .ex-filters__group.ex-filters__group--muscle-select:has(.msf-rs__container) {
+    grid-column: auto;
+    width: 100%;
+    max-width: min(100%, 16.5rem);
+    min-width: 0;
+    justify-self: start;
+  }
+
+  .ex-filters__group:has(.msf-rs__container):not(.ex-filters__group--muscle-select) {
+    min-width: 0;
+    max-width: min(100%, 15rem);
+    width: 100%;
+    justify-self: start;
+  }
+
+  .ex-filters__btn.ex-filters__btn--reset {
+    grid-column: auto;
+    justify-self: start;
+    width: auto;
+    max-width: 100%;
+  }
+
+  .ex-filters .msf-rs__control {
+    min-height: 34px !important;
+    font-size: 0.82rem !important;
+  }
+
+  .ex-filters .msf-rs__value-container {
+    padding: 1px 6px !important;
+  }
+
+  .ex-filters .msf-rs__dropdown-indicator {
+    padding: 0 6px !important;
   }
 }
 
 @media (max-width: 480px) {
+  .ex-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
   .ex-hero {
     padding: 2rem 1rem 1.5rem;
   }
@@ -718,6 +790,10 @@
 
   .ex-filters {
     gap: 0.75rem;
+  }
+
+  .ex-filters__search-form {
+    width: 100%;
   }
 
   .ex-filters__group {

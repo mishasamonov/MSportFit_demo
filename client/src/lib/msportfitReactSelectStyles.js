@@ -28,6 +28,15 @@ export function getMsportfitSelectStyles(variant = 'filter') {
       boxShadow: state.isFocused ? accentGlow : 'none',
       cursor: 'pointer',
       transition: 'border-color 0.2s, box-shadow 0.2s',
+      ...(!isCalc
+        ? {
+            minWidth: 0,
+            maxWidth: '100%',
+            width: '100%',
+            boxSizing: 'border-box',
+            overflow: 'hidden',
+          }
+        : {}),
       '&:hover': {
         borderColor: state.isFocused ? accentBorder : 'rgba(255, 255, 255, 0.1)',
       },
@@ -35,11 +44,20 @@ export function getMsportfitSelectStyles(variant = 'filter') {
     valueContainer: (base) => ({
       ...base,
       padding: isCalc ? '2px 10px' : '2px 8px',
+      ...(!isCalc ? { minWidth: 0, overflow: 'hidden' } : {}),
     }),
     singleValue: (base) => ({
       ...base,
       color: 'var(--color-text)',
       margin: 0,
+      ...(!isCalc
+        ? {
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            maxWidth: '100%',
+          }
+        : {}),
     }),
     placeholder: (base) => ({
       ...base,

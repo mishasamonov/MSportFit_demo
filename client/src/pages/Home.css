@@ -17,6 +17,10 @@
   .home-page {
     margin: -1rem -0.85rem;
   }
+
+  .home-calcs__grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 360px) {
@@ -672,10 +676,22 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
 }
 
+.home-products__card-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  min-width: 0;
+  margin-bottom: 0.75rem;
+}
+
 .home-products__card-title {
   font-size: 1.05rem;
   font-weight: 700;
-  margin: 0 0 0.35rem;
+  margin: 0;
+  line-height: 1.38;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
 }
 
 .home-products__card-category {
@@ -686,7 +702,9 @@
   background: rgba(232, 99, 10, 0.12);
   color: var(--color-accent);
   font-weight: 500;
-  margin-bottom: 0.75rem;
+  margin: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .home-products__kcal-row {
@@ -1241,12 +1259,6 @@
   }
 }
 
-@media (max-width: 639px) {
-  .home-calcs__grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 @media (max-width: 640px) {
   .home-hero {
     padding: 3.75rem 1rem 3.25rem;
@@ -1299,6 +1311,70 @@
   .home-hero__btn {
     min-height: 48px;
     justify-content: center;
+  }
+}
+
+/* 639–480px: щільніший герой і сітки прев’ю/переваг без «раннього» 1 колонки з max-width:640 */
+@media (max-width: 639px) and (min-width: 480px) {
+  .home-hero__btn {
+    padding: 0.52rem 1.05rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    min-height: 0;
+    justify-content: center;
+  }
+
+  .home-advantages,
+  .home-programs,
+  .home-exercises,
+  .home-products,
+  .home-calcs {
+    padding-top: 2.65rem;
+    padding-bottom: 2.65rem;
+  }
+
+  .home-cta {
+    padding-top: 2.65rem;
+    padding-bottom: 4rem;
+  }
+
+  .home-section-header {
+    margin-bottom: 1.45rem;
+  }
+
+  /* Переваги: 2 колонки, поки не тісно; нижня частина діапазону — 1 колонка */
+  .home-advantages__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+  }
+
+  .home-advantages__card {
+    padding: 1.15rem 1rem;
+  }
+
+  .home-advantages__icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0.75rem;
+  }
+
+  .home-advantages__card-title {
+    font-size: 0.98rem;
+  }
+
+  .home-products__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+  }
+
+  .home-products__card {
+    padding: 1rem 0.9rem;
+  }
+}
+
+@media (max-width: 519px) and (min-width: 480px) {
+  .home-advantages__grid {
+    grid-template-columns: 1fr;
   }
 }
 

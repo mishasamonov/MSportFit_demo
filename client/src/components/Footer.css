@@ -327,8 +327,8 @@
   }
 }
 
-/* 640–899px: центрований ритм як на планшеті (767–640 входять сюди; <640 — окремий крок) */
-@media (max-width: 899px) and (min-width: 640px) {
+/* 480–899px: центрований ритм як на планшеті (включно з вузькою смугою до 480px — без «дірки» 481–639) */
+@media (max-width: 899px) and (min-width: 480px) {
   .ft__inner {
     padding: 1.1rem clamp(0.85rem, 2.2vw, 1.2rem) 0.95rem;
     max-width: min(var(--max-width), 100%);
@@ -415,14 +415,17 @@
   }
 }
 
+/* 639–481px: трохи щільніше, щоб 2-колонковий ряд nav|extra тримався довше без переходу в 1 колонку */
+@media (max-width: 639px) and (min-width: 481px) {
+  .ft__top {
+    column-gap: 0.8rem;
+    row-gap: 0.95rem;
+  }
+}
+
 @media (max-width: 560px) {
   .ft__inner {
     padding: 1rem 1.1rem 0.85rem;
-  }
-
-  .ft__top {
-    grid-template-columns: 1fr;
-    gap: 1.05rem;
   }
 
   .ft__brand-logo {
@@ -438,8 +441,18 @@
 
   .ft__bottom {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     margin-top: 1rem;
     padding-top: 0.65rem;
+  }
+}
+
+/* Одна колонка лише з ≤480px (раніше спрацьовувало з ~560px і «з’їдало» 520px) */
+@media (max-width: 480px) {
+  .ft__top {
+    grid-template-columns: 1fr;
+    gap: 1.05rem;
   }
 }

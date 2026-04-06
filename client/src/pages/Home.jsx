@@ -287,8 +287,10 @@ function Home() {
           <div className="home-products__grid">
             {PRODUCTS_PREVIEW.map((product) => (
               <div className="home-products__card" key={product.title}>
-                <h3 className="home-products__card-title">{product.title}</h3>
-                <span className="home-products__card-category">{product.category}</span>
+                <div className="home-products__card-head">
+                  <h3 className="home-products__card-title">{product.title}</h3>
+                  <span className="home-products__card-category">{product.category}</span>
+                </div>
                 <div className="home-products__kcal-row">
                   <IconFlame aria-hidden="true" />
                   <span className="home-products__kcal-value">{product.kcal}</span>

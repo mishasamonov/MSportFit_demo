@@ -17,6 +17,10 @@
   .pd-page {
     margin: -1rem -0.85rem;
   }
+
+  .program-details-page .pd-training-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ── Hero ── */
@@ -1056,8 +1060,8 @@ button.pd-hero__back {
   }
 }
 
-/* 640–767px: компактний верх і двоколонкові дні (без «плит» на всю ширину) */
-@media (max-width: 767px) and (min-width: 640px) {
+/* 480–767px: компактний верх і двоколонкові дні (без «плит» на всю ширину) */
+@media (max-width: 767px) and (min-width: 480px) {
   .program-details-page .pd-hero {
     padding: 1.35rem 1rem 1.65rem;
   }
@@ -1081,12 +1085,6 @@ button.pd-hero__back {
   .program-details-page .pd-training-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.85rem;
-  }
-}
-
-@media (max-width: 639px) {
-  .pd-training-grid {
-    grid-template-columns: 1fr;
   }
 }
 

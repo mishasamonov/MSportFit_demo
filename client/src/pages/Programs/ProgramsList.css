@@ -420,6 +420,15 @@ a.program-card--link:focus-visible {
   .programs-grid {
     grid-template-columns: 1fr;
   }
+
+  /* Після max-width:768px CTA лишався min-height:48px — зменшуємо вагу кнопки в цій смузі */
+  .program-card__cta {
+    padding: 0.4rem 0.88rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    min-height: 0;
+    gap: 0.32rem;
+  }
 }
 
 @media (max-width: 480px) {
