@@ -355,15 +355,17 @@ function Favorites() {
                           <HeartIcon />
                         </button>
 
-                        <h3 className="prod-card__title">
-                          <Link to={link} className="prod-card__title-link">
-                            {product.title}
-                          </Link>
-                        </h3>
+                        <div className="prod-card__head">
+                          <h3 className="prod-card__title">
+                            <Link to={link} className="prod-card__title-link">
+                              {product.title}
+                            </Link>
+                          </h3>
 
-                        {product.category && (
-                          <span className="prod-card__category">{product.category}</span>
-                        )}
+                          {product.category && (
+                            <span className="prod-card__category">{product.category}</span>
+                          )}
+                        </div>
 
                         <div className="prod-card__kcal-row">
                           <IconFlame aria-hidden="true" />

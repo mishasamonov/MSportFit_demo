@@ -211,28 +211,30 @@ function Products() {
             </button>
           </form>
 
-          <div className="prod-filters__group">
-            <label htmlFor="prod-filter-category" className="prod-filters__label">
-              Категорія
-            </label>
-            <MsportFitSelect
-              id="prod-filter-category"
-              variant="filter"
-              value={currentCategory}
-              options={CATEGORY_OPTIONS}
-              onChange={(v) => updateFilter('category', v)}
-            />
-          </div>
+          <div className="prod-filters__row prod-filters__row--secondary">
+            <div className="prod-filters__group">
+              <label htmlFor="prod-filter-category" className="prod-filters__label">
+                Категорія
+              </label>
+              <MsportFitSelect
+                id="prod-filter-category"
+                variant="filter"
+                value={currentCategory}
+                options={CATEGORY_OPTIONS}
+                onChange={(v) => updateFilter('category', v)}
+              />
+            </div>
 
-          {hasActiveFilters && (
-            <button
-              type="button"
-              onClick={handleReset}
-              className="prod-filters__btn prod-filters__btn--reset"
-            >
-              Скинути фільтри
-            </button>
-          )}
+            {hasActiveFilters && (
+              <button
+                type="button"
+                onClick={handleReset}
+                className="prod-filters__btn prod-filters__btn--reset"
+              >
+                Скинути фільтри
+              </button>
+            )}
+          </div>
         </div>
 
         {loading && (
@@ -283,15 +285,17 @@ function Products() {
                       </button>
                     )}
 
-                    <h3 className="prod-card__title">
-                      <Link to={link} className="prod-card__title-link">
-                        {product.title}
-                      </Link>
-                    </h3>
+                    <div className="prod-card__head">
+                      <h3 className="prod-card__title">
+                        <Link to={link} className="prod-card__title-link">
+                          {product.title}
+                        </Link>
+                      </h3>
 
-                    {product.category && (
-                      <span className="prod-card__category">{product.category}</span>
-                    )}
+                      {product.category && (
+                        <span className="prod-card__category">{product.category}</span>
+                      )}
+                    </div>
 
                     <div className="prod-card__kcal-row">
                       <IconFlame aria-hidden="true" />

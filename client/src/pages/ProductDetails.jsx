@@ -148,7 +148,7 @@ function ProductDetails() {
 
   if (loading) {
     return (
-      <div className="pd-page">
+      <div className="pd-page product-detail-page">
         <div className="prod-message pd-state">
           <p className="prod-message__text">Завантаження продукту…</p>
         </div>
@@ -158,7 +158,7 @@ function ProductDetails() {
 
   if (error) {
     return (
-      <div className="pd-page">
+      <div className="pd-page product-detail-page">
         <div className="pd-state pd-state--center">
           <p className="prod-message__text prod-message__text--error">Помилка: {error}</p>
           <button
@@ -175,7 +175,7 @@ function ProductDetails() {
 
   if (!product) {
     return (
-      <div className="pd-page">
+      <div className="pd-page product-detail-page">
         <div className="prod-empty">
           <div className="prod-empty__icon" aria-hidden="true">
             📦
@@ -214,7 +214,7 @@ function ProductDetails() {
   };
 
   return (
-    <div className="pd-page">
+    <div className="pd-page product-detail-page">
       <section className="pd-hero" aria-labelledby="pd-product-title">
         <div className="pd-hero__glow" aria-hidden="true" />
         <div className="pd-hero__inner">

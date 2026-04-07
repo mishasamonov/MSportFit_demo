@@ -113,6 +113,31 @@
   }
 }
 
+@media (min-width: 900px) and (max-width: 1024px) {
+  .calc-page {
+    min-height: unset;
+  }
+}
+
+@media (max-width: 899px) and (min-width: 768px) {
+  .calc-page {
+    min-height: unset;
+  }
+
+  .calc-hero {
+    padding: 2.65rem clamp(0.85rem, 2.2vw, 1.15rem) 1.85rem;
+  }
+
+  .calc-body {
+    padding: 0 clamp(0.85rem, 2.2vw, 1.15rem) 4rem;
+  }
+
+  .calc-tabs__btn {
+    padding: 0.72rem 0.85rem;
+    font-size: 0.86rem;
+  }
+}
+
 @media (min-width: 1025px) {
   .calc-hero {
     padding-bottom: 2.65rem;

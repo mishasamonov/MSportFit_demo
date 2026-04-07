@@ -315,6 +315,9 @@
   gap: 0.35rem;
   flex-wrap: wrap;
   margin-bottom: 0.75rem;
+  /* Резерв під абсолютну кнопку обраного (як padding у prod-card__head) */
+  padding-right: 2.75rem;
+  box-sizing: border-box;
 }
 
 .ex-card__tag {
@@ -614,6 +617,51 @@
   }
 }
 
+/* 901–1023px: компактніший hero, менше «важкий» glow */
+@media (max-width: 1023px) and (min-width: 901px) {
+  .ex-hero {
+    padding: 2.15rem clamp(1rem, 2.5vw, 1.35rem) 1.35rem;
+  }
+
+  .ex-hero__title {
+    font-size: clamp(1.65rem, 3.2vw, 2.05rem);
+    margin-bottom: 0.55rem;
+  }
+
+  .ex-hero__desc {
+    font-size: 0.94rem;
+    line-height: 1.58;
+    max-width: 34rem;
+  }
+
+  .ex-hero__glow {
+    width: min(420px, 88vw);
+    height: 220px;
+    top: 8%;
+    opacity: 0.85;
+  }
+
+  .ex-content {
+    padding-left: clamp(1rem, 2.5vw, 1.35rem);
+    padding-right: clamp(1rem, 2.5vw, 1.35rem);
+  }
+}
+
+@media (max-width: 899px) and (min-width: 768px) {
+  .ex-hero {
+    padding: 1.85rem clamp(0.85rem, 2.2vw, 1.15rem) 1.25rem;
+  }
+
+  .ex-hero__title {
+    font-size: clamp(1.55rem, 4vw, 2rem);
+  }
+
+  .ex-content {
+    padding-left: clamp(0.85rem, 2.2vw, 1.15rem);
+    padding-right: clamp(0.85rem, 2.2vw, 1.15rem);
+  }
+}
+
 @media (max-width: 768px) {
   .ex-hero {
     padding: 2.5rem 1rem 2rem;
@@ -634,7 +682,9 @@
   .ex-filters {
     padding: 1rem 1.1rem;
   }
+}
 
+@media (max-width: 639px) {
   .ex-filters__search-form {
     width: 100%;
   }
@@ -653,14 +703,86 @@
     min-width: min(14.25rem, 100%);
     flex: 1 1 13.5rem;
   }
+}
 
+/* Каталог вправ: одна колонка в смузі 639–481 (2 колонки лишаються для 640–767) */
+@media (max-width: 639px) and (min-width: 481px) {
   .ex-grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 0.95rem;
+  }
+}
+
+/* 639–480: ряд 1 — пошук; ряд 2 — м’язова група | рівень; ряд 3 — обладнання | скидання */
+@media (max-width: 639px) and (min-width: 480px) {
+  .ex-filters {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.48rem 0.55rem;
+    padding: 0.8rem 0.88rem;
+    align-content: start;
+    align-items: end;
+    justify-items: stretch;
+  }
+
+  .ex-filters__input {
+    padding: 0.45rem 0.6rem;
+  }
+
+  .ex-filters__btn {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.84rem;
+  }
+
+  .ex-filters__search-form {
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .ex-filters__group.ex-filters__group--muscle-select:has(.msf-rs__container) {
+    grid-column: auto;
+    width: 100%;
+    max-width: min(100%, 16.5rem);
+    min-width: 0;
+    justify-self: start;
+  }
+
+  .ex-filters__group:has(.msf-rs__container):not(.ex-filters__group--muscle-select) {
+    min-width: 0;
+    max-width: min(100%, 15rem);
+    width: 100%;
+    justify-self: start;
+  }
+
+  .ex-filters__btn.ex-filters__btn--reset {
+    grid-column: auto;
+    justify-self: start;
+    width: auto;
+    max-width: 100%;
+  }
+
+  .ex-filters .msf-rs__control {
+    min-height: 34px !important;
+    font-size: 0.82rem !important;
+  }
+
+  .ex-filters .msf-rs__value-container {
+    padding: 1px 6px !important;
+  }
+
+  .ex-filters .msf-rs__dropdown-indicator {
+    padding: 0 6px !important;
   }
 }
 
 @media (max-width: 480px) {
+  .ex-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
   .ex-hero {
     padding: 2rem 1rem 1.5rem;
   }
@@ -671,6 +793,10 @@
 
   .ex-filters {
     gap: 0.75rem;
+  }
+
+  .ex-filters__search-form {
+    width: 100%;
   }
 
   .ex-filters__group {
@@ -695,6 +821,54 @@
     white-space: normal;
     max-width: 100%;
     overflow-wrap: anywhere;
+  }
+}
+
+/* ≤479px: стабільна одноколонкова панель фільтрів (рядки без «плаваючого» скидання) */
+@media (max-width: 479px) {
+  .ex-filters {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.45rem;
+    padding: 0.72rem 0.8rem;
+    align-content: start;
+    align-items: stretch;
+  }
+
+  .ex-filters__search-form {
+    grid-column: 1;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .ex-filters__group {
+    grid-column: 1;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .ex-filters__btn.ex-filters__btn--reset {
+    grid-column: 1;
+    justify-self: start;
+    width: auto;
+    max-width: 100%;
+  }
+
+  .ex-filters__input {
+    min-width: 0;
+  }
+
+  .ex-filters .msf-rs__control {
+    min-height: 34px !important;
+    font-size: 0.82rem !important;
+  }
+
+  .ex-filters .msf-rs__value-container {
+    padding: 1px 6px !important;
+  }
+
+  .ex-filters .msf-rs__dropdown-indicator {
+    padding: 0 6px !important;
   }
 }
 

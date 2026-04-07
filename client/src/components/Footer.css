@@ -231,6 +231,175 @@
   }
 }
 
+/* 961–1023px: трійкова сітка як при ≤960px — без стиснених чотирьох колонок; ≤960 залишається попередній блок */
+@media (max-width: 1023px) and (min-width: 961px) {
+  .ft__inner {
+    padding: 1.05rem clamp(1rem, 2.6vw, 1.35rem) 0.9rem;
+    box-sizing: border-box;
+  }
+
+  .ft__top {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.05rem 1.15rem;
+  }
+
+  .ft__brand {
+    grid-column: 1 / -1;
+  }
+
+  .ft__col--nav,
+  .ft__col--extra,
+  .ft__col--social {
+    justify-self: stretch;
+  }
+}
+
+/* 900–1023px: зібраний центрований футер (900 входить — інакше лишається «лівий» ритм з ≤960px) */
+@media (max-width: 1023px) and (min-width: 900px) {
+  .ft__inner {
+    padding: 1.1rem clamp(1rem, 2.4vw, 1.3rem) 0.95rem;
+    max-width: min(var(--max-width), 100%);
+  }
+
+  .ft__top {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: clamp(1rem, 3vw, 1.75rem);
+    row-gap: 1.15rem;
+    align-items: start;
+  }
+
+  .ft__brand {
+    grid-column: 1 / -1;
+    align-items: center;
+    text-align: center;
+    padding-right: 0;
+  }
+
+  .ft__brand-head {
+    justify-content: center;
+  }
+
+  .ft__brand-logo {
+    object-position: center top;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 96px;
+    max-width: min(280px, 72vw);
+  }
+
+  .ft__brand-desc {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 34rem;
+  }
+
+  .ft__col--nav,
+  .ft__col--extra,
+  .ft__col--social {
+    justify-self: center;
+    text-align: center;
+    width: 100%;
+    max-width: 14rem;
+  }
+
+  .ft__col-title {
+    margin-bottom: 0.65rem;
+  }
+
+  .ft__col--nav .ft__link-list,
+  .ft__col--extra .ft__link-list {
+    align-items: center;
+  }
+
+  .ft__col--social .ft__social-list {
+    justify-content: center;
+  }
+
+  .ft__bottom {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.35rem 0.75rem;
+    margin-top: 1.05rem;
+    padding-top: 0.7rem;
+  }
+}
+
+/* 480–899px: центрований ритм як на планшеті (включно з вузькою смугою до 480px — без «дірки» 481–639) */
+@media (max-width: 899px) and (min-width: 480px) {
+  .ft__inner {
+    padding: 1.1rem clamp(0.85rem, 2.2vw, 1.2rem) 0.95rem;
+    max-width: min(var(--max-width), 100%);
+  }
+
+  .ft__top {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: clamp(0.85rem, 2.8vw, 1.5rem);
+    row-gap: 1.1rem;
+    align-items: start;
+  }
+
+  .ft__brand {
+    grid-column: 1 / -1;
+    align-items: center;
+    text-align: center;
+    padding-right: 0;
+  }
+
+  .ft__brand-head {
+    justify-content: center;
+  }
+
+  .ft__brand-logo {
+    object-position: center top;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 96px;
+    max-width: min(280px, 72vw);
+  }
+
+  .ft__brand-desc {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 34rem;
+  }
+
+  .ft__col--nav,
+  .ft__col--extra,
+  .ft__col--social {
+    justify-self: center;
+    text-align: center;
+    width: 100%;
+    max-width: 14rem;
+  }
+
+  .ft__col-title {
+    margin-bottom: 0.65rem;
+  }
+
+  .ft__col--nav .ft__link-list,
+  .ft__col--extra .ft__link-list {
+    align-items: center;
+  }
+
+  .ft__col--social .ft__social-list {
+    justify-content: center;
+  }
+
+  .ft__bottom {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.35rem 0.75rem;
+    margin-top: 1.05rem;
+    padding-top: 0.7rem;
+  }
+}
+
 @media (max-width: 720px) {
   .ft__top {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -246,14 +415,17 @@
   }
 }
 
+/* 639–481px: трохи щільніше, щоб 2-колонковий ряд nav|extra тримався довше без переходу в 1 колонку */
+@media (max-width: 639px) and (min-width: 481px) {
+  .ft__top {
+    column-gap: 0.8rem;
+    row-gap: 0.95rem;
+  }
+}
+
 @media (max-width: 560px) {
   .ft__inner {
     padding: 1rem 1.1rem 0.85rem;
-  }
-
-  .ft__top {
-    grid-template-columns: 1fr;
-    gap: 1.05rem;
   }
 
   .ft__brand-logo {
@@ -269,8 +441,82 @@
 
   .ft__bottom {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     margin-top: 1rem;
     padding-top: 0.65rem;
+  }
+}
+
+/* 360–479px: знову 2 колонки для nav|extra (як ≤720px), бренд і соцмережі на всю ширину — менш «ламаний» стовпчик */
+@media (max-width: 479px) {
+  .ft__inner {
+    padding: 0.95rem 1rem 0.85rem;
+  }
+
+  .ft__top {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 0.75rem;
+    row-gap: 0.9rem;
+  }
+
+  .ft__brand {
+    grid-column: 1 / -1;
+    align-items: center;
+    text-align: center;
+    padding-right: 0;
+  }
+
+  .ft__brand-head {
+    justify-content: center;
+  }
+
+  .ft__brand-logo {
+    margin-left: auto;
+    margin-right: auto;
+    object-position: center top;
+  }
+
+  .ft__brand-desc {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 34rem;
+  }
+
+  .ft__col--nav,
+  .ft__col--extra {
+    justify-self: center;
+    text-align: center;
+    width: 100%;
+    max-width: 14rem;
+  }
+
+  .ft__col--nav .ft__link-list,
+  .ft__col--extra .ft__link-list {
+    align-items: center;
+  }
+
+  .ft__col--social {
+    grid-column: 1 / -1;
+    justify-self: center;
+    text-align: center;
+    width: 100%;
+    max-width: 14rem;
+  }
+
+  .ft__col--social .ft__social-list {
+    justify-content: center;
+  }
+
+  .ft__col-title {
+    margin-bottom: 0.55rem;
+  }
+
+  .ft__bottom {
+    margin-top: 0.9rem;
+    padding-top: 0.6rem;
+    gap: 0.3rem 0.65rem;
   }
 }

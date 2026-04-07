@@ -417,7 +417,7 @@ function ProgramDetails() {
   };
 
   return (
-    <div className="pd-page">
+    <div className="pd-page program-details-page">
       <section className="pd-hero">
         <div className="pd-hero__inner">
           <button type="button" className="pd-hero__back" onClick={goBackToPrograms}>

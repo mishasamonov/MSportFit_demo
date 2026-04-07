@@ -131,10 +131,30 @@
   width: 100%;
 }
 
-.prod-filters__group:has(.msf-rs__container) {
+/* Ряд «категорія + скидання»: один flex-елемент у панелі, щоб на вузьких ширинах не ламати сітку */
+.prod-filters__row--secondary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem;
   flex: 1 1 16.5rem;
-  min-width: 16.5rem;
+  min-width: min(16.5rem, 100%);
   max-width: 100%;
+}
+
+.prod-filters__row--secondary > .prod-filters__group {
+  flex: 1 1 12rem;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.prod-filters__row--secondary > .prod-filters__group:only-child {
+  flex: 1 1 16.5rem;
+  min-width: min(14rem, 100%);
+}
+
+.prod-filters__row--secondary > .prod-filters__btn--reset {
+  flex-shrink: 0;
 }
 
 .prod-filters__input {
@@ -310,14 +330,24 @@
 
 /* ── Card content (Home product card styles) ── */
 
+.prod-card__head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  min-width: 0;
+  padding-right: 2rem;
+  margin-bottom: 0.75rem;
+}
+
 .prod-card__title {
   font-size: 1.05rem;
   font-weight: 700;
-  margin: 0 0 0.35rem;
-  padding-right: 2rem;
+  margin: 0;
   line-height: 1.38;
   letter-spacing: -0.01em;
   overflow-wrap: anywhere;
+  width: 100%;
 }
 
 .prod-card__title-link {
@@ -325,6 +355,8 @@
   text-decoration: none;
   transition: color 0.2s;
   border-radius: 2px;
+  display: inline;
+  overflow-wrap: anywhere;
 }
 
 .prod-card__title-link:hover {
@@ -352,7 +384,7 @@
   background: rgba(232, 99, 10, 0.12);
   color: var(--color-accent);
   font-weight: 500;
-  margin-bottom: 0.75rem;
+  margin: 0;
 }
 
 .prod-card__kcal-row {
@@ -628,9 +660,30 @@
 
 /* ── Responsive ── */
 
-@media (max-width: 1024px) {
+@media (max-width: 1024px) and (min-width: 767px) {
   .prod-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.12rem;
+  }
+}
+
+@media (max-width: 766px) {
+  .prod-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 899px) and (min-width: 768px) {
+  .prod-hero {
+    padding: 2.85rem clamp(0.85rem, 2.2vw, 1.15rem) 2.15rem;
+  }
+
+  .prod-content {
+    padding: 0 clamp(0.85rem, 2.2vw, 1.15rem) 4.5rem;
+  }
+
+  .prod-grid {
+    gap: 1.05rem;
   }
 }
 
@@ -654,7 +707,9 @@
   .prod-filters {
     padding: 1rem 1.1rem;
   }
+}
 
+@media (max-width: 767px) {
   .prod-filters__search-form {
     width: 100%;
   }
@@ -664,18 +719,89 @@
     min-width: 0;
   }
 
-  .prod-filters__group:has(.msf-rs__container) {
-    min-width: min(14rem, 100%);
-    flex: 1 1 14rem;
+  .prod-filters__row--secondary {
+    flex: 1 1 100%;
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 480px) {
+  /* Ряд 1: пошук + кнопка; ряд 2: категорія + скидання (фіксована сітка панелі + flex другого ряду без «відриву» кнопки). */
+  .prod-filters {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.48rem 0.55rem;
+    padding: 0.8rem 0.88rem;
+    align-content: start;
+    justify-items: stretch;
   }
 
-  .prod-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+  .prod-filters__input {
+    padding: 0.45rem 0.6rem;
+  }
+
+  .prod-filters__btn {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.84rem;
+  }
+
+  .prod-filters__search-form {
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .prod-filters__row--secondary {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 0.55rem;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .prod-filters__row--secondary > .prod-filters__group {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: min(15rem, calc(100% - 9rem));
+    width: auto;
+  }
+
+  .prod-filters__row--secondary > .prod-filters__group:only-child {
+    max-width: min(100%, 16.5rem);
+  }
+
+  .prod-filters__row--secondary > .prod-filters__btn--reset {
+    flex: 0 0 auto;
+    align-self: flex-end;
+  }
+
+  /* Інлайнові стилі react-select інакше не перебити */
+  .prod-filters .msf-rs__control {
+    min-height: 34px !important;
+    font-size: 0.82rem !important;
+  }
+
+  .prod-filters .msf-rs__value-container {
+    padding: 1px 6px !important;
+  }
+
+  .prod-filters .msf-rs__dropdown-indicator {
+    padding: 0 6px !important;
   }
 }
 
 @media (max-width: 480px) {
+  .prod-grid {
+    grid-template-columns: 1fr;
+  }
+
   .prod-hero {
     padding: 2rem 1rem 1.5rem;
   }
@@ -688,17 +814,66 @@
     gap: 0.75rem;
   }
 
+  .prod-filters__search-form {
+    width: 100%;
+  }
+
   .prod-filters__group {
     width: 100%;
   }
 
-  .prod-filters__group:has(.msf-rs__container) {
-    min-width: 0;
-    flex: 1 1 100%;
-  }
-
   .prod-card {
     padding: 1.1rem 1.15rem 1rem;
+  }
+}
+
+/* ≤479px: ряд 1 — пошук+кнопка; ряд 2 — категорія; ряд 3 — скидання зліва; без зайвого повітря в панелі */
+@media (max-width: 479px) {
+  .prod-filters {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.45rem;
+    padding: 0.72rem 0.8rem;
+    align-content: start;
+    align-items: stretch;
+  }
+
+  .prod-filters__search-form {
+    grid-column: 1;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .prod-filters__row--secondary {
+    display: contents;
+  }
+
+  .prod-filters__row--secondary > .prod-filters__group {
+    grid-column: 1;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .prod-filters__row--secondary > .prod-filters__btn--reset {
+    grid-column: 1;
+    justify-self: start;
+    width: auto;
+    max-width: 100%;
+    align-self: start;
+  }
+
+  .prod-filters .msf-rs__control {
+    min-height: 34px !important;
+    font-size: 0.82rem !important;
+  }
+
+  .prod-filters .msf-rs__value-container {
+    padding: 1px 6px !important;
+  }
+
+  .prod-filters .msf-rs__dropdown-indicator {
+    padding: 0 6px !important;
   }
 }
 

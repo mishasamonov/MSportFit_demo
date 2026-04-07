@@ -56,7 +56,9 @@ function Layout() {
   return (
     <div className="layout">
       <ScrollRestoration />
-      <header className={`header${navOpen ? ' header--nav-open' : ''}`}>
+      <header
+        className={`header${navOpen ? ' header--nav-open' : ''}${isAuthed ? ' header--authed' : ''}`}
+      >
         <div className="header__inner">
           <Link to="/" className="header__brand" onClick={closeNav}>
             <img src={logoNavbar} alt="MSportFit" className="header__brand-logo" />
@@ -126,7 +128,23 @@ function Layout() {
               ))}
             </nav>
 
-            {!isAuthed && (
+            {isAuthed ? (
+              <>
+                <div className="header__sheet-divider" aria-hidden />
+                <div className="header__sheet-foot">
+                  <button
+                    type="button"
+                    className="header__btn header__btn--logout"
+                    onClick={() => {
+                      logout();
+                      closeNav();
+                    }}
+                  >
+                    Вийти
+                  </button>
+                </div>
+              </>
+            ) : (
               <>
                 <div className="header__sheet-divider" aria-hidden />
                 <div className="header__sheet-foot">
