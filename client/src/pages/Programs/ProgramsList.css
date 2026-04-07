@@ -357,14 +357,9 @@ a.program-card--link:focus-visible {
   .program-card__body {
     padding: 1.35rem 1.25rem;
   }
-
-  .program-card__cta {
-    min-height: 48px;
-    align-items: center;
-  }
 }
 
-@media (max-width: 767px) and (min-width: 640px) {
+@media (max-width: 768px) and (min-width: 640px) {
   .programs-grid {
     gap: 1.1rem;
   }

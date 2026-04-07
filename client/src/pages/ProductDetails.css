@@ -788,7 +788,7 @@ button.pd-hero__back {
  * маршруту — через це попередні правила з однаковою специфічністю не застосовувались. Селектори з
  * .product-detail-page (див. ProductDetails.jsx) гарантовано перемагають каскад.
  */
-@media (max-width: 1023px) and (min-width: 901px) {
+@media (max-width: 1023px) and (min-width: 900px) {
   .product-detail-page.pd-page {
     margin: -1.5rem;
   }
@@ -896,7 +896,8 @@ button.pd-hero__back {
  * на ProductDetails це ламає ряд «ккал + обране». Сторінковий маркер .product-detail-page
  * відновлює горизонтальний ряд і обмеження ширини блоку калорій.
  */
-@media (max-width: 899px) and (min-width: 480px) {
+/* 480–900px: глобальний max-width:900px інакше ламає ряд «ккал + обране» на рівно 900px */
+@media (max-width: 900px) and (min-width: 480px) {
   .product-detail-page .pd-hero__meta {
     flex-direction: row;
     flex-wrap: wrap;
@@ -913,6 +914,7 @@ button.pd-hero__back {
     width: auto;
     max-width: none;
     flex: 0 0 auto;
+    align-self: center;
   }
 }
 

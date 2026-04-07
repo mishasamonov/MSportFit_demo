@@ -430,8 +430,8 @@
   }
 }
 
-/* Вузька смуга планшета: 901–1023px — стабільний хедер і відступи main без змін для ≤900px */
-@media (max-width: 1023px) and (min-width: 901px) {
+/* Вузька смуга планшета: 900–1023px — стабільний хедер і відступи main (900 включно з футером / details) */
+@media (max-width: 1023px) and (min-width: 900px) {
   .header {
     overflow-x: clip;
   }

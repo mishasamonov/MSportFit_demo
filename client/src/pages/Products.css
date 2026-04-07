@@ -660,16 +660,16 @@
 
 /* ── Responsive ── */
 
-@media (max-width: 1024px) and (min-width: 768px) {
+@media (max-width: 1024px) and (min-width: 767px) {
   .prod-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1.12rem;
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 766px) {
   .prod-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -726,7 +726,7 @@
   }
 }
 
-@media (max-width: 767px) and (min-width: 480px) {
+@media (max-width: 768px) and (min-width: 480px) {
   /* Ряд 1: пошук + кнопка; ряд 2: категорія + скидання (фіксована сітка панелі + flex другого ряду без «відриву» кнопки). */
   .prod-filters {
     display: grid;
@@ -820,15 +820,6 @@
 
   .prod-filters__group {
     width: 100%;
-  }
-
-  .prod-filters__row--secondary {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .prod-filters__row--secondary > .prod-filters__btn--reset {
-    align-self: flex-start;
   }
 
   .prod-card {

@@ -924,8 +924,8 @@ button.pd-hero__back {
 
 /* ── Responsive ── */
 
-/* 901–1023px: щільніший верх hero; селектор з program-details-page — без перетину з ProductDetails */
-@media (max-width: 1023px) and (min-width: 901px) {
+/* 900–1023px: щільніший верх hero; селектор з program-details-page — без перетину з ProductDetails */
+@media (max-width: 1023px) and (min-width: 900px) {
   .program-details-page .pd-hero {
     padding: 1.45rem clamp(1rem, 2.5vw, 1.35rem) 1.85rem;
   }

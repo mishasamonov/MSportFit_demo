@@ -254,8 +254,8 @@
   }
 }
 
-/* 901–1023px: зібраний центрований футер, рівні три колонки, акуратний нижній ряд */
-@media (max-width: 1023px) and (min-width: 901px) {
+/* 900–1023px: зібраний центрований футер (900 входить — інакше лишається «лівий» ритм з ≤960px) */
+@media (max-width: 1023px) and (min-width: 900px) {
   .ft__inner {
     padding: 1.1rem clamp(1rem, 2.4vw, 1.3rem) 0.95rem;
     max-width: min(var(--max-width), 100%);
@@ -446,14 +446,6 @@
     text-align: center;
     margin-top: 1rem;
     padding-top: 0.65rem;
-  }
-}
-
-/* Одна колонка лише з ≤480px (раніше спрацьовувало з ~560px і «з’їдало» 520px) */
-@media (max-width: 480px) {
-  .ft__top {
-    grid-template-columns: 1fr;
-    gap: 1.05rem;
   }
 }
 

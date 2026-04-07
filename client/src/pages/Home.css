@@ -1276,9 +1276,7 @@
     font-size: 1.5rem;
   }
 
-  .home-advantages__grid,
-  .home-programs__grid,
-  .home-products__grid {
+  .home-programs__grid {
     grid-template-columns: 1fr;
   }
 
@@ -1309,20 +1307,16 @@
   }
 
   .home-hero__btn {
-    min-height: 48px;
-    justify-content: center;
-  }
-}
-
-/* ≤639px: компактні вертикальні ритми (у т.ч. 361–479px; раніше лишались лише правила з max-width:768px) */
-@media (max-width: 639px) {
-  .home-hero__btn {
     padding: 0.52rem 1.05rem;
     font-size: 0.875rem;
     font-weight: 600;
     min-height: 0;
     justify-content: center;
   }
+}
+
+/* ≤639px: компактні вертикальні ритми (у т.ч. 361–479px; раніше лишались лише правила з max-width:768px) */
+@media (max-width: 639px) {
 
   .home-advantages,
   .home-programs,
@@ -1381,6 +1375,13 @@
   }
 }
 
+/* Прев’ю продуктів: рівно 3 картки на 480px і вужче (на 479 раніше ховалось, на 480 — ні) */
+@media (max-width: 480px) {
+  .home-products__grid .home-products__card:nth-child(n + 4) {
+    display: none;
+  }
+}
+
 /* Дуже вузькі ширини: повна ширина CTA лише <360px, щоб 360–479 лишались компактними */
 @media (max-width: 359px) {
   .home-hero__pill {
@@ -1414,11 +1415,6 @@
     max-width: 100%;
   }
 
-  /* Прев’ю: 3 картки; 4-ту приховуємо (каталог не змінюється) */
-  .home-products__grid .home-products__card:nth-child(n + 4) {
-    display: none;
-  }
-
   .home-calcs__grid {
     width: 100%;
     justify-items: stretch;
@@ -1446,5 +1442,21 @@
 
   .home-section-header {
     margin-bottom: 1.25rem;
+  }
+
+  /* Прев’ю «База продуктів»: вертикальний список, картка на всю ширину (як Favorites → Продукти: prod-grid 1fr + prod-card на ≤480px) */
+  .home-products__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .home-products__card {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+    padding: 1.1rem 1.15rem 1rem;
   }
 }
