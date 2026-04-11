@@ -108,14 +108,14 @@ const WORKOUTS = {
         },
       },
       {
-        name: 'Румунська тяга',
-        slug: 'barbell-romanian-deadlift',
+        name: 'Румунська тяга з гантелями',
+        slug: 'romanian-deadlift',
         target: 'біцепс стегна, сідниці, поперек-стабілізатори',
         sets: 4,
         reps: '6–12',
         rest: '2–3 хв',
         alternatives: {
-          gym: 'Згинання ніг у тренажері',
+          gym: 'Згинання ніг лежачи в тренажері',
           home: 'Румунська тяга з резиною',
         },
       },
@@ -273,7 +273,7 @@ const WORKOUTS = {
         reps: '6–12',
         rest: '60–90 с',
         alternatives: {
-          gym: 'Румунська тяга',
+          gym: 'Румунська тяга з гантелями',
           home: 'Випади з випригуванням',
         },
       },
