@@ -114,6 +114,10 @@ function Register() {
                   minLength={6}
                   required
                   autoComplete="new-password"
+                  onInvalid={(e) =>
+                    e.target.setCustomValidity('Поле повинно містити щонайменше 6 символів')
+                  }
+                  onInput={(e) => e.target.setCustomValidity('')}
                 />
                 <button
                   type="button"
@@ -195,6 +199,10 @@ function Register() {
                   minLength={6}
                   required
                   autoComplete="new-password"
+                  onInvalid={(e) =>
+                    e.target.setCustomValidity('Поле повинно містити щонайменше 6 символів')
+                  }
+                  onInput={(e) => e.target.setCustomValidity('')}
                 />
                 <button
                   type="button"

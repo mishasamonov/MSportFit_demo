@@ -68,7 +68,7 @@ function Products() {
 
         const res = await fetch(url);
         if (!res.ok) {
-          throw new Error(`Помилка завантаження: ${res.status}`);
+          throw Object.assign(new Error('http'), { status: res.status });
         }
 
         const data = await res.json();
@@ -78,7 +78,15 @@ function Products() {
       } catch (err) {
         console.error('Products fetch error', err);
         if (isMounted) {
-          setError(err.message || 'Не вдалося завантажити продукти');
+          const isNetwork = err instanceof TypeError || err.message === 'Failed to fetch';
+          const isServer = err.status >= 500;
+          setError(
+            isNetwork
+              ? 'Сервер тимчасово недоступний. Перевірте підключення або спробуйте пізніше.'
+              : isServer
+                ? 'Сервіс тимчасово недоступний. Спробуйте пізніше.'
+                : 'Не вдалося завантажити продукти',
+          );
         }
       } finally {
         if (isMounted) {
@@ -245,7 +253,7 @@ function Products() {
 
         {!loading && error && (
           <div className="prod-message">
-            <p className="prod-message__text prod-message__text--error">Помилка: {error}</p>
+            <p className="prod-message__text prod-message__text--error">{error}</p>
           </div>
         )}
 

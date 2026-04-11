@@ -166,7 +166,7 @@ function createAuthRouter(prisma) {
 
       return res.status(status).json({
         error: err.name || 'InternalServerError',
-        message: err.message || 'Не вдалося виконати вхід',
+        message: err.message || 'Не вдалося увійти',
       });
     }
   });

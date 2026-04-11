@@ -68,7 +68,8 @@ function Favorites() {
       ]);
 
       if (!productsRes.ok || !exercisesRes.ok) {
-        throw new Error('Не вдалося завантажити обране');
+        const status = !productsRes.ok ? productsRes.status : exercisesRes.status;
+        throw Object.assign(new Error('http'), { status });
       }
 
       const [productsData, exercisesData] = await Promise.all([
@@ -80,7 +81,15 @@ function Favorites() {
       setExercises(Array.isArray(exercisesData) ? exercisesData : []);
     } catch (err) {
       console.error('Favorites fetch error', err);
-      setError(err.message || 'Не вдалося завантажити обране');
+      const isNetwork = err instanceof TypeError || err.message === 'Failed to fetch';
+      const isServer = err.status >= 500;
+      setError(
+        isNetwork
+          ? 'Сервер тимчасово недоступний. Перевірте підключення або спробуйте пізніше.'
+          : isServer
+            ? 'Сервіс тимчасово недоступний. Спробуйте пізніше.'
+            : 'Не вдалося завантажити обране',
+      );
     } finally {
       setLoading(false);
     }

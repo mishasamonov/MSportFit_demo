@@ -106,7 +106,7 @@ export function AuthProvider({ children }) {
 
     if (!res.ok) {
       const errorBody = await res.json().catch(() => ({}));
-      const msg = errorBody.message || 'Не вдалося виконати вхід';
+      const msg = errorBody.message || 'Не вдалося увійти';
       throw new Error(msg);
     }
 
