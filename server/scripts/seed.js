@@ -259,8 +259,8 @@ async function seedExercises() {
         },
       },
       {
-        slug: 'dumbbell-lateral-raise',
-        title: 'Розведення гантелей у сторони',
+        slug: 'standing-dumbbell-lateral-raise',
+        title: 'Махи з гантелями в сторони стоячи',
         category: 'Плечі',
         calories: 55,
         muscleGroup: 'Плечі',
@@ -468,74 +468,6 @@ async function seedExercises() {
           band: ['Жим з гумовою стрічкою лежачи на спині', 'Присідання з гумою'],
         },
       },
-      {
-        slug: 'lat-pulldown',
-        title: 'Тяга верхнього блоку',
-        category: 'Спина',
-        calories: 85,
-        muscleGroup: 'Спина, Біцепс',
-        level: 'Початковий',
-        equipment: 'Тренажер',
-        videoUrl: 'https://www.youtube.com/watch?v=CAwf7n6Luuc',
-        description:
-          "Вправа в тренажері для розвитку широчайших м'язів спини. Імітує підтягування і підходить для тих, хто поки не може підтягуватись.",
-        steps: [
-          'Сядь у тренажер, зафіксуй стегна валиком.',
-          'Візьми рукоять широким хватом, долоні від себе.',
-          'На видиху тягни рукоять до верхньої частини грудей, зводячи лопатки.',
-          'У нижній точці затримайся на 1 секунду.',
-          'На вдиху повільно випрями руки, контролюючи вагу.',
-        ],
-        tips: [
-          'Тягни ліктями, а не руками — думай про лопатки.',
-          'Не відхиляйся занадто назад — максимум 15–20°.',
-          'Використовуй повний діапазон руху.',
-        ],
-        mistakes: [
-          'Тяга рукояті за голову — навантажує шийний відділ.',
-          'Надмірний нахил назад для підняття більшої ваги.',
-          'Робота переважно біцепсом замість спини.',
-        ],
-        alternatives: {
-          home: ['Тяга гантелей в нахилі', 'Підтягування з гумовою стрічкою'],
-          outdoor: ['Австралійські підтягування', 'Підтягування широким хватом на турніку'],
-          band: ['Тяга гуми зверху вниз сидячи', 'Пуловер з гумовою стрічкою'],
-        },
-      },
-      {
-        slug: 'hip-thrust',
-        title: 'Сідничний міст зі штангою',
-        category: 'Сідниці',
-        calories: 105,
-        muscleGroup: 'Сідниці, Ноги',
-        level: 'Середній',
-        equipment: 'Штанга',
-        videoUrl: 'https://www.youtube.com/watch?v=SEdqd1n0cvg',
-        description:
-          "Цільова вправа для сідничних м'язів. Виконується з опорою спини на лаву та штангою на стегнах. Ефективно будує силу та об'єм сідниць.",
-        steps: [
-          'Сядь на підлогу, обопрись верхньою частиною спини на лаву.',
-          'Поклади штангу на згин стегон, використовуй підкладку для комфорту.',
-          'Стопи на підлозі на ширині плечей, коліна зігнуті під 90°.',
-          'На видиху підніми таз вгору, стискаючи сідниці у верхній точці.',
-          'На вдиху повільно опусти таз, не торкаючись підлоги.',
-        ],
-        tips: [
-          'Тримай підборіддя притиснутим — дивись вперед, а не вгору.',
-          'У верхній точці гомілки мають бути вертикальними.',
-          'Стискай сідниці на 2 секунди у верхній позиції.',
-        ],
-        mistakes: [
-          'Перерозгинання в попереку у верхній точці.',
-          "Відштовхування носками замість п'ятами.",
-          'Занадто далеке або близьке розташування стоп.',
-        ],
-        alternatives: {
-          home: ['Сідничний міст на одній нозі без ваги', 'Сідничний міст з паузою'],
-          outdoor: ['Сідничний міст на лавці в парку', 'Зашагування з акцентом на сідниці'],
-          band: ['Сідничний міст з гумовою стрічкою на стегнах', 'Відведення ноги з гумою'],
-        },
-      },
     ],
   });
 
@@ -584,8 +516,8 @@ const upperABulk = [
     effort: 'RIR 1-2',
   },
   {
-    name: 'Розведення гантелей у сторони',
-    exerciseSlug: 'dumbbell-lateral-raise',
+    name: 'Махи з гантелями в сторони стоячи',
+    exerciseSlug: 'standing-dumbbell-lateral-raise',
     sets: 3,
     reps: '12-15',
     restSec: 60,
@@ -641,8 +573,8 @@ const upperBBulk = [
     effort: 'RIR 1-2',
   },
   {
-    name: 'Розведення гантелей у сторони',
-    exerciseSlug: 'dumbbell-lateral-raise',
+    name: 'Махи з гантелями в сторони стоячи',
+    exerciseSlug: 'standing-dumbbell-lateral-raise',
     sets: 3,
     reps: '12-15',
     restSec: 60,
@@ -663,7 +595,7 @@ const lowerABulk = [
   },
   {
     name: 'Румунська тяга зі штангою',
-    exerciseSlug: 'romanian-deadlift-barbell',
+    exerciseSlug: 'barbell-romanian-deadlift',
     sets: 3,
     reps: '8-10',
     restSec: 120,
@@ -813,7 +745,7 @@ const upperACut = [
   },
   {
     name: 'Жим гантелей над головою сидячи',
-    exerciseSlug: 'seated-dumbbell-overhead-press',
+    exerciseSlug: 'seated-dumbbell-shoulder-press',
     sets: 3,
     reps: '12-15',
     restSec: 60,
@@ -821,8 +753,8 @@ const upperACut = [
     effort: 'RIR 1-2',
   },
   {
-    name: 'Розведення гантелей у сторони',
-    exerciseSlug: 'dumbbell-lateral-raise',
+    name: 'Махи з гантелями в сторони стоячи',
+    exerciseSlug: 'standing-dumbbell-lateral-raise',
     sets: 3,
     reps: '15-20',
     restSec: 45,
@@ -869,8 +801,8 @@ const upperBCut = [
     effort: 'RIR 1-2',
   },
   {
-    name: 'Розведення гантелей у сторони',
-    exerciseSlug: 'dumbbell-lateral-raise',
+    name: 'Махи з гантелями в сторони стоячи',
+    exerciseSlug: 'standing-dumbbell-lateral-raise',
     sets: 3,
     reps: '15-20',
     restSec: 45,
@@ -891,7 +823,7 @@ const lowerACut = [
   },
   {
     name: 'Румунська тяга з гантелями',
-    exerciseSlug: 'romanian-deadlift-dumbbell',
+    exerciseSlug: 'romanian-deadlift',
     sets: 3,
     reps: '12-15',
     restSec: 60,
@@ -927,7 +859,7 @@ const lowerACut = [
   },
   {
     name: 'Підйом гантелей на біцепс',
-    exerciseSlug: 'dumbbell-curl',
+    exerciseSlug: 'dumbbell-bicep-curl',
     sets: 3,
     reps: '12-15',
     restSec: 45,
