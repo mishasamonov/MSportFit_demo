@@ -358,7 +358,6 @@ function ExerciseDetails() {
   const tags = [
     exercise.category,
     exercise.level,
-    typeof exercise.calories === 'number' ? `~${exercise.calories} ккал` : null,
     ...splitEquipmentLabels(exercise.equipment),
   ].filter(Boolean);
 
