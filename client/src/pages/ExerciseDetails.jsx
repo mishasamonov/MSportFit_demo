@@ -212,7 +212,6 @@ function ExerciseDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [source, setSource] = useState(null);
   const favoriteReqRef = useRef(false);
 
   useEffect(() => {
@@ -228,7 +227,6 @@ function ExerciseDetails() {
           const data = await res.json();
           if (isMounted) {
             setExercise(data);
-            setSource('api');
           }
           return;
         }
@@ -237,7 +235,6 @@ function ExerciseDetails() {
           const fallback = getExerciseFallback(id);
           if (fallback && isMounted) {
             setExercise({ ...fallback, id: null });
-            setSource('fallback');
             return;
           }
         }
@@ -247,7 +244,6 @@ function ExerciseDetails() {
         const fallback = getExerciseFallback(id);
         if (fallback && isMounted) {
           setExercise({ ...fallback, id: null });
-          setSource('fallback');
           return;
         }
         console.error('Exercise details fetch error', err);
@@ -272,7 +268,7 @@ function ExerciseDetails() {
     let isMounted = true;
 
     async function loadFavoriteState() {
-      if (!isAuthed || !exercise || source !== 'api') {
+      if (!isAuthed || !exercise || !exercise.id) {
         setIsFavorite(false);
         return;
       }
@@ -296,10 +292,10 @@ function ExerciseDetails() {
     return () => {
       isMounted = false;
     };
-  }, [exercise, isAuthed, source]);
+  }, [exercise, isAuthed]);
 
   const handleToggleFavorite = async () => {
-    if (!exercise || !isAuthed || source !== 'api' || favoriteReqRef.current) return;
+    if (!exercise || !exercise.id || !isAuthed || favoriteReqRef.current) return;
 
     const prevFavorite = isFavorite;
     const nextFavorite = !prevFavorite;
@@ -399,7 +395,7 @@ function ExerciseDetails() {
           )}
 
           <div className="ed-hero__actions">
-            {exercise.videoUrl && (
+            {exercise.videoUrl ? (
               <a
                 href={exercise.videoUrl}
                 target="_blank"
@@ -408,9 +404,13 @@ function ExerciseDetails() {
               >
                 ▶ Дивитись відео
               </a>
+            ) : (
+              <span className="ed-hero__video-btn ed-hero__video-btn--placeholder">
+                ▶ Відео скоро
+              </span>
             )}
 
-            {isAuthed && source === 'api' && (
+            {isAuthed && exercise.id && (
               <button
                 type="button"
                 className={`ed-hero__fav-btn${isFavorite ? ' ed-hero__fav-btn--active' : ''}`}

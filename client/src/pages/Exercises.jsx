@@ -5,9 +5,27 @@ import { apiFetch } from '../lib/api';
 import MsportFitSelect from '../components/MsportFitSelect';
 import './Exercises.css';
 
-const MUSCLE_GROUPS = ['Груди', 'Спина', 'Ноги', 'Плечі', 'Біцепс', 'Трицепс', 'Сідниці', 'Кор'];
+const MUSCLE_GROUPS = [
+  'Груди',
+  'Спина',
+  'Ноги',
+  'Плечі',
+  'Руки',
+  'Біцепс',
+  'Трицепс',
+  'Сідниці',
+  'Кор',
+];
 const LEVELS = ['Початковий', 'Середній'];
-const EQUIPMENT = ['Без обладнання', 'Гантелі', 'Штанга', 'Тренажер', 'Турнік'];
+const EQUIPMENT = [
+  'Без обладнання',
+  'Гантелі',
+  'Штанга',
+  'Тренажер',
+  'Турнік',
+  'Бруси',
+  'Резинова стрічка',
+];
 
 const MUSCLE_GROUP_SELECT_OPTIONS = [
   { value: '', label: 'Усі' },

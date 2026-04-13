@@ -1,5 +1,68 @@
 const express = require('express');
 
+/* ------------------------------------------------------------------ */
+/*  Keyword map: canonical UI group  →  substrings that indicate it   */
+/* ------------------------------------------------------------------ */
+const MUSCLE_GROUP_KEYWORDS = {
+  Груди: ['груди', 'грудн'],
+  Спина: ['спин', 'найширш', 'ромбоподібн', "круглі м'язи"],
+  Ноги: ['ноги', 'квадрицепс', 'стегн', 'литков'],
+  Плечі: ['плечі', 'дельт', 'ротатор', 'трапеці'],
+  Руки: ['біцепс', 'трицепс', 'брахіаліс'],
+  Біцепс: ['біцепс', 'брахіаліс'],
+  Трицепс: ['трицепс'],
+  Сідниці: ['сідниц'],
+  Кор: ['кор', 'прес', 'живот', "косі м'язи"],
+};
+
+function normalizeText(text) {
+  return text.toLowerCase().replace(/[\u2018\u2019\u02BC]/g, "'");
+}
+
+/**
+ * Перевіряє, чи відповідає вправа обраній канонічній м'язовій групі.
+ * Спершу робить пряме порівняння (для legacy-даних зі збігом назви групи),
+ * потім — пошук за ключовими словами зі спеціальною обробкою
+ * "біцепс стегна" (задня поверхня стегна ≠ біцепс руки).
+ * @param {object} exercise - Об'єкт вправи з полями muscleGroup та category.
+ * @param {string} selectedGroup - Канонічна назва м'язової групи з UI-фільтра.
+ * @returns {boolean} true, якщо вправа належить до обраної групи.
+ */
+function matchesMuscleGroup(exercise, selectedGroup) {
+  const muscleText = normalizeText(exercise.muscleGroup || '');
+  const categoryText = normalizeText(exercise.category || '');
+  const groupLower = selectedGroup.toLowerCase();
+  const needsBicepsGuard = selectedGroup === 'Руки' || selectedGroup === 'Біцепс';
+
+  if (!needsBicepsGuard) {
+    if (muscleText.includes(groupLower) || categoryText.includes(groupLower)) {
+      return true;
+    }
+  }
+
+  const keywords = MUSCLE_GROUP_KEYWORDS[selectedGroup];
+  if (!keywords) {
+    return muscleText.includes(groupLower) || categoryText.includes(groupLower);
+  }
+
+  for (const kw of keywords) {
+    const found = muscleText.includes(kw) || categoryText.includes(kw);
+    if (!found) continue;
+
+    if (kw === 'біцепс' && needsBicepsGuard) {
+      const src = muscleText.includes(kw) ? muscleText : categoryText;
+      if (src.includes('біцепс стегн')) {
+        const cleaned = src.replace(/біцепс стегн\S*/g, '');
+        if (!cleaned.includes('біцепс')) continue;
+      }
+    }
+
+    return true;
+  }
+
+  return false;
+}
+
 /**
  * Маршрути для вправ.
  * @param {object} prisma - Екземпляр Prisma Client для роботи з базою даних.
@@ -21,10 +84,6 @@ function createExercisesRouter(prisma) {
         ];
       }
 
-      if (muscleGroup) {
-        where.muscleGroup = { contains: muscleGroup, mode: 'insensitive' };
-      }
-
       if (level) {
         where.level = { equals: level, mode: 'insensitive' };
       }
@@ -33,10 +92,16 @@ function createExercisesRouter(prisma) {
         where.equipment = { contains: equipment, mode: 'insensitive' };
       }
 
-      const exercises = await prisma.exercise.findMany({
+      let exercises = await prisma.exercise.findMany({
         where,
         orderBy: { createdAt: 'desc' },
       });
+
+      if (muscleGroup) {
+        const group = String(muscleGroup);
+        exercises = exercises.filter((ex) => matchesMuscleGroup(ex, group));
+      }
+
       res.json(exercises);
     } catch (err) {
       console.error('GET /api/exercises error:', err);
