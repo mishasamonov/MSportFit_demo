@@ -109,7 +109,7 @@ const WORKOUTS = {
       },
       {
         name: 'Румунська тяга з гантелями',
-        slug: 'romanian-deadlift',
+        slug: 'dumbbell-romanian-deadlift',
         target: 'біцепс стегна, сідниці, поперек-стабілізатори',
         sets: 4,
         reps: '6–12',
