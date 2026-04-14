@@ -102,11 +102,9 @@ function createAuthRouter(prisma) {
         });
       }
 
-      const status = err.status && Number.isInteger(err.status) ? err.status : 500;
-
-      return res.status(status).json({
-        error: err.name || 'InternalServerError',
-        message: err.message || 'Не вдалося зареєструвати користувача',
+      return res.status(500).json({
+        error: 'InternalServerError',
+        message: 'Сервіс тимчасово недоступний. Спробуйте пізніше.',
       });
     }
   });
@@ -162,11 +160,9 @@ function createAuthRouter(prisma) {
     } catch (err) {
       console.error('POST /api/auth/login error:', err);
 
-      const status = err.status && Number.isInteger(err.status) ? err.status : 500;
-
-      return res.status(status).json({
-        error: err.name || 'InternalServerError',
-        message: err.message || 'Не вдалося виконати вхід',
+      return res.status(500).json({
+        error: 'InternalServerError',
+        message: 'Сервіс тимчасово недоступний. Спробуйте пізніше.',
       });
     }
   });

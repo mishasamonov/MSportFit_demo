@@ -178,6 +178,15 @@
   transform: translateY(0);
 }
 
+.ed-hero__video-btn--placeholder {
+  opacity: 0.55;
+  cursor: default;
+  pointer-events: none;
+  background: var(--color-surface-elevated);
+  border-color: var(--color-border);
+  color: var(--color-text-secondary);
+}
+
 .ed-hero__fav-btn {
   display: inline-flex;
   align-items: center;

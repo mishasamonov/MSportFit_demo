@@ -99,14 +99,22 @@ export function AuthProvider({ children }) {
   };
 
   const login = async (email, password) => {
-    const res = await apiFetch('/api/auth/login', {
-      method: 'POST',
-      body: { email, password },
-    });
+    let res;
+    try {
+      res = await apiFetch('/api/auth/login', {
+        method: 'POST',
+        body: { email, password },
+      });
+    } catch {
+      throw new Error('Не вдалося виконати вхід. Спробуйте пізніше.');
+    }
 
     if (!res.ok) {
       const errorBody = await res.json().catch(() => ({}));
-      const msg = errorBody.message || 'Не вдалося виконати вхід';
+      const msg =
+        res.status >= 400 && res.status < 500
+          ? errorBody.message || 'Невірний email або пароль.'
+          : 'Сервіс тимчасово недоступний. Спробуйте пізніше.';
       throw new Error(msg);
     }
 
@@ -116,14 +124,22 @@ export function AuthProvider({ children }) {
   };
 
   const register = async (email, password) => {
-    const res = await apiFetch('/api/auth/register', {
-      method: 'POST',
-      body: { email, password },
-    });
+    let res;
+    try {
+      res = await apiFetch('/api/auth/register', {
+        method: 'POST',
+        body: { email, password },
+      });
+    } catch {
+      throw new Error('Не вдалося зареєструватися. Спробуйте пізніше.');
+    }
 
     if (!res.ok) {
       const errorBody = await res.json().catch(() => ({}));
-      const msg = errorBody.message || 'Не вдалося зареєструватися';
+      const msg =
+        res.status >= 400 && res.status < 500
+          ? errorBody.message || 'Не вдалося зареєструватися.'
+          : 'Сервіс тимчасово недоступний. Спробуйте пізніше.';
       throw new Error(msg);
     }
 
