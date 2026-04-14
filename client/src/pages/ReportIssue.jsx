@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useBackOrNavigate } from '../hooks/useBackOrNavigate.js';
 import { apiFetch } from '../lib/api';
+import './ReportIssue.css';
 
 function buildPayload(fields) {
   return {
