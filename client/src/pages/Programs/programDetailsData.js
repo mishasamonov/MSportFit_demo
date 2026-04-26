@@ -97,7 +97,7 @@ const WORKOUTS = {
     exercises: [
       {
         name: 'Жим ногами в тренажері',
-        slug: null,
+        slug: 'leg-press',
         target: 'квадрицепс, сідниці',
         sets: 4,
         reps: '6–12',
