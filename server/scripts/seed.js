@@ -2,115 +2,316 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
+// БЖВ і калорійність вказані на 100 г їстівної частини.
+// Крупи, рис, макарони, бобові — у сухому вигляді.
+// Мʼясо, риба, птиця — сирий продукт.
+// Овочі та фрукти — сирий продукт, їстівна частина.
+// Хліб, батон, лаваш — продукт «як продається».
+const PRODUCT_SEED_DATA = [
+  // ────────── Крупи (сухий продукт) ──────────
+  { title: 'Вівсянка', category: 'Крупи', calories: 389, protein: 16.9, fat: 6.9, carbs: 66.3 },
+  { title: 'Гречка', category: 'Крупи', calories: 346, protein: 11.7, fat: 2.7, carbs: 75.0 },
+  { title: 'Рис білий', category: 'Крупи', calories: 360, protein: 7.0, fat: 0.6, carbs: 77.0 },
+  { title: 'Рис бурий', category: 'Крупи', calories: 363, protein: 7.5, fat: 2.6, carbs: 72.9 },
+  {
+    title: 'Перлова крупа',
+    category: 'Крупи',
+    calories: 320,
+    protein: 9.3,
+    fat: 1.1,
+    carbs: 66.9,
+  },
+  { title: 'Пшоно', category: 'Крупи', calories: 348, protein: 11.5, fat: 3.3, carbs: 66.5 },
+  {
+    title: 'Манна крупа',
+    category: 'Крупи',
+    calories: 333,
+    protein: 10.3,
+    fat: 1.0,
+    carbs: 67.4,
+  },
+  { title: 'Булгур', category: 'Крупи', calories: 342, protein: 12.3, fat: 1.3, carbs: 75.9 },
+  {
+    title: 'Макарони з твердих сортів пшениці',
+    category: 'Крупи',
+    calories: 358,
+    protein: 12.0,
+    fat: 1.5,
+    carbs: 71.0,
+  },
+
+  // ────────── Хліб (як продається) ──────────
+  { title: 'Батон', category: 'Хліб', calories: 264, protein: 7.5, fat: 2.9, carbs: 50.9 },
+  {
+    title: 'Хліб пшеничний',
+    category: 'Хліб',
+    calories: 242,
+    protein: 7.7,
+    fat: 2.4,
+    carbs: 47.0,
+  },
+  { title: 'Хліб житній', category: 'Хліб', calories: 217, protein: 6.6, fat: 1.2, carbs: 42.4 },
+  { title: 'Лаваш тонкий', category: 'Хліб', calories: 277, protein: 7.7, fat: 1.0, carbs: 57.1 },
+
+  // ────────── Бобові (сухий продукт) ──────────
+  {
+    title: 'Сочевиця',
+    category: 'Бобові',
+    calories: 295,
+    protein: 24.0,
+    fat: 1.5,
+    carbs: 46.3,
+  },
+  { title: 'Нут', category: 'Бобові', calories: 364, protein: 19.3, fat: 6.0, carbs: 61.0 },
+  { title: 'Квасоля', category: 'Бобові', calories: 298, protein: 21.0, fat: 2.0, carbs: 47.0 },
+  { title: 'Горох', category: 'Бобові', calories: 298, protein: 20.5, fat: 2.0, carbs: 48.6 },
+
+  // ────────── Мʼясо / Птиця (сирий продукт) ──────────
+  {
+    title: 'Куряче філе',
+    category: 'Мʼясо',
+    calories: 120,
+    protein: 22.5,
+    fat: 2.6,
+    carbs: 0.0,
+  },
+  {
+    title: 'Куряче стегно (без шкіри)',
+    category: 'Мʼясо',
+    calories: 165,
+    protein: 19.0,
+    fat: 9.7,
+    carbs: 0.0,
+  },
+  {
+    title: 'Індича грудка',
+    category: 'Мʼясо',
+    calories: 114,
+    protein: 23.3,
+    fat: 2.3,
+    carbs: 0.0,
+  },
+  {
+    title: 'Свинина нежирна',
+    category: 'Мʼясо',
+    calories: 142,
+    protein: 19.4,
+    fat: 7.1,
+    carbs: 0.0,
+  },
+  {
+    title: 'Яловичина (мʼякоть)',
+    category: 'Мʼясо',
+    calories: 187,
+    protein: 20.5,
+    fat: 12.0,
+    carbs: 0.0,
+  },
+
+  // ────────── Риба (сирий продукт) ──────────
+  { title: 'Лосось', category: 'Риба', calories: 208, protein: 20.0, fat: 13.4, carbs: 0.0 },
+  {
+    title: 'Тунець (свіжий)',
+    category: 'Риба',
+    calories: 144,
+    protein: 23.3,
+    fat: 4.9,
+    carbs: 0.0,
+  },
+  { title: 'Скумбрія', category: 'Риба', calories: 205, protein: 18.7, fat: 13.9, carbs: 0.0 },
+  { title: 'Хек', category: 'Риба', calories: 86, protein: 16.6, fat: 2.2, carbs: 0.0 },
+
+  // ────────── Яйця ──────────
+  {
+    title: 'Яйце куряче',
+    category: 'Яйця',
+    calories: 143,
+    protein: 12.6,
+    fat: 9.5,
+    carbs: 0.7,
+  },
+  {
+    title: 'Яєчні білки',
+    category: 'Яйця',
+    calories: 52,
+    protein: 10.9,
+    fat: 0.2,
+    carbs: 0.7,
+  },
+
+  // ────────── Молочні продукти ──────────
+  {
+    title: 'Молоко 2.5%',
+    category: 'Молочні продукти',
+    calories: 52,
+    protein: 2.9,
+    fat: 2.5,
+    carbs: 4.7,
+  },
+  {
+    title: 'Кефір 1%',
+    category: 'Молочні продукти',
+    calories: 40,
+    protein: 2.8,
+    fat: 1.0,
+    carbs: 4.0,
+  },
+  {
+    title: 'Йогурт натуральний 2%',
+    category: 'Молочні продукти',
+    calories: 60,
+    protein: 4.3,
+    fat: 2.0,
+    carbs: 6.2,
+  },
+  {
+    title: 'Грецький йогурт нежирний',
+    category: 'Молочні продукти',
+    calories: 59,
+    protein: 10.2,
+    fat: 0.4,
+    carbs: 3.6,
+  },
+  {
+    title: 'Сир кисломолочний 5%',
+    category: 'Молочні продукти',
+    calories: 121,
+    protein: 17.0,
+    fat: 5.0,
+    carbs: 1.8,
+  },
+  {
+    title: 'Сир кисломолочний 0%',
+    category: 'Молочні продукти',
+    calories: 71,
+    protein: 16.5,
+    fat: 0.1,
+    carbs: 1.8,
+  },
+  {
+    title: 'Сир твердий 45%',
+    category: 'Молочні продукти',
+    calories: 364,
+    protein: 24.0,
+    fat: 30.0,
+    carbs: 0.0,
+  },
+  {
+    title: 'Сметана 15%',
+    category: 'Молочні продукти',
+    calories: 158,
+    protein: 2.6,
+    fat: 15.0,
+    carbs: 3.6,
+  },
+
+  // ────────── Овочі (сирий продукт, їстівна частина) ──────────
+  { title: 'Брокколі', category: 'Овочі', calories: 34, protein: 2.8, fat: 0.4, carbs: 6.6 },
+  { title: 'Батат', category: 'Овочі', calories: 86, protein: 1.6, fat: 0.1, carbs: 20.1 },
+  { title: 'Картопля', category: 'Овочі', calories: 77, protein: 2.0, fat: 0.1, carbs: 17.5 },
+  { title: 'Морква', category: 'Овочі', calories: 41, protein: 0.9, fat: 0.2, carbs: 9.6 },
+  { title: 'Помідор', category: 'Овочі', calories: 19, protein: 1.1, fat: 0.2, carbs: 3.7 },
+  { title: 'Огірок', category: 'Овочі', calories: 15, protein: 0.7, fat: 0.1, carbs: 2.5 },
+  {
+    title: 'Перець солодкий',
+    category: 'Овочі',
+    calories: 27,
+    protein: 1.3,
+    fat: 0.1,
+    carbs: 4.9,
+  },
+  { title: 'Шпинат', category: 'Овочі', calories: 23, protein: 2.9, fat: 0.4, carbs: 3.6 },
+  {
+    title: 'Капуста білокачанна',
+    category: 'Овочі',
+    calories: 25,
+    protein: 1.3,
+    fat: 0.1,
+    carbs: 5.8,
+  },
+  {
+    title: 'Цибуля ріпчаста',
+    category: 'Овочі',
+    calories: 40,
+    protein: 1.1,
+    fat: 0.1,
+    carbs: 9.3,
+  },
+  { title: 'Буряк', category: 'Овочі', calories: 43, protein: 1.6, fat: 0.2, carbs: 9.6 },
+
+  // ────────── Фрукти (сирий продукт, їстівна частина) ──────────
+  { title: 'Банан', category: 'Фрукти', calories: 89, protein: 1.1, fat: 0.3, carbs: 22.8 },
+  { title: 'Яблуко', category: 'Фрукти', calories: 52, protein: 0.3, fat: 0.2, carbs: 13.8 },
+  { title: 'Груша', category: 'Фрукти', calories: 57, protein: 0.4, fat: 0.1, carbs: 15.2 },
+  { title: 'Апельсин', category: 'Фрукти', calories: 47, protein: 0.9, fat: 0.1, carbs: 11.8 },
+  { title: 'Мандарин', category: 'Фрукти', calories: 53, protein: 0.8, fat: 0.3, carbs: 13.3 },
+  { title: 'Ківі', category: 'Фрукти', calories: 61, protein: 1.1, fat: 0.5, carbs: 14.7 },
+
+  // ────────── Горіхи ──────────
+  { title: 'Мигдаль', category: 'Горіхи', calories: 579, protein: 21.2, fat: 49.9, carbs: 21.6 },
+  {
+    title: 'Арахісова паста',
+    category: 'Горіхи',
+    calories: 598,
+    protein: 22.2,
+    fat: 51.4,
+    carbs: 22.3,
+  },
+  {
+    title: 'Волоський горіх',
+    category: 'Горіхи',
+    calories: 654,
+    protein: 15.2,
+    fat: 65.2,
+    carbs: 13.7,
+  },
+  { title: 'Кешʼю', category: 'Горіхи', calories: 553, protein: 18.2, fat: 43.9, carbs: 30.2 },
+
+  // ────────── Олії та жири ──────────
+  {
+    title: 'Олія соняшникова',
+    category: 'Олії та жири',
+    calories: 884,
+    protein: 0.0,
+    fat: 100.0,
+    carbs: 0.0,
+  },
+  {
+    title: 'Олія оливкова',
+    category: 'Олії та жири',
+    calories: 884,
+    protein: 0.0,
+    fat: 100.0,
+    carbs: 0.0,
+  },
+  {
+    title: 'Масло вершкове 82.5%',
+    category: 'Олії та жири',
+    calories: 748,
+    protein: 0.5,
+    fat: 82.5,
+    carbs: 0.8,
+  },
+];
+
 async function seedProducts() {
-  const count = await prisma.product.count();
-  if (count > 0) {
-    console.log(`Products already exist (${count}), skipping seeding.`);
-    return;
+  let createdCount = 0;
+  let updatedCount = 0;
+
+  for (const data of PRODUCT_SEED_DATA) {
+    const existing = await prisma.product.findFirst({ where: { title: data.title } });
+    if (existing) {
+      await prisma.product.update({ where: { id: existing.id }, data });
+      updatedCount += 1;
+    } else {
+      await prisma.product.create({ data });
+      createdCount += 1;
+    }
   }
 
-  await prisma.product.createMany({
-    data: [
-      {
-        title: 'Вівсянка',
-        category: 'Крупи',
-        calories: 389,
-        protein: 16.9,
-        fat: 6.9,
-        carbs: 66.3,
-      },
-      {
-        title: 'Гречка',
-        category: 'Крупи',
-        calories: 346,
-        protein: 11.7,
-        fat: 2.7,
-        carbs: 75.0,
-      },
-      {
-        title: 'Куряче філе',
-        category: 'Мʼясо',
-        calories: 120,
-        protein: 22.5,
-        fat: 2.6,
-        carbs: 0.0,
-      },
-      {
-        title: 'Індича грудка',
-        category: 'Мʼясо',
-        calories: 114,
-        protein: 23.3,
-        fat: 2.3,
-        carbs: 0.0,
-      },
-      {
-        title: 'Грецький йогурт',
-        category: 'Молочні продукти',
-        calories: 59,
-        protein: 10.2,
-        fat: 0.4,
-        carbs: 3.6,
-      },
-      {
-        title: 'Сир кисломолочний 5%',
-        category: 'Молочні продукти',
-        calories: 121,
-        protein: 17.0,
-        fat: 5.0,
-        carbs: 1.8,
-      },
-      {
-        title: 'Банан',
-        category: 'Фрукти',
-        calories: 89,
-        protein: 1.1,
-        fat: 0.3,
-        carbs: 22.8,
-      },
-      {
-        title: 'Яблуко',
-        category: 'Фрукти',
-        calories: 52,
-        protein: 0.3,
-        fat: 0.2,
-        carbs: 13.8,
-      },
-      {
-        title: 'Брокколі',
-        category: 'Овочі',
-        calories: 34,
-        protein: 2.8,
-        fat: 0.4,
-        carbs: 6.6,
-      },
-      {
-        title: 'Батат',
-        category: 'Овочі',
-        calories: 86,
-        protein: 1.6,
-        fat: 0.1,
-        carbs: 20.1,
-      },
-      {
-        title: 'Мигдаль',
-        category: 'Горіхи',
-        calories: 579,
-        protein: 21.2,
-        fat: 49.9,
-        carbs: 21.6,
-      },
-      {
-        title: 'Арахісова паста',
-        category: 'Горіхи',
-        calories: 598,
-        protein: 22.2,
-        fat: 51.4,
-        carbs: 22.3,
-      },
-    ],
-  });
-
-  console.log('Seeded products.');
+  console.log(
+    `Seeded products: created ${createdCount}, updated ${updatedCount} (total in seed: ${PRODUCT_SEED_DATA.length}).`,
+  );
 }
 
 const REMOVED_EXERCISE_SLUGS = [

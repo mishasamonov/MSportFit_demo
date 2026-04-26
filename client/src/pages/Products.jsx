@@ -9,12 +9,26 @@ import './Products.css';
 const CATEGORY_OPTIONS = [
   { value: '', label: 'Усі категорії' },
   { value: 'Крупи', label: 'Крупи' },
+  { value: 'Хліб', label: 'Хліб' },
+  { value: 'Бобові', label: 'Бобові' },
   { value: 'Мʼясо', label: 'Мʼясо' },
+  { value: 'Риба', label: 'Риба' },
+  { value: 'Яйця', label: 'Яйця' },
   { value: 'Молочні продукти', label: 'Молочні продукти' },
-  { value: 'Фрукти', label: 'Фрукти' },
   { value: 'Овочі', label: 'Овочі' },
+  { value: 'Фрукти', label: 'Фрукти' },
   { value: 'Горіхи', label: 'Горіхи' },
+  { value: 'Олії та жири', label: 'Олії та жири' },
 ];
+
+const PRODUCT_NUTRITION_NOTE =
+  'Показники наведені на 100 г продукту: крупи та бобові — у сухому вигляді; м’ясо, риба, овочі та фрукти — у сирому вигляді; молочні продукти, хліб, горіхи й олії — як продаються.';
+
+function sortProductsByTitle(items) {
+  return [...items].sort((a, b) =>
+    String(a?.title ?? '').localeCompare(String(b?.title ?? ''), 'uk'),
+  );
+}
 
 const FILTER_KEYS = ['search', 'category'];
 
@@ -73,7 +87,8 @@ function Products() {
 
         const data = await res.json();
         if (isMounted) {
-          setProducts(Array.isArray(data) ? data : data.items || []);
+          const list = Array.isArray(data) ? data : data.items || [];
+          setProducts(sortProductsByTitle(list));
         }
       } catch (err) {
         console.error('Products fetch error', err);
@@ -251,6 +266,7 @@ function Products() {
 
         {!loading && !error && products.length > 0 && (
           <>
+            <p className="prod-nutrition-note">{PRODUCT_NUTRITION_NOTE}</p>
             <p className="prod-results-info">
               Знайдено <span className="prod-results-info__count">{products.length}</span>{' '}
               {products.length === 1 ? 'продукт' : products.length < 5 ? 'продукти' : 'продуктів'}
