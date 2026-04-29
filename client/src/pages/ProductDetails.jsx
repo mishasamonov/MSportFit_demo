@@ -4,6 +4,7 @@ import { useBackOrNavigate } from '../hooks/useBackOrNavigate.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import { apiFetch } from '../lib/api';
 import { IconFlame, IconHeart } from '../components/HomeIcons';
+import { getProductWeightHint } from '../data/productWeightHints.js';
 import './ProductDetails.css';
 import './Products.css';
 
@@ -213,6 +214,9 @@ function ProductDetails() {
     return `${shares[key]}% від БЖВ`;
   };
 
+  const weightHint = getProductWeightHint(product.title);
+  const noteTitle = weightHint ? 'Орієнтир ваги' : 'Примітка до показників';
+
   return (
     <div className="pd-page product-detail-page">
       <section className="pd-hero" aria-labelledby="pd-product-title">
@@ -400,12 +404,16 @@ function ProductDetails() {
           <section className="pd-card pd-note-card" aria-labelledby="pd-note-title">
             <div className="pd-note-card__inner">
               <h2 id="pd-note-title" className="pd-note-card__title">
-                Калорійність на порцію
+                {noteTitle}
               </h2>
-              <p className="pd-note-card__text">
-                Дані наведені на <strong>100 г</strong> продукту. Фактична калорійність може
-                відрізнятися залежно від виробника та способу приготування.
-              </p>
+              {weightHint ? (
+                <p className="pd-note-card__text">{weightHint}</p>
+              ) : (
+                <p className="pd-note-card__text">
+                  Дані наведені на <strong>100 г</strong> продукту. Фактична калорійність може
+                  відрізнятися залежно від виробника та способу приготування.
+                </p>
+              )}
             </div>
           </section>
 
