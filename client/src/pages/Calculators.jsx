@@ -151,6 +151,7 @@ function Calculators() {
       cut: cutCalories,
       maintain: tdeeRounded,
       bulk: bulkCalories,
+      isMinor: a < 18,
     });
 
     if (!macroWeight) setMacroWeight(String(w));
@@ -226,8 +227,10 @@ function Calculators() {
 
     const weightErr = validateRange(w, 30, 250, 'Вага');
     const caloriesErr = validateRange(calories, 800, 6000, 'Калорії');
-    if (weightErr || caloriesErr) {
-      setMacroError(weightErr || caloriesErr);
+    const proteinErr = validateRange(proteinKg, 0.5, 4.0, 'Білок (г/кг)');
+    const fatErr = validateRange(fatKg, 0.3, 2.0, 'Жири (г/кг)');
+    if (weightErr || caloriesErr || proteinErr || fatErr) {
+      setMacroError(weightErr || caloriesErr || proteinErr || fatErr);
       setMacroResult(null);
       return;
     }
@@ -236,7 +239,12 @@ function Calculators() {
     const fatG = w * fatKg;
     const proteinCal = proteinG * 4;
     const fatCal = fatG * 9;
-    const carbsCal = Math.max(0, calories - proteinCal - fatCal);
+    const carbsCal = calories - proteinCal - fatCal;
+    if (carbsCal < 0) {
+      setMacroError('Сума калорій з білка та жирів не може перевищувати добову норму калорій');
+      setMacroResult(null);
+      return;
+    }
     const carbsG = carbsCal / 4;
 
     setMacroResult({
@@ -251,7 +259,7 @@ function Calculators() {
     const macroDefaults = {
       cut: { protein: '2.0', fat: '0.8' },
       maintain: { protein: '1.8', fat: '0.8' },
-      bulk: { protein: '1.8', fat: '1.0' },
+      bulk: { protein: '2.0', fat: '1.0' },
     };
     const defaults = macroDefaults[goal];
     setProteinPerKg(defaults.protein);
@@ -303,7 +311,11 @@ function Calculators() {
     (sex === 'male' || sex === 'female') &&
     activity.trim() !== '';
   const macroCanSubmit =
-    macroCalories.trim() !== '' && macroWeight.trim() !== '' && macroGoal.trim() !== '';
+    macroCalories.trim() !== '' &&
+    macroWeight.trim() !== '' &&
+    proteinPerKg.trim() !== '' &&
+    fatPerKg.trim() !== '' &&
+    macroGoal.trim() !== '';
 
   return (
     <div className="calc-page">
@@ -381,8 +393,31 @@ function Calculators() {
                 <p className="calc-panel__desc">
                   Розрахуйте свій індекс маси тіла на основі зросту та ваги
                 </p>
+                <div className="calc-panel__note" role="note">
+                  <svg
+                    className="calc-panel__note-icon"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 16v-4M12 8h.01" />
+                  </svg>
+                  <p className="calc-panel__note-text">
+                    BMI є орієнтовним показником для дорослих 18+. Його не слід використовувати для
+                    дітей, підлітків, вагітних жінок і спортсменів високої кваліфікації, оскільки
+                    показник може некоректно відображати склад тіла.
+                  </p>
+                </div>
 
                 <form
+                  noValidate
                   onSubmit={(e) => {
                     e.preventDefault();
                     handleBmiCalculate();
@@ -401,7 +436,8 @@ function Calculators() {
                           value={bmiWeight}
                           onChange={(e) => setBmiWeight(e.target.value)}
                           placeholder="78"
-                          min="20"
+                          min={30}
+                          max={250}
                         />
                       </div>
                       <div className="calc-panel__field">
@@ -415,7 +451,8 @@ function Calculators() {
                           value={bmiHeight}
                           onChange={(e) => setBmiHeight(e.target.value)}
                           placeholder="188"
-                          min="50"
+                          min={120}
+                          max={230}
                         />
                       </div>
                     </div>
@@ -479,8 +516,32 @@ function Calculators() {
                 <p className="calc-panel__desc">
                   Розрахуйте вашу добову норму калорій з урахуванням активності
                 </p>
+                <div className="calc-panel__note" role="note">
+                  <svg
+                    className="calc-panel__note-icon"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 16v-4M12 8h.01" />
+                  </svg>
+                  <p className="calc-panel__note-text">
+                    Розрахунок TDEE є орієнтовним. Для користувачів молодше 18 років результат не є
+                    персональною нормою калорійності, оскільки енергетичні потреби в цьому віці
+                    залежать від росту та розвитку. Не використовуйте цей показник для самостійного
+                    обмеження харчування без консультації фахівця.
+                  </p>
+                </div>
 
                 <form
+                  noValidate
                   onSubmit={(e) => {
                     e.preventDefault();
                     handleTdeeCalculate();
@@ -499,7 +560,8 @@ function Calculators() {
                           value={weight}
                           onChange={(e) => setWeight(e.target.value)}
                           placeholder="78"
-                          min="20"
+                          min={30}
+                          max={250}
                         />
                       </div>
                       <div className="calc-panel__field">
@@ -513,7 +575,8 @@ function Calculators() {
                           value={height}
                           onChange={(e) => setHeight(e.target.value)}
                           placeholder="188"
-                          min="50"
+                          min={120}
+                          max={230}
                         />
                       </div>
                     </div>
@@ -530,7 +593,8 @@ function Calculators() {
                           value={age}
                           onChange={(e) => setAge(e.target.value)}
                           placeholder="21"
-                          min="1"
+                          min={10}
+                          max={90}
                         />
                       </div>
                       <div className="calc-panel__field">
@@ -596,6 +660,13 @@ function Calculators() {
 
                 {bmrResult && (
                   <div className="calc-result">
+                    {bmrResult.isMinor && (
+                      <p className="calc-panel__disclaimer calc-panel__disclaimer--minor">
+                        Для віком до 18 років цей результат є лише загальним довідковим орієнтиром і
+                        не повинен використовуватися для самостійного обмеження або збільшення
+                        калорійності без консультації фахівця.
+                      </p>
+                    )}
                     <div className="calc-tdee-main">
                       <p className="calc-tdee-main__label">Ваша добова норма (TDEE):</p>
                       <p className="calc-tdee-main__value">
@@ -636,8 +707,30 @@ function Calculators() {
               <>
                 <h2 className="calc-panel__title">Калькулятор макронутрієнтів</h2>
                 <p className="calc-panel__desc">Розрахуйте розподіл білків, жирів та вуглеводів</p>
+                <div className="calc-panel__note" role="note">
+                  <svg
+                    className="calc-panel__note-icon"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 16v-4M12 8h.01" />
+                  </svg>
+                  <p className="calc-panel__note-text">
+                    Розрахунок БЖВ має довідковий характер і не замінює індивідуальний план
+                    харчування від лікаря або дієтолога.
+                  </p>
+                </div>
 
                 <form
+                  noValidate
                   onSubmit={(e) => {
                     e.preventDefault();
                     handleMacroCalculate();
@@ -655,7 +748,8 @@ function Calculators() {
                         value={macroCalories}
                         onChange={(e) => setMacroCalories(e.target.value)}
                         placeholder="2800"
-                        min="500"
+                        min={800}
+                        max={6000}
                       />
                       <span className="calc-panel__helper">
                         Використайте TDEE калькулятор для точного розрахунку
@@ -674,7 +768,8 @@ function Calculators() {
                           value={macroWeight}
                           onChange={(e) => setMacroWeight(e.target.value)}
                           placeholder="78"
-                          min="20"
+                          min={30}
+                          max={250}
                         />
                       </div>
                       <div className="calc-panel__field">
@@ -687,6 +782,43 @@ function Calculators() {
                           value={macroGoal}
                           options={MACRO_GOALS}
                           onChange={(v) => handleMacroGoalChange(v)}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="calc-panel__row">
+                      <div className="calc-panel__field">
+                        <label className="calc-panel__label" htmlFor="calc-macro-protein">
+                          Білок (г/кг)
+                        </label>
+                        <input
+                          id="calc-macro-protein"
+                          className="calc-panel__input"
+                          type="number"
+                          inputMode="decimal"
+                          value={proteinPerKg}
+                          onChange={(e) => setProteinPerKg(e.target.value)}
+                          placeholder="1.8"
+                          min={0.5}
+                          max={4}
+                          step={0.1}
+                        />
+                      </div>
+                      <div className="calc-panel__field">
+                        <label className="calc-panel__label" htmlFor="calc-macro-fat">
+                          Жири (г/кг)
+                        </label>
+                        <input
+                          id="calc-macro-fat"
+                          className="calc-panel__input"
+                          type="number"
+                          inputMode="decimal"
+                          value={fatPerKg}
+                          onChange={(e) => setFatPerKg(e.target.value)}
+                          placeholder="0.8"
+                          min={0.3}
+                          max={2}
+                          step={0.1}
                         />
                       </div>
                     </div>
