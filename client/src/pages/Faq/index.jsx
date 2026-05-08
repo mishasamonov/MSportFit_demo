@@ -21,9 +21,12 @@ function FaqCategoryTabs({ activeId, onChange }) {
   );
 }
 
-function FaqAccordionItem({ id, question, answer, isOpen, onToggle }) {
+function FaqAccordionItem({ id, question, answer, sources, isOpen, onToggle }) {
   const panelId = `faq-panel-${id}`;
   const triggerId = `faq-trigger-${id}`;
+  const sourcesTitleId = `faq-sources-${id}`;
+  const hasSources = Array.isArray(sources) && sources.length > 0;
+  const sourcesHeading = hasSources && sources.length === 1 ? 'Джерело' : 'Джерела';
 
   return (
     <div className={`faq-item${isOpen ? ' faq-item--open' : ''}`}>
@@ -60,6 +63,32 @@ function FaqAccordionItem({ id, question, answer, isOpen, onToggle }) {
         <div className="faq-item__panel-inner">
           <div className="faq-item__answer">
             <p>{answer}</p>
+
+            {hasSources && (
+              <section className="faq-item__sources" aria-labelledby={sourcesTitleId}>
+                <h3 id={sourcesTitleId} className="faq-item__sources-title">
+                  {sourcesHeading}
+                </h3>
+                <ul className="faq-item__sources-list">
+                  {sources.map((source) => (
+                    <li key={source.url}>
+                      <a
+                        className="faq-item__source-link"
+                        href={source.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${source.label} (відкрити у новій вкладці)`}
+                      >
+                        <span className="faq-item__source-label">{source.label}</span>
+                        {source.type && (
+                          <span className="faq-item__source-type">{source.type}</span>
+                        )}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
           </div>
         </div>
       </div>
@@ -162,6 +191,7 @@ function Faq() {
                 id={item.id}
                 question={item.question}
                 answer={item.answer}
+                sources={item.sources}
                 isOpen={openId === item.id}
                 onToggle={() => toggleItem(item.id)}
               />
