@@ -1,289 +1,106 @@
-# MSportFit — інформаційна система підтримки тренувань і харчування (demo)
+# MSportFit
 
-Публічний репозиторій бакалаврського проєкту **MSportFit**.  
-Формат: **монорепозиторій** (`client` + `server`). Поточний стан — початковий етап (MVP/скелет).
+**MSportFit** — інформаційна система підтримки спортивних тренувань і харчування у вигляді адаптивного україномовного вебзастосунку.
 
-## Мета проєкту
-Створити вебзастосунок, який допомагає користувачу:
-- підбирати та виконувати **тренування** (програми/плани) і переглядати **вправи** з описом;
-- користуватись **калькуляторами** (BMI / добова потреба в калоріях / БЖВ);
-- працювати з розділом **харчування** (каталог продуктів та їх КБЖВ);
-- отримувати довідкову інформацію у **FAQ** (додатковий розділ).
+Користувач отримує єдину платформу для роботи з тренуваннями, базою вправ, харчуванням і фітнес-калькуляторами. Інтерфейс орієнтований на десктоп і мобільні пристрої, оформлений у темній темі з акцентним брендом MSportFit.
 
-## Функціонал (MVP)
-- Вправи та/або програми тренувань (з описом, фільтрами; відео — за потреби через YouTube embed).
-- Калькулятори: BMI, добова потреба в калоріях (TDEE/BMR), БЖВ.
-- Каталог продуктів харчування з КБЖВ.
-- Авторизація (JWT) та **обране** (збереження вибраних елементів користувача).
-- FAQ як додатковий інформаційний блок.
+---
+
+## Основні можливості
+
+- **Програми тренувань** для набору м'язової маси та схуднення з адаптацією під 2–4 тренування на тиждень.
+- **Каталог вправ** із технікою виконання, порадами, типовими помилками та альтернативами (для залу і для дому).
+- **Каталог продуктів** із калорійністю та повним розкладом БЖВ на 100 г.
+- **Калькулятори** BMI, TDEE та БЖВ із візуалізацією результатів і рекомендаціями.
+- **FAQ** з відповідями на типові питання щодо тренувань, харчування та відновлення, частина відповідей підкріплена науковими джерелами.
+- **Авторизація та реєстрація** користувачів (JWT-сесія).
+- **Обране** для вправ і продуктів — швидкий доступ до збережених елементів.
+
+---
 
 ## Технології
-**Frontend:** React, Vite, SCSS, React Router, Redux Toolkit (auth/favorites/products/filters), React Select  
-**Backend:** Node.js, Express  
-**DB:** PostgreSQL (Docker Compose), Prisma  
-**Auth:** bcrypt + JWT (Bearer) — потребує змінної середовища `JWT_SECRET` на сервері
 
-## Структура репозиторію
-- `client/` — клієнтська частина (React/Vite)
-- `server/` — серверна частина (API)
-- `spec.md` — специфікація MVP, маршрути та API-контракти
-- `PROJECT_RULES.md` — правила розробки/робочий гайд (у т.ч. для Cursor)
-- `docker-compose.yml` — інфраструктура БД для локальної розробки
-- `.gitignore` — ігнорування службових/згенерованих файлів і секретів
-- `LICENSE` — ліцензія на код (MIT)
+| Шар        | Стек                                                |
+| ---------- | --------------------------------------------------- |
+| Frontend   | React, Vite, JavaScript, SCSS, Redux Toolkit        |
+| Backend    | Node.js, Express                                    |
+| Database   | PostgreSQL                                          |
+| ORM        | Prisma                                              |
 
-## Запуск локально
+---
 
-### 1) PostgreSQL (Docker)
+## Скріншоти
+
+| Сторінка                         | Превʼю                                                          |
+| -------------------------------- | --------------------------------------------------------------- |
+| Головна                          | ![Home](docs/screenshots/home.png)                              |
+| Програми тренувань               | ![Programs](docs/screenshots/programs.png)                      |
+| Деталі програми тренувань        | ![Program details](docs/screenshots/program-details.png)        |
+| Каталог вправ                    | ![Exercises](docs/screenshots/exercises.png)                    |
+| Деталі вправи                    | ![Exercise details](docs/screenshots/exercise-details.png)      |
+| Каталог продуктів                | ![Products](docs/screenshots/products.png)                      |
+| Деталі продукту                  | ![Product details](docs/screenshots/product-details.png)        |
+| Калькулятори                     | ![Calculators](docs/screenshots/calculators.png)                |
+| FAQ                              | ![FAQ](docs/screenshots/faq.png)                                |
+| Обране                           | ![Favorites](docs/screenshots/favorites.png)                    |
+
+> Файли скріншотів зберігаються у `docs/screenshots/`. Як тільки відповідні PNG будуть додані у репозиторій, вони автоматично відобразяться у цій таблиці.
+
+---
+
+## Локальний запуск
+
+### 1. PostgreSQL через Docker
+
 ```bash
 docker compose up -d
 ```
 
-### 2) Backend
+Це підніме сервіс PostgreSQL, описаний у `docker-compose.yml`, і зробить його доступним для backend-а.
+
+### 2. Backend (`server`)
+
 ```bash
 cd server
 npm install
-
-# Налаштування .env (ОБОВ'ЯЗКОВО!)
-# Скопіюйте env.example → .env
-copy env.example .env    # Windows
-# або
-cp env.example .env      # Linux/Mac
-
-# Після копіювання відредагуйте .env та встановіть JWT_SECRET
-# Приклад: JWT_SECRET=my_super_secret_random_string_12345
-
-# Prisma
-npm run prisma:generate
-npm run prisma:migrate
-
-# Запуск
 npm run dev
 ```
 
-### 3) Frontend (Vite)
+Перед першим запуском заповніть `.env` (зокрема `DATABASE_URL` і `JWT_SECRET`) та виконайте міграції Prisma:
+
+```bash
+npm run prisma:generate
+npm run prisma:migrate
+```
+
+### 3. Frontend (`client`)
+
 ```bash
 cd client
 npm install
 npm run dev
 ```
 
-## Налаштування авторизації (обов'язково для Stage D+)
-
-### Крок 1: Створіть .env файл
-```bash
-cd server
-copy env.example .env    # Windows
-# або
-cp env.example .env      # Linux/Mac
-```
-
-### Крок 2: Встановіть JWT_SECRET
-Відкрийте `server/.env` та встановіть унікальний секретний ключ:
-```env
-JWT_SECRET=your_long_random_secret_key_here
-JWT_EXPIRES_IN=7d
-```
-
-**ВАЖЛИВО:** 
-- JWT_SECRET має бути довгим випадковим рядком (мінімум 32 символи)
-- Ніколи не комітьте файл `.env` в git!
-- Без JWT_SECRET auth endpoints повертатимуть помилку `ServerConfigError`
-
-### Крок 3: Перезапустіть сервер
-```bash
-npm run dev
-```
-
-Якщо все налаштовано правильно, при старті побачите:
-```
-✓ Auth config OK: JWT_SECRET налаштовано
-Server running on port 3001
-```
-
-## Тестування API авторизації
-
-**ВАЖЛИВО:** Endpoints `/api/auth/login` та `/api/auth/register` — це **POST** запити.  
-Відкриття їх у браузері через адресний рядок використовує **GET** і поверне `Cannot GET /api/auth/login` — це нормально!
-
-### 🚀 Швидке тестування (автоматичний скрипт)
-
-Найпростіший спосіб перевірити auth та favorites:
-
-```bash
-# 1. Запустіть сервер (якщо ще не запущено)
-cd server
-npm run dev
-
-# 2. В іншому терміналі
-cd server
-npm run test:stage-d
-```
-
-Скрипт автоматично протестує реєстрацію, вхід, `/me`, додавання в обране та отримання списків.
-
-**Вимоги:** Node.js 18+, запущений сервер, налаштований JWT_SECRET
-
-### Тестування через PowerShell (Windows)
-
-#### 1. Реєстрація нового користувача
-```powershell
-$body = @{ 
-  email = "test@example.com"
-  password = "secret123" 
-} | ConvertTo-Json
-
-$response = Invoke-RestMethod `
-  -Uri "http://localhost:3001/api/auth/register" `
-  -Method Post `
-  -ContentType "application/json" `
-  -Body $body
-
-# Зберігаємо токен для подальших запитів
-$token = $response.token
-Write-Host "Token: $token"
-```
-
-#### 2. Вхід (Login)
-```powershell
-$body = @{ 
-  email = "test@example.com"
-  password = "secret123" 
-} | ConvertTo-Json
-
-$response = Invoke-RestMethod `
-  -Uri "http://localhost:3001/api/auth/login" `
-  -Method Post `
-  -ContentType "application/json" `
-  -Body $body
-
-$token = $response.token
-Write-Host "Token: $token"
-```
-
-#### 3. Отримання поточного користувача (захищений endpoint)
-```powershell
-# Використовуємо токен з попереднього запиту
-Invoke-RestMethod `
-  -Uri "http://localhost:3001/api/auth/me" `
-  -Method Get `
-  -Headers @{ Authorization = "Bearer $token" }
-```
-
-### Тестування через curl (Linux/Mac)
-
-#### Реєстрація
-```bash
-curl -X POST http://localhost:3001/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"email":"test@example.com","password":"secret123"}'
-```
-
-#### Вхід
-```bash
-TOKEN=$(curl -X POST http://localhost:3001/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"test@example.com","password":"secret123"}' \
-  | jq -r '.token')
-
-echo "Token: $TOKEN"
-```
-
-#### Отримання поточного користувача
-```bash
-curl http://localhost:3001/api/auth/me \
-  -H "Authorization: Bearer $TOKEN"
-```
+Vite-сервер за замовчуванням підіймається на `http://localhost:5173` і проксіює `/api` на backend (`http://localhost:3001`).
 
 ---
 
-## Документування коду (Lab 5)
+## GitHub Pages
 
-### Стандарт
+Frontend опубліковано як **публічну demo-версію** через GitHub Pages:
 
-Проєкт використовує **JSDoc** для документування JS/JSX-коду на клієнті (React/Vite) та сервері (Node.js/Express).
+**Demo:** https://mishasamonov.github.io/MSportFit_demo/
 
-### Що документується
-
-Обов'язково документуються всі **публічні та експортовані інтерфейси**:
-
-- утиліти (`client/src/lib/`) — функції роботи з токеном, API-обгортки;
-- React-хуки та контексти (`client/src/context/`) — `AuthProvider`, `useAuth`, typedef-и;
-- Express-middleware (`server/src/middleware/`) — перевірка JWT, підготовка `req.user`;
-- фабрики роутерів (`server/src/routes/`) — опис ендпоінтів, параметри, повернені значення.
-
-### Вимоги до JSDoc-блоків
-
-| Елемент | Обов'язкові теги |
-|---------|-----------------|
-| Функція / метод | Опис, `@param`, `@returns` |
-| Функція, що кидає помилки | + `@throws` |
-| Публічна утиліта / хук | + `@example` |
-| Складний об'єкт / структура | `@typedef` з `@property` |
-
-### Як згенерувати документацію
-
-Детальна інструкція: [`docs/generate_docs.md`](docs/generate_docs.md).
-
-```bash
-# Виконується з кореня репозиторію
-npm run docs:build
-```
-
-Результат: `docs/site/` — HTML-сайт із документацією (відкрийте `docs/site/index.html`).
-
-> **Примітка:** директорія `docs/site/` додана до `.gitignore` і **не комітиться**.  
-> Для здачі заархівуйте її у zip (PowerShell):
-> ```powershell
-> Compress-Archive -Path docs/site/* -DestinationPath docs-site.zip -Force
-> ```
+GitHub Pages обслуговує лише статичну збірку клієнтської частини (`client/dist`). Це **frontend demo** для ознайомлення з інтерфейсом і навігацією; повна функціональність із backend і базою даних доступна при локальному запуску згідно з інструкцією вище.
 
 ---
 
-## Архітектура
+## Статус
 
-### Development
-
-```mermaid
-flowchart LR
-    Browser -->|HTTP :5173| Vite["Vite Dev Server\n:5173"]
-    Vite -->|proxy /api → :3001| Node["Node.js / Express\n:3001"]
-    Node --> PG[(PostgreSQL\nDocker :5432)]
-```
-
-### Production
-
-```mermaid
-flowchart LR
-    Browser -->|HTTPS :443| Nginx["Nginx\n:443"]
-    Nginx -->|static files| Dist["client/dist\n(збірка Vite)"]
-    Nginx -->|proxy /api → :3001| Node["Node.js / Express\n:3001"]
-    Node --> PG[(PostgreSQL\n:5432)]
-```
+Система реалізована локально та працює як повноцінне рішення з frontend, backend і базою даних. GitHub Pages використовується для **публічної демонстрації frontend-частини**.
 
 ---
 
-## Вимоги (чиста ОС)
+## Автор
 
-Перед першим запуском переконайтесь, що встановлено:
-
-| Інструмент | Мінімальна версія | Перевірка |
-|---|---|---|
-| **Git** | будь-яка актуальна | `git --version` |
-| **Node.js** | 18+ | `node --version` |
-| **npm** | входить до Node.js | `npm --version` |
-| **Docker** | будь-яка актуальна | `docker --version` |
-| **Docker Compose** | v2 (плагін) або v1 | `docker compose version` |
-
-> **Примітка для Windows:** рекомендується встановити Docker Desktop, він містить Docker Compose v2 «з коробки».
-
----
-
-## Документація для DevOps/Release
-
-| Документ | Опис |
-|---|---|
-| [`docs/deployment.md`](docs/deployment.md) | Покрокове розгортання на сервері (production) |
-| [`docs/update.md`](docs/update.md) | Процедура оновлення застосунку без downtime |
-| [`docs/backup.md`](docs/backup.md) | Резервне копіювання та відновлення БД |
-| [`docs/scripts/`](docs/scripts/) | Shell/bat-скрипти для автоматизації (dev, prod, backup, restore) |
+**Misha Samonov** / Самонов Михайло
