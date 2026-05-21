@@ -8,7 +8,7 @@
     "typecheck": "npm --prefix client run typecheck && npm --prefix server run typecheck",
     "check": "npm run lint && npm run typecheck",
     "build": "npm run check && npm --prefix client run build",
-    "prepare": "husky install",
+    "prepare": "husky || true",
     "docs:clean": "node -e \"const fs=require('fs');fs.rmSync('docs/site',{recursive:true,force:true});\"",
     "docs:build": "npm run docs:clean && npx jsdoc -c jsdoc.json"
   },
