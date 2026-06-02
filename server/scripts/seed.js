@@ -350,7 +350,7 @@ async function seedExercises() {
       muscleGroup: 'Плечі',
       level: 'Початковий',
       equipment: 'Гантелі',
-      videoUrl: 'https://www.youtube.com/watch?v=3VcKaXpzqRo',
+      videoUrl: null,
       description:
         'Ізольована вправа на середній пучок дельт. Формує ширину плечей і V-подібний силует.',
       steps: [
@@ -383,7 +383,7 @@ async function seedExercises() {
       muscleGroup: 'Ноги, Сідниці',
       level: 'Початковий',
       equipment: 'Гантелі',
-      videoUrl: 'https://www.youtube.com/watch?v=7j-2w4-P14I',
+      videoUrl: null,
       description:
         'Вправа для задньої поверхні стегна та сідниць. Розвиває силу та гнучкість задньої лінії тіла.',
       steps: [
@@ -416,7 +416,7 @@ async function seedExercises() {
       muscleGroup: 'Груди, передня дельта, трицепс',
       level: 'Середній',
       equipment: 'Гантелі',
-      videoUrl: 'https://www.youtube.com/watch?v=8iPEnn-ltC8',
+      videoUrl: 'https://youtube.com/shorts/WN3bqV6b-_U',
       description:
         'Базова вправа для розвитку верхньої частини грудних м\u2019язів із залученням передніх дельтоїдів та трицепсів.',
       steps: [
@@ -449,6 +449,7 @@ async function seedExercises() {
       muscleGroup: 'Груди',
       level: 'Початковий',
       equipment: 'Тренажер',
+      videoUrl: 'https://youtube.com/shorts/3S9IOZlosuU',
       description:
         'Ізольована вправа для грудних м\u2019язів, що забезпечує стабільну амплітуду та контрольоване навантаження.',
       steps: [
@@ -481,6 +482,7 @@ async function seedExercises() {
       muscleGroup: 'Найширші, біцепс',
       level: 'Середній',
       equipment: 'Тренажер',
+      videoUrl: 'https://youtube.com/shorts/55K8RUpvI3s',
       description:
         'Варіація тяги верхнього блока з акцентом на нижню частину найширших м\u2019язів та біцепси.',
       steps: [
@@ -513,6 +515,7 @@ async function seedExercises() {
       muscleGroup: 'Найширші, круглі м\u2019язи спини',
       level: 'Середній',
       equipment: 'Тренажер',
+      videoUrl: 'https://youtube.com/shorts/fPJzcXomYX8',
       description:
         'Ізольована вправа для найширших м\u2019язів спини, що мінімізує залучення біцепсів.',
       steps: [
@@ -545,7 +548,7 @@ async function seedExercises() {
       muscleGroup: 'Передня і середня дельта',
       level: 'Середній',
       equipment: 'Гантелі',
-      videoUrl: 'https://www.youtube.com/watch?v=qEwKCR5JCog',
+      videoUrl: null,
       description:
         'Базова вправа для розвитку дельтоїдних м\u2019язів із можливістю збільшення амплітуди руху порівняно зі штангою.',
       steps: [
@@ -642,7 +645,7 @@ async function seedExercises() {
       muscleGroup: 'Найширші, верх спини',
       level: 'Початковий',
       equipment: 'Тренажер',
-      videoUrl: 'https://www.youtube.com/watch?v=CAwf7n6Luuc',
+      videoUrl: null,
       description:
         'Базова вправа для розвитку найширших м\u2019язів спини та формування V-подібної фігури.',
       steps: [
@@ -771,7 +774,7 @@ async function seedExercises() {
       muscleGroup: 'Ноги, Сідниці',
       level: 'Початковий',
       equipment: 'Тренажер',
-      videoUrl: 'https://www.youtube.com/watch?v=IZxyjW7MPJQ',
+      videoUrl: null,
       description:
         'Багатосуглобова вправа в тренажері для розвитку ніг. Менше навантаження на хребет порівняно з присіданнями, що робить її безпечнішою для новачків.',
       steps: [
@@ -805,7 +808,7 @@ async function seedExercises() {
       muscleGroup: 'Біцепс',
       level: 'Початковий',
       equipment: 'Гантелі',
-      videoUrl: 'https://www.youtube.com/watch?v=ykJmrZ5v0Oo',
+      videoUrl: 'https://youtube.com/shorts/JH5Hp7rqiVg',
       description:
         'Класична вправа для біцепса з обертанням кисті, що максимально активує обидві головки біцепса.',
       steps: [
@@ -870,6 +873,7 @@ async function seedExercises() {
       muscleGroup: 'Довга головка трицепса',
       level: 'Середній',
       equipment: 'Гантелі',
+      videoUrl: 'https://youtube.com/shorts/mgG6KKX5PFw',
       description:
         'Вправа для трицепса з акцентом на довгу головку завдяки розтягненню м\u2019яза у верхній позиції.',
       steps: [
@@ -934,7 +938,7 @@ async function seedExercises() {
       muscleGroup: 'Квадрицепс',
       level: 'Початковий',
       equipment: 'Тренажер',
-      videoUrl: 'https://www.youtube.com/watch?v=YyvSfVjQeL0',
+      videoUrl: null,
       description:
         'Ізольована вправа для чотириголового м\u2019яза стегна з контрольованим діапазоном руху.',
       steps: [
@@ -1127,7 +1131,7 @@ async function seedExercises() {
       muscleGroup: 'Трицепс',
       level: 'Початковий',
       equipment: 'Тренажер',
-      videoUrl: 'https://www.youtube.com/watch?v=vB5OHsJ3EME',
+      videoUrl: 'https://youtube.com/shorts/SUyU_Me5Vdc',
       description:
         'Ізольована вправа для трицепса з канатною рукояткою, що дозволяє розводити руки в кінцевій точці.',
       steps: [
@@ -1160,6 +1164,7 @@ async function seedExercises() {
       muscleGroup: 'Найширші, біцепс, плечовий м\u2019яз (брахіаліс)',
       level: 'Середній',
       equipment: 'Тренажер',
+      videoUrl: 'https://youtube.com/shorts/eY9sQF4i6MY',
       description:
         'Варіація тяги верхнього блока нейтральним хватом для глибшого скорочення найширших і залучення плечового м\u2019яза.',
       steps: [
@@ -1224,6 +1229,7 @@ async function seedExercises() {
       muscleGroup: 'Середина спини, найширші, ромбоподібні',
       level: 'Середній',
       equipment: 'Тренажер',
+      videoUrl: 'https://youtube.com/shorts/GJEKmeUvf2c',
       description:
         'Тяга нижнього блока у нахилі корпусу для розвитку товщини середини спини з постійним натягом троса.',
       steps: [
@@ -1795,7 +1801,7 @@ async function seedExercises() {
       muscleGroup: 'Верх грудних, передня дельта, трицепс',
       level: 'Початковий',
       equipment: 'Без обладнання',
-      videoUrl: 'https://www.youtube.com/watch?v=SKPab2YC8BE',
+      videoUrl: 'https://youtube.com/shorts/0COHCAZ2JtQ',
       description:
         'Варіація віджимань із піднятими ногами, що зміщує акцент на верхню частину грудних м\u2019язів та передні дельтоїди.',
       steps: [
@@ -1860,7 +1866,7 @@ async function seedExercises() {
       muscleGroup: 'Найширші, біцепс',
       level: 'Середній',
       equipment: 'Турнік',
-      videoUrl: 'https://www.youtube.com/watch?v=brhRXlOhsAM',
+      videoUrl: 'https://youtube.com/shorts/SFV_e_6S_pE',
       description:
         'Базова вправа з власною вагою для розвитку найширших м\u2019язів спини та біцепсів, що забезпечує природну траєкторію руху.',
       steps: [
@@ -2085,6 +2091,7 @@ async function seedExercises() {
       muscleGroup: 'Найширші м\u2019язи спини, біцепс, верхня частина спини',
       level: 'Середній',
       equipment: 'Турнік',
+      videoUrl: 'https://youtube.com/shorts/R8HE9sr8UyM',
       description:
         'Базова вправа з власною вагою для розвитку найширших м\u2019язів спини та формування V-подібної фігури.',
       steps: [
